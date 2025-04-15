@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卧烟伊豆湖 Search</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('臥煙 伊豆湖.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-width: 80%;
+            backdrop-filter: blur(5px);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            height: 40px;
+            padding: 0 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #0078d7;
+        }
+
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            min-width: 40px;
+        }
+
+        .custom-select .selected {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            background-color: white;
+            transition: all 0.3s;
+            min-width: 40px;
+        }
+
+        .custom-select .selected:hover {
+            border-color: #0078d7;
+        }
+
+        .custom-select .selected img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .custom-select .selected::after {
+            content: "▼";
+            font-size: 10px;
+            margin-left: 8px;
+        }
+
+        .custom-select .options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border: 1px solid #ccc;
+            border-radius: 0 0 10px 10px;
+            background-color: #fff;
+            z-index: 1000;
+            margin-top: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-select.active .options {
+            display: block;
+        }
+
+        .custom-select .option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            min-width: 40px;
+        }
+
+        .custom-select .option img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .custom-select .option:hover {
+            background-color: #f0f7ff;
+        }
+
+        button {
+            height: 40px;
+            padding: 0 25px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #0078d7;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #005a9e;
+        }
+
+        .quote {
+            margin: 20px 0;
+            font-style: italic;
+            color: #555;
+        }
+
+        .disclaimer {
+            font-size: 12px;
+            color: #888;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                width: 90%;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            input[type="text"] {
+                width: 100%;
+            }
+            
+            .custom-select {
+                width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+
+<body>
+    <div class="container">
+        <h1>请教教我，卧烟伊豆湖老师！</h1>
+        <div class="quote">
+            <b>
+                <ruby>
+                    <rb>我什么都知道哦</rb>
+                    <rt style="font-size:0.75em">私は何でも知っている</rt>
+                </ruby>
+            </b>
+        </div>
+
+        <div class="search-box">
+            <input type="text" name="q" placeholder="输入你想知道的一切..." id="searchInput" autocomplete="off">
+            <div class="custom-select" id="engineSelect">
+                <div class="selected" data-url="https://www.bing.com/search" data-param="q" title="Bing">
+                    <img src="https://www.bing.com/favicon.ico" alt="Bing">
+                </div>
+                <div class="options">
+                    <div class="option" data-url="https://www.bing.com/search" data-param="q" data-name="Bing" title="Bing">
+                        <img src="https://www.bing.com/favicon.ico" alt="Bing">
+                    </div>
+                    <div class="option" data-url="https://www.google.com/search" data-param="q" data-name="Google" title="Google">
+                        <img src="https://www.google.com/favicon.ico" alt="Google">
+                    </div>
+                    <div class="option" data-url="https://www.baidu.com/s" data-param="wd" data-name="百度" title="百度">
+                        <img src="https://www.baidu.com/favicon.ico" alt="百度">
+                    </div>
+                    <div class="option" data-url="https://duckduckgo.com/" data-param="q" data-name="DuckDuckGo" title="DuckDuckGo">
+                        <img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo">
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="searchButton"><i class="fas fa-search"></i></button>
+        </div>
+
+        <p class="disclaimer">
+            [注] 实际上，本页面使用您选择的搜索引擎为您提供服务。
+            什么都知道的大姐姐只存在于物语之中！（悲）
+        </p>
+    </div>
+
+    <script>
+        // 搜索引擎选择功能
+        const engineSelect = document.getElementById('engineSelect');
+        const selectedEngine = engineSelect.querySelector('.selected');
+        const options = engineSelect.querySelector('.options');
+        const searchButton = document.getElementById('searchButton');
+        const searchInput = document.getElementById('searchInput');
+
+        // 切换下拉菜单显示/隐藏
+        selectedEngine.addEventListener('click', () => {
+            engineSelect.classList.toggle('active');
+        });
+
+        // 选择搜索引擎
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', () => {
+                const img = option.querySelector('img').cloneNode(true);
+
+                selectedEngine.innerHTML = '';
+                selectedEngine.appendChild(img);
+
+                selectedEngine.dataset.url = option.dataset.url;
+                selectedEngine.dataset.param = option.dataset.param;
+                selectedEngine.title = option.title; // 设置鼠标悬停显示的搜索引擎名称
+
+                engineSelect.classList.remove('active');
+            });
+        });
+
+        // 点击搜索按钮
+        searchButton.addEventListener('click', performSearch);
+
+        // 回车键搜索
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // 点击页面其他地方关闭下拉菜单
+        document.addEventListener('click', (e) => {
+            if (!engineSelect.contains(e.target)) {
+                engineSelect.classList.remove('active');
+            }
+        });
+
+        // 执行搜索函数
+        function performSearch() {
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            // 获取当前选择的搜索引擎的 URL 和参数
+            const url = selectedEngine.dataset.url || "https://www.bing.com/search"; // 默认值为 Bing
+            const param = selectedEngine.dataset.param || "q"; // 默认参数为 "q"
+
+            // 构造搜索链接
+            const searchUrl = `${url}?${param}=${encodeURIComponent(query)}`;
+
+            console.log('Generated Search URL:', searchUrl); // 调试输出
+            window.open(searchUrl, '_blank'); // 在新标签页中打开
+        }
+
+        // 自动聚焦到搜索框
+        searchInput.focus();
+    </script>
+</body>
+</html>
