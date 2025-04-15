@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>与Python共读《红楼梦》 | wzzmmm</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('HongLouMeng-SunWen-023.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 900px;
+            padding: 2rem;
+            margin: 2rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: left;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        h2 {
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .intro, .projects {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        p, li {
+            line-height: 1.6;
+            color: #eee;
+        }
+        
+        a {
+            color: #4dabf7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: #74c0fc;
+            text-decoration: underline;
+        }
+        
+        ul {
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+  
+<body>
+    <div class="container">
+        <header>
+            <h1>与Python共读《红楼梦》</h1>
+            <p class="subtitle">持续更新中……</p>
+        </header>
+        
+        <section class="projects">
+            <h2>数据来源</h2>
+            <ul>
+                <li>初步主要使用人民文学出版社1982年以后推出的“当代通行本”，后续可能需要用到其他多个版本</li>
+                <li>Internet Archive上的开源项目：<a href="https://archive.org/details/20210126_20210126_1456/page/13/mode/2up">紅樓夢(通行本)</a>
+                ，Exported from Wikisource on 2020年12月17日，可能需要繁体化为简体、删去批语和注释、划分章回</li>
+                <li>本页面背景图为[清]孙温《全本红楼梦图》之第二十三回《西厢记妙词通戏语 牡丹亭艳曲警芳心》取其“共读”之美意。感谢知友开源：
+                  <a href="https://zhuanlan.zhihu.com/p/339261803">雲绯的文章 - 知乎</a></li>
+            </ul>
+        </section>
+        
+        <section class="projects">
+            <h2>我的项目</h2>
+            <ul>
+                <li><a href="aict-pku/farmland19962010_mapTimeline.html">耕地保护指标分省地图（待完善）</a></li>
+                <li><a href="aict-pku/SearchEngines.html">一个简单的集成搜索引擎</a></li>
+                <li><a href="aict-pku/HongLongMeng-Python.html">与Python共读《红楼梦》</a></li>
+            </ul>
+        </section>
+        
+        <footer style="text-align: center; margin-top: 2rem; color: #aaa;">
+            <p><a href="/">← 返回主页</a></p>
+        </footer>
+    </div>
+</body>
+</html>
