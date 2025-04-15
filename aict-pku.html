@@ -1,87 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <!-- 保持原有的head部分不变 -->
-
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>人工智能与计算思维 | wzzmmm</title>
     <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2980b9;
-            --text-color: #333;
-            --light-bg: #f9f9f9;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
         body {
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #eee;
-        }
-        
-        h1 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .subtitle {
-            color: #666;
-            font-size: 1.1rem;
-            font-weight: normal;
-        }
-        
-        .intro {
-            background: var(--light-bg);
-            padding: 1.5rem;
-            border-radius: 6px;
-            margin-bottom: 2rem;
-        }
-        
-        
-        footer {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
-            color: #777;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-                margin: 1rem;
-            }
-        }
-
-        body {
             background-image: url('aict-pku_bg.jpg');
             background-size: cover;
-            background-attachment: fixed;
             background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
             position: relative;
         }
         
@@ -92,64 +29,113 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(0, 0, 0, 0.6);
             z-index: -1;
         }
         
         .container {
-            background-color: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(5px);
+            max-width: 900px;
+            padding: 2rem;
+            margin: 2rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: left;
         }
         
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
         
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
         
-        .projects {
-            background: var(--light-bg);
+        h2 {
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .intro, .projects {
+            background-color: rgba(255, 255, 255, 0.1);
             padding: 1.5rem;
-            border-radius: 6px;
-            margin: 2rem 0;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .projects ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 1rem 0 0;
+        p, li {
+            line-height: 1.6;
+            color: #eee;
         }
         
-        .projects li {
-            margin-bottom: 1rem;
-            position: relative;
+        a {
+            color: #4dabf7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: #74c0fc;
+            text-decoration: underline;
+        }
+        
+        ul {
             padding-left: 1.5rem;
         }
         
-        .projects li:before {
-            content: "•";
-            color: var(--primary-color);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
+        li {
+            margin-bottom: 0.5rem;
+            position: relative;
         }
         
-        .projects a {
-            color: var(--text-color);
-            text-decoration: none;
-            transition: color 0.3s;
-            display: inline-block;
-            padding: 0.2rem 0;
-            border-bottom: 1px dashed transparent;
+        .more-info {
+            text-align: right;
+            margin-top: 1rem;
         }
         
-        .projects a:hover {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
+        .more-info a {
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .more-info a::after {
+            content: "→";
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .more-info a:hover::after {
+            transform: translateX(3px);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
-
-
-
-    
-    
 <body>
     <div class="container">
         <header>
@@ -160,28 +146,23 @@
         <section class="intro">
             <h2>课程简介</h2>
             <p>全新开设的通识核心课"人工智能与计算思维"，该课程讲授数据科学与人工智能的核心知识，
-                设8个平行班，阐述人工智能在各学科领域应用的典型案例，使学生初步掌握人工智能在解决实际问题中的应用方法，培养学生的计算思维。
-                <!--教学班6班的方向为新闻传播、国际关系、公共卫生。-->
-            </p>
+              设8个平行班，阐述人工智能在各学科领域应用的典型案例，使学生初步掌握人工智能在解决实际问题中的应用方法，培养学生的计算思维。</p>
             <p class="more-info">
-                <a href="https://mp.weixin.qq.com/s/4KukjOS6VReOg_gcblc5Cw" target="_blank" rel="noopener noreferrer">
-                  <span class="link-text">更多信息</span>
-                  <span class="link-icon">→</span>
-                </a>
+                <a href="https://mp.weixin.qq.com/s/4KukjOS6VReOg_gcblc5Cw" target="_blank" rel="noopener noreferrer">更多信息</a>
             </p>
         </section>
         
-         <section class="projects">
+        <section class="projects">
             <h2>我的项目</h2>
             <ul>
-                <li><a href="aict-pku/farmland19962010-mapTimeline.html">耕地保护指标分省地图（待完善）</a></li>
-                <li><a href="aict-pku/SearchEngines.html">一个简单的集成搜索引擎</a></li>
-                <li><a href="aict-pku/HongLongMeng-Python.html">与Python共读《红楼梦》</a></li>
+                <li><a href="aict-pku/farmland-map">耕地保护指标分省地图（待完善）</a></li>
+                <li><a href="aict-pku/search-engine">搜索引擎</a></li>
+                <li><a href="aict-pku/dream-of-red-mansions">与Python共读《红楼梦》</a></li>
             </ul>
         </section>
         
-        <footer>
-            <p>© 2025 wzzmmm | <a href="/">返回主页</a></p>
+        <footer style="text-align: center; margin-top: 2rem; color: #aaa;">
+            <p><a href="/">← 返回主页</a></p>
         </footer>
     </div>
 </body>
