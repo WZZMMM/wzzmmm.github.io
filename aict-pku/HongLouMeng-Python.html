@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -113,27 +112,70 @@
             position: relative;
         }
         
-        /* 图表容器样式 */
+        /* 图表容器样式 - 优化部分 */
         .chart-container {
-            background-color: rgba(245, 245, 245, 0.4);
+            background-color: rgba(245, 245, 245, 0.35);
             border-radius: 8px;
             padding: 10px;
             margin: 15px 0;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(1px);
             overflow: hidden;
+            position: relative;
+            width: 100%;
+            min-height: 400px;
+        }
+        
+        .aspect-ratio-box {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-top: 75%; /* 默认4:3比例 */
+            overflow: hidden;
         }
         
         .chart-container iframe {
-            background-color: transparent !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             border: none;
-            display: block;
+            background-color: transparent !important;
         }
         
-        @media (max-width: 600px) {
+        .chart-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.7);
+            z-index: 10;
+        }
+        
+        /* 网络图专用比例 */
+        .network-chart .aspect-ratio-box {
+            padding-top: 100%; /* 1:1比例 */
+        }
+        
+        /* 词云图专用比例 */
+        .wordcloud-chart .aspect-ratio-box {
+            padding-top: 100%; /* 1:1比例 */
+        }
+        
+        /* 柱状图专用比例 */
+        .bar-chart-container {
+            width: 100%;      /* 容器宽度占满父元素 */
+            height: 720px;    /* 固定高度为720px */
+            overflow-x: auto; /* 水平方向溢出时显示滚动条 */
+            overflow-y: hidden; /* 垂直方向禁止滚动 */
+        }
+        
+        @media (max-width: 768px) {
             .container {
                 padding: 1.5rem;
                 margin: 1.5rem;
+                width: 95%;
             }
             
             h1 {
@@ -146,12 +188,38 @@
             
             .chart-container {
                 padding: 8px;
+                min-height: 350px;
+            }
+            
+            .aspect-ratio-box {
+                padding-top: 100%; /* 小屏幕上使用更高的比例 */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+            
+            .chart-container {
+                min-height: 300px;
+                border-radius: 4px;
+            }
+            
+            .aspect-ratio-box {
+                padding-top: 120%; /* 手机竖屏使用更高的比例 */
+            }
+            
+            .network-chart .aspect-ratio-box,
+            .wordcloud-chart .aspect-ratio-box,
+            .bar-chart .aspect-ratio-box {
+                padding-top: 120%; /* 手机统一比例 */
             }
         }
     </style>
     <link href="styles.css" rel="stylesheet">
 </head>
-
 
 <body>
     <div class="container">
@@ -170,7 +238,7 @@
                     <a href="https://github.com/Elenore1997/HongLou" target="_blank" rel="noopener noreferrer" class="monospace">HongLou</a>
                     收集整理了登场人物及人物关系数据，
                     暂时用到小说中的登场人物词表<span class="monospace">character.txt</span>，带有"nr"标签，帮助jieba分词的时候更加准确；
-                    暂时仅考虑贾宝玉=宝玉, 林黛玉=黛玉, 薛宝钗=宝钗这三个“同人异名”的情形
+                    暂时仅考虑贾宝玉=宝玉, 林黛玉=黛玉, 薛宝钗=宝钗这三个"同人异名"的情形
                 <li>本页面背景图为[清]孙温《全本红楼梦图》第二十三回《西厢记妙词通戏语 牡丹亭艳曲警芳心》，取其"共读"之美意。感谢知友开源：
                   <a href="https://zhuanlan.zhihu.com/p/339261803" target="_blank" rel="noopener noreferrer">雲绯的文章 - 知乎</a></li>
                 <li>感兴趣的读者可以查看本项目用到的外部原始数据：
@@ -202,16 +270,25 @@
                     <a href="HongLouMeng-Python/output/top3_characters_per_chapter.csv" class="file-link" target="_blank" rel="noopener noreferrer">每个章回出场频次top3的人物</a>、
                     <a href="HongLouMeng-Python/output/main_characters_appear.csv" class="file-link" target="_blank" rel="noopener noreferrer">宝黛钗三人在每个章回的出场频次</a></li>
                 <li>以下词云图可视化了全文中所有人物的出场频次，注意到黛玉出场频次排第2位，由此可见黛玉是仅次于宝玉的主角：</li>
-                    <div class="chart-container">
-                        <iframe src="HongLouMeng-Python/output/character_wordcloud.html" width="100%" height="600px" frameborder="0"></iframe>
+                    <div class="chart-container wordcloud-chart">
+                        <!--<div class="chart-loading">加载词云图中...</div>-->
+                        <div class="aspect-ratio-box">
+                            <iframe src="HongLouMeng-Python/output/character_wordcloud.html" loading="lazy"></iframe>
+                        </div>
                     </div>
                 <li>以下柱状图可视化了每个章回出场频次top3的人物：</li>
-                    <div class="chart-container">
-                        <iframe src="HongLouMeng-Python/output/top3_appear_per_chapter.html" width="100%" height="600px" frameborder="0"></iframe>
+                    <div class="chart-container bar-chart">
+                        <!--<div class="chart-loading">加载柱状图中...</div>-->
+                        <div class="aspect-ratio-box">
+                            <iframe src="HongLouMeng-Python/output/top3_appear_per_chapter.html" loading="lazy"></iframe>
+                        </div>
                     </div>
                 <li>以下柱状图可视化了宝黛钗三人在每个章回的出场频次，除了黛玉出场更早，可以看出在第97回（焚稿断痴情）之前的绝大多数章回，黛玉的出场频次都高于宝钗：</li>
-                    <div class="chart-container">
-                        <iframe src="HongLouMeng-Python/output/main_characters_appear.html" width="100%" height="600px" frameborder="0"></iframe>
+                    <div class="chart-container bar-chart">
+                        <!--<div class="chart-loading">加载柱状图中...</div>-->
+                        <div class="aspect-ratio-box">
+                            <iframe src="HongLouMeng-Python/output/main_characters_appear.html" loading="lazy"></iframe>
+                        </div>
                     </div>
             </ul>
         </section>
@@ -225,23 +302,35 @@
                     ，主要使用jieba, pyecharts等库，实现中文分句，以3句为窗口大小，分析人物共现关系</li>
                 <li>以下网络图可视化了全文出场频次前120位人物的共现关系，节点大小表示出场频次，边线粗细表示共现次数，
                     鼠标悬停在节点上可显示每个人物的出场频次和主要共现前5位人物及次数，在边线上可显示出两个人物之间的共现次数：</li>
-                    <div class="chart-container">
-                        <iframe src="HongLouMeng-Python/output/co_occurrence.html" width="100%" height="720px" frameborder="0"></iframe>
+                    <div class="chart-container network-chart">
+                        <!--<div class="chart-loading">加载网络图中...</div>-->
+                        <div class="aspect-ratio-box">
+                            <iframe src="HongLouMeng-Python/output/co_occurrence.html" loading="lazy"></iframe>
+                        </div>
                     </div>
                 <li>以下网络图可视化了宝玉的共现关系：</li>
-                    <div class="chart-container">
-                        <iframe src="HongLouMeng-Python/output/co_occurrence_baoyu.html" width="100%" height="720px" frameborder="0"></iframe>
+                    <div class="chart-container network-chart">
+                        <!--<div class="chart-loading">加载网络图中...</div>-->
+                        <div class="aspect-ratio-box">
+                            <iframe src="HongLouMeng-Python/output/co_occurrence_baoyu.html" loading="lazy"></iframe>
+                        </div>
                     </div>
                 <li>以下网络图可视化了黛玉的共现关系：</li>
-                    <div class="chart-container">
-                        <iframe src="HongLouMeng-Python/output/co_occurrence_daiyu.html" width="100%" height="720px" frameborder="0"></iframe>
+                    <div class="chart-container network-chart">
+                        <!--<div class="chart-loading">加载网络图中...</div>-->
+                        <div class="aspect-ratio-box">
+                            <iframe src="HongLouMeng-Python/output/co_occurrence_daiyu.html" loading="lazy"></iframe>
+                        </div>
                     </div>     
                 <li>以下网络图可视化了宝钗的共现关系：</li>
-                    <div class="chart-container">
-                        <iframe src="HongLouMeng-Python/output/co_occurrence_baochai.html" width="100%" height="720px" frameborder="0"></iframe>
+                    <div class="chart-container network-chart">
+                        <!--<div class="chart-loading">加载网络图中...</div>-->
+                        <div class="aspect-ratio-box">
+                            <iframe src="HongLouMeng-Python/output/co_occurrence_baochai.html" loading="lazy"></iframe>
+                        </div>
                     </div>    
                 <li>从以上共现关系图，可见与宝玉紧密程度断层式最靠前的两位是袭人和黛玉
-                    （二者相差不大，考虑到我们暂时没有处理“林妹妹”“颦儿”等对黛玉的称呼，宝黛紧密程度可能还被低估），
+                    （二者相差不大，考虑到我们暂时没有处理"林妹妹""颦儿"等对黛玉的称呼，宝黛紧密程度可能还被低估），
                 其后依次为宝二爷他奶奶、他娘和他宝姐姐；
                 与黛玉关系最紧密的毫无疑问是宝玉，其次分别是宝钗和潇湘馆丫鬟紫鹃，宝钗和紫鹃与黛玉之间的共现次数非常接近，宝二爷断层式领先；
                 与宝钗关系最紧密的前两位是宝玉和黛玉</li>      
@@ -260,8 +349,6 @@
             <p><a href="/">← 返回主页</a></p>
         </footer>
     </div>
-
-
 
     <script>
         // 自动确保所有文件链接在新标签页打开
@@ -282,19 +369,67 @@
                 }
             });
 
-            // 图表背景透明化
+            // 图表加载完成后隐藏加载指示器
             document.querySelectorAll('.chart-container iframe').forEach(iframe => {
                 iframe.style.backgroundColor = 'transparent';
+                
                 iframe.addEventListener('load', function() {
+                    // 隐藏加载指示器
+                    const container = iframe.closest('.chart-container');
+                    const loadingIndicator = container.querySelector('.chart-loading');
+                    if (loadingIndicator) {
+                        loadingIndicator.style.display = 'none';
+                    }
+                    
+                    // 尝试设置iframe内部背景透明
                     try {
                         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                         iframeDoc.body.style.backgroundColor = 'transparent';
+                        
+                        // 尝试触发图表resize
+                        if (iframe.contentWindow.echarts) {
+                            const charts = iframe.contentWindow.echarts.getInstanceByDom(
+                                iframeDoc.querySelector('.chart-container') || iframeDoc.body
+                            );
+                            if (charts) {
+                                charts.resize();
+                            }
+                        }
                     } catch (e) {
                         console.log('优化iframe背景:', e);
                     }
                 });
             });
         });
+
+        // 图表响应式调整
+        function resizeAllCharts() {
+            document.querySelectorAll('.chart-container iframe').forEach(iframe => {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (iframe.contentWindow.echarts) {
+                        const charts = iframe.contentWindow.echarts.getInstanceByDom(
+                            iframeDoc.querySelector('.chart-container') || iframeDoc.body
+                        );
+                        if (charts) {
+                            charts.resize();
+                        }
+                    }
+                } catch (e) {
+                    console.log('调整图表大小:', e);
+                }
+            });
+        }
+
+        // 添加resize事件监听（节流）
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(resizeAllCharts, 200);
+        });
+
+        // 初始加载时调整
+        window.addEventListener('load', resizeAllCharts);
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
