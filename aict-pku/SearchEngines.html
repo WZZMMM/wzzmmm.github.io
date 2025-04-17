@@ -2,9 +2,22 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
+    <meta name="theme-color" content="#000000">
     <title>臥煙 伊豆湖 Search | WZM</title>
     <style>
+        :root {
+            --primary-color: #4dabf7;
+            --text-color: #fff;
+            --bg-overlay: rgba(0, 0, 0, 0.6);
+            --container-bg: rgba(0, 0, 0, 0.5);
+            --border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -13,12 +26,13 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #fff;
+            color: var(--text-color);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
+            line-height: 1.6;
         }
         
         body::before {
@@ -28,15 +42,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: var(--bg-overlay);
             z-index: -1;
         }
         
         .container {
+            width: 90%;
             max-width: 800px;
             padding: 2rem;
-            margin: 2rem;
-            background-color: rgba(0, 0, 0, 0.5);
+            margin: 2rem auto;
+            background-color: var(--container-bg);
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             text-align: center;
@@ -45,9 +60,9 @@
         }
         
         h1 {
-            font-size: 2rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             margin-bottom: 1.5rem;
-            color: #fff;
+            color: var(--text-color);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
@@ -61,45 +76,47 @@
         }
         
         input[type="text"] {
-            width: 300px;
-            height: 40px;
-            padding: 0 15px;
+            flex: 1;
+            min-width: 0;
+            height: 50px;
+            padding: 0 20px;
             font-size: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
             outline: none;
             transition: all 0.3s;
             background-color: rgba(0, 0, 0, 0.3);
-            color: #fff;
+            color: var(--text-color);
         }
         
         input[type="text"]:focus {
-            border-color: #4dabf7;
+            border-color: var(--primary-color);
             background-color: rgba(0, 0, 0, 0.5);
         }
         
         .custom-select {
             position: relative;
             display: inline-block;
-            min-width: 40px;
+            min-width: 50px;
+            height: 50px;
         }
         
         .custom-select .selected {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            height: 100%;
+            padding: 0 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.3);
             transition: all 0.3s;
-            min-width: 40px;
-            color: #fff;
+            color: var(--text-color);
         }
         
         .custom-select .selected:hover {
-            border-color: #4dabf7;
+            border-color: var(--primary-color);
             background-color: rgba(0, 0, 0, 0.5);
         }
         
@@ -113,22 +130,22 @@
             content: "▼";
             font-size: 10px;
             margin-left: 8px;
-            color: #fff;
+            color: var(--text-color);
         }
         
         .custom-select .options {
             display: none;
             position: absolute;
-            top: 100%;
+            top: calc(100% + 5px);
             left: 0;
             right: 0;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0 0 10px 10px;
-            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.9);
             z-index: 1000;
-            margin-top: 5px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(5px);
+            overflow: hidden;
         }
         
         .custom-select.active .options {
@@ -139,17 +156,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8px;
+            padding: 12px;
             cursor: pointer;
             transition: all 0.2s;
-            min-width: 40px;
-            color: #fff;
+            color: var(--text-color);
         }
         
         .custom-select .option img {
             width: 24px;
             height: 24px;
             filter: invert(1);
+            margin-right: 10px;
         }
         
         .custom-select .option:hover {
@@ -157,19 +174,23 @@
         }
         
         button {
-            height: 40px;
-            padding: 0 25px;
+            height: 50px;
+            padding: 0 30px;
             font-size: 16px;
             cursor: pointer;
             background-color: rgba(77, 171, 247, 0.8);
-            color: #fff;
+            color: var(--text-color);
             border: none;
-            border-radius: 20px;
+            border-radius: 25px;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         button:hover {
-            background-color: rgba(77, 171, 247, 1);
+            background-color: var(--primary-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -179,25 +200,37 @@
             font-style: italic;
             color: #ddd;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-size: clamp(1rem, 3vw, 1.2rem);
         }
         
         .disclaimer {
-            font-size: 12px;
+            font-size: 0.75rem;
             color: #aaa;
             margin-top: 1.5rem;
             line-height: 1.5;
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
         }
         
-        @media (max-width: 600px) {
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #aaa;
+        }
+        
+        footer a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        footer a:hover {
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
             .container {
                 padding: 1.5rem;
-                margin: 1.5rem;
-                width: 90%;
-            }
-            
-            .search-box {
-                flex-direction: column;
+                width: 95%;
             }
             
             input[type="text"] {
@@ -208,17 +241,51 @@
                 width: 100%;
             }
             
-            h1 {
-                font-size: 1.8rem;
+            button {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+            
+            .search-box {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .custom-select, 
+            input[type="text"],
+            button {
+                width: 100%;
+            }
+            
+            .quote {
+                margin: 1rem 0;
+            }
+        }
+        
+        /* 防止移动设备上输入框被放大 */
+        @media screen and (-webkit-min-device-pixel-ratio:0) {
+            input[type="text"] {
+                font-size: 16px;
+            }
+        }
+        
+        /* 触摸设备优化 */
+        @media (pointer: coarse) {
+            button, 
+            .custom-select .selected,
+            .custom-select .option {
+                min-height: 44px; /* Apple推荐的最小触摸目标尺寸 */
             }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
-
-
-
 <body>
     <div class="container">
         <h1>请教教我，卧烟伊豆湖老师！</h1>
@@ -232,27 +299,27 @@
         </div>
 
         <div class="search-box">
-            <input type="text" name="q" placeholder="输入你想知道的一切..." id="searchInput" autocomplete="off">
+            <input type="text" name="q" placeholder="输入你想知道的一切..." id="searchInput" autocomplete="off" enterkeyhint="search">
             <div class="custom-select" id="engineSelect">
                 <div class="selected" data-url="https://www.bing.com/search" data-param="q" title="Bing">
                     <img src="https://www.bing.com/favicon.ico" alt="Bing">
                 </div>
                 <div class="options">
                     <div class="option" data-url="https://www.bing.com/search" data-param="q" data-name="Bing" title="Bing">
-                        <img src="https://www.bing.com/favicon.ico" alt="Bing">
+                        <img src="https://www.bing.com/favicon.ico" alt="Bing"> Bing
                     </div>
                     <div class="option" data-url="https://www.google.com/search" data-param="q" data-name="Google" title="Google">
-                        <img src="https://www.google.com/favicon.ico" alt="Google">
+                        <img src="https://www.google.com/favicon.ico" alt="Google"> Google
                     </div>
                     <div class="option" data-url="https://www.baidu.com/s" data-param="wd" data-name="百度" title="百度">
-                        <img src="https://www.baidu.com/favicon.ico" alt="百度">
+                        <img src="https://www.baidu.com/favicon.ico" alt="百度"> 百度
                     </div>
                     <div class="option" data-url="https://duckduckgo.com/" data-param="q" data-name="DuckDuckGo" title="DuckDuckGo">
-                        <img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo">
+                        <img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo"> DuckDuckGo
                     </div>
                 </div>
             </div>
-            <button type="button" id="searchButton"><i class="fas fa-search"></i></button>
+            <button type="button" id="searchButton"><i class="fas fa-search"></i> 搜索</button>
         </div>
 
         <p class="disclaimer">
@@ -260,9 +327,9 @@
             实际上，什么都知道的大姐姐只存在于物语之中！（悲）
         </p>
    
-    <footer style="text-align: center; margin-top: 2rem; color: #aaa;">
+        <footer>
             <p><a href="/">← 返回主页</a></p>
-    </footer>
+        </footer>
     </div>
 
     <script>
@@ -274,7 +341,8 @@
         const searchInput = document.getElementById('searchInput');
 
         // 切换下拉菜单显示/隐藏
-        selectedEngine.addEventListener('click', () => {
+        selectedEngine.addEventListener('click', (e) => {
+            e.stopPropagation();
             engineSelect.classList.toggle('active');
         });
 
@@ -282,13 +350,19 @@
         document.querySelectorAll('.option').forEach(option => {
             option.addEventListener('click', () => {
                 const img = option.querySelector('img').cloneNode(true);
+                const engineName = option.dataset.name || '';
 
                 selectedEngine.innerHTML = '';
                 selectedEngine.appendChild(img);
+                if (engineName) {
+                    const nameSpan = document.createElement('span');
+                    nameSpan.textContent = engineName;
+                    selectedEngine.appendChild(nameSpan);
+                }
 
                 selectedEngine.dataset.url = option.dataset.url;
                 selectedEngine.dataset.param = option.dataset.param;
-                selectedEngine.title = option.title; // 设置鼠标悬停显示的搜索引擎名称
+                selectedEngine.title = option.title;
 
                 engineSelect.classList.remove('active');
             });
@@ -305,32 +379,32 @@
         });
 
         // 点击页面其他地方关闭下拉菜单
-        document.addEventListener('click', (e) => {
-            if (!engineSelect.contains(e.target)) {
-                engineSelect.classList.remove('active');
-            }
+        document.addEventListener('click', () => {
+            engineSelect.classList.remove('active');
         });
 
         // 执行搜索函数
         function performSearch() {
             const query = searchInput.value.trim();
-            if (!query) return;
+            if (!query) {
+                searchInput.focus();
+                return;
+            }
 
-            // 获取当前选择的搜索引擎的 URL 和参数
-            const url = selectedEngine.dataset.url || "https://www.bing.com/search"; // 默认值为 Bing
-            const param = selectedEngine.dataset.param || "q"; // 默认参数为 "q"
-
-            // 构造搜索链接
+            const url = selectedEngine.dataset.url || "https://www.bing.com/search";
+            const param = selectedEngine.dataset.param || "q";
             const searchUrl = `${url}?${param}=${encodeURIComponent(query)}`;
-
-            console.log('Generated Search URL:', searchUrl); // 调试输出
-            window.open(searchUrl, '_blank'); // 在新标签页中打开
+            
+            window.open(searchUrl, '_blank');
         }
 
         // 自动聚焦到搜索框
         searchInput.focus();
+        
+        // 防止下拉菜单点击事件冒泡
+        options.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
     </script>
-
-    
 </body>
 </html>
