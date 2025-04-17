@@ -104,13 +104,14 @@
             position: relative;
         }
         
-        /* 新增的iframe容器样式 */
+        /* 修改后的iframe容器样式 - 带30%透明度的浅灰色 */
         .chart-container {
-            background-color: #f5f5f5; /* 浅灰色背景 */
+            background-color: rgba(245, 245, 245, 0.3); /* 30%透明度的浅灰色 */
             border-radius: 8px;
             padding: 10px;
             margin: 15px 0;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(1px); /* 可选：添加轻微模糊效果增强可读性 */
         }
         
         @media (max-width: 600px) {
@@ -147,14 +148,14 @@
                 <li>GitHub上的开源项目
                     <a href="https://github.com/Elenore1997/HongLou" target="_blank" rel="noopener noreferrer" class="monospace">HongLou</a>
                     收集整理了登场人物及人物关系数据，
-                    暂时用到小说中的登场人物词表<span class="monospace">character.txt</span>，带有"nr"标签，帮助结巴分词的时候更加准确
+                    暂时用到小说中的登场人物词表<span class="monospace">character.txt</span>，带有"nr"标签，帮助jieba分词的时候更加准确
                 <li>本页面背景图为[清]孙温《全本红楼梦图》第二十三回《西厢记妙词通戏语 牡丹亭艳曲警芳心》，取其"共读"之美意。感谢知友开源：
                   <a href="https://zhuanlan.zhihu.com/p/339261803" target="_blank" rel="noopener noreferrer">雲绯的文章 - 知乎</a></li>
                 <li>感兴趣的读者可以查看本项目用到的外部原始数据：
                     <a href="HongLouMeng-Python/data/紅樓夢-通行版一百二十回.txt" target="_blank" rel="noopener noreferrer">原始文本</a>
                     和
-                    <a href="HongLouMeng-Python/data/红楼梦_character.txt" target="_blank" rel="noopener noreferrer">人物词表</a></li>
-                    ，若有侵权请联系删除
+                    <a href="HongLouMeng-Python/data/红楼梦_character.txt" target="_blank" rel="noopener noreferrer">人物词表</a>
+                    ，若有侵权请联系删除</li>
             </ul>
         </section>
         
@@ -225,13 +226,13 @@
                         // 尝试访问iframe内部的document
                         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                         
-                        // 修改iframe内部背景色
-                        iframeDoc.body.style.backgroundColor = '#f5f5f5';
+                        // 修改iframe内部背景色为30%透明度的浅灰色
+                        iframeDoc.body.style.backgroundColor = 'rgba(245, 245, 245, 0.3)';
                         
                         // 如果iframe中有图表容器，也可以修改其背景色
                         const chartContainers = iframeDoc.querySelectorAll('.chart-container');
                         chartContainers.forEach(container => {
-                            container.style.backgroundColor = '#f5f5f5';
+                            container.style.backgroundColor = 'rgba(245, 245, 245, 0.3)';
                         });
                     } catch (e) {
                         console.log('无法修改iframe背景:', e);
