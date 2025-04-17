@@ -200,22 +200,24 @@
 
 
     <script>
-        // 等待所有 iframe 加载完成
         window.addEventListener('load', function() {
             const iframes = document.querySelectorAll('.iframe-container');
 
             iframes.forEach(iframe => {
                 iframe.onload = function() {
                     try {
-                        // 获取 iframe 的内容文档
                         const iframeDoc = iframe.contentWindow.document;
 
-                        // 动态添加样式规则，将文字颜色改为白色
+                        // 动态添加样式规则，设置背景和文字颜色
                         const style = iframeDoc.createElement('style');
                         style.type = 'text/css';
                         style.innerHTML = `
-                            body, p, span, div, a, h1, h2, h3, h4, h5, h6 {
-                                color: white !important;
+                            body {
+                                background-color: rgba(255, 255, 255, 0.8); /* 80% 白色透明背景 */
+                                color: rgba(0, 0, 0, 0.8); /* 80% 黑色文字 */
+                                margin: 0;
+                                padding: 20px;
+                                font-family: Arial, sans-serif;
                             }
                         `;
                         iframeDoc.head.appendChild(style);
