@@ -104,14 +104,22 @@
             position: relative;
         }
         
-        /* 修改后的iframe容器样式 - 带30%透明度的浅灰色 */
+        /* 优化后的图表容器样式 - 单层40%透明背景 */
         .chart-container {
-            background-color: rgba(245, 245, 245, 0.3); /* 30%透明度的浅灰色 */
+            background-color: rgba(245, 245, 245, 0.4);
             border-radius: 8px;
             padding: 10px;
             margin: 15px 0;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(1px); /* 可选：添加轻微模糊效果增强可读性 */
+            backdrop-filter: blur(1px);
+            overflow: hidden; /* 确保圆角裁剪iframe内容 */
+        }
+        
+        /* 强制iframe透明无边框 */
+        .chart-container iframe {
+            background-color: transparent !important;
+            border: none;
+            display: block; /* 移除iframe默认的内联间隙 */
         }
         
         @media (max-width: 600px) {
@@ -127,11 +135,14 @@
             .subtitle {
                 font-size: 1rem;
             }
+            
+            .chart-container {
+                padding: 8px;
+            }
         }
     </style>
 </head>
 
-  
 <body>
     <div class="container">
         <header>
@@ -144,18 +155,17 @@
             <ul>
                 <li>初步主要使用人民文学出版社1982年以后推出的"当代通行本"，后续可能需要用到其他多个版本</li>
                 <li>原始文本数据来自Internet Archive上的开源项目：<a href="https://archive.org/details/20210126_20210126_1456/page/13/mode/2up" target="_blank" rel="noopener noreferrer">
-                    紅樓夢</a>     ，Exported from Wikisource on 2020年12月17日</li>
+                    紅樓夢</a>，Exported from Wikisource on 2020年12月17日</li>
                 <li>GitHub上的开源项目
                     <a href="https://github.com/Elenore1997/HongLou" target="_blank" rel="noopener noreferrer" class="monospace">HongLou</a>
                     收集整理了登场人物及人物关系数据，
-                    暂时用到小说中的登场人物词表<span class="monospace">character.txt</span>，带有"nr"标签，帮助jieba分词的时候更加准确
+                    暂时用到小说中的登场人物词表<span class="monospace">character.txt</span>，带有"nr"标签，帮助结巴分词的时候更加准确
                 <li>本页面背景图为[清]孙温《全本红楼梦图》第二十三回《西厢记妙词通戏语 牡丹亭艳曲警芳心》，取其"共读"之美意。感谢知友开源：
                   <a href="https://zhuanlan.zhihu.com/p/339261803" target="_blank" rel="noopener noreferrer">雲绯的文章 - 知乎</a></li>
                 <li>感兴趣的读者可以查看本项目用到的外部原始数据：
                     <a href="HongLouMeng-Python/data/紅樓夢-通行版一百二十回.txt" target="_blank" rel="noopener noreferrer">原始文本</a>
                     和
-                    <a href="HongLouMeng-Python/data/红楼梦_character.txt" target="_blank" rel="noopener noreferrer">人物词表</a>
-                    ，若有侵权请联系删除</li>
+                    <a href="HongLouMeng-Python/data/红楼梦_character.txt" target="_blank" rel="noopener noreferrer">人物词表</a>，若有侵权请联系删除</li>
             </ul>
         </section>
         
@@ -182,20 +192,19 @@
                     <a href="HongLouMeng-Python/output/main_characters_appear.csv" target="_blank" rel="noopener noreferrer">宝黛钗三人在每个章回的出场频次</a></li>
                 <li>以下词云图可视化了全文中所有人物的出场频次：</li>
                     <div class="chart-container">
-                        <iframe src="HongLouMeng-Python/output/character_wordcloud.html" width="100%" height="600px" frameborder="0" allowfullscreen></iframe>
+                        <iframe src="HongLouMeng-Python/output/character_wordcloud.html" width="100%" height="600px" frameborder="0"></iframe>
                     </div>
                 <li>以下柱状图可视化了每个章回出场频次top3的人物：</li>
                     <div class="chart-container">
-                        <iframe src="HongLouMeng-Python/output/top3_appear_per_chapter.html" width="100%" height="600px" frameborder="0" allowfullscreen></iframe>
+                        <iframe src="HongLouMeng-Python/output/top3_appear_per_chapter.html" width="100%" height="600px" frameborder="0"></iframe>
                     </div>
                 <li>以下柱状图可视化了宝黛钗三人在每个章回的出场频次：</li>
                     <div class="chart-container">
-                        <iframe src="HongLouMeng-Python/output/main_characters_appear.html" width="100%" height="600px" frameborder="0" allowfullscreen></iframe>
+                        <iframe src="HongLouMeng-Python/output/main_characters_appear.html" width="100%" height="600px" frameborder="0"></iframe>
                     </div>
             </ul>
         </section>
 
-        
         <section class="projects">
             <h2>人物共现分析</h2>
             <ul>
@@ -207,37 +216,63 @@
             </ul>
         </section>
 
-
         <footer style="text-align: center; margin-top: 2rem; color: #aaa;">
             <p><a href="/">← 返回主页</a></p>
         </footer>
     </div>
 
     <script>
-        // 等待页面加载完成
+        // 确保所有图表背景透明化
         document.addEventListener('DOMContentLoaded', function() {
-            // 获取所有iframe
-            const iframes = document.querySelectorAll('iframe');
-            
-            // 为每个iframe添加加载事件监听器
+            // 1. 移除iframe默认背景
+            const iframes = document.querySelectorAll('.chart-container iframe');
             iframes.forEach(iframe => {
-                iframe.addEventListener('load', function() {
-                    try {
-                        // 尝试访问iframe内部的document
-                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                        
-                        // 修改iframe内部背景色为30%透明度的浅灰色
-                        iframeDoc.body.style.backgroundColor = 'rgba(245, 245, 245, 0.3)';
-                        
-                        // 如果iframe中有图表容器，也可以修改其背景色
-                        const chartContainers = iframeDoc.querySelectorAll('.chart-container');
-                        chartContainers.forEach(container => {
-                            container.style.backgroundColor = 'rgba(245, 245, 245, 0.3)';
-                        });
-                    } catch (e) {
-                        console.log('无法修改iframe背景:', e);
-                    }
+                iframe.style.backgroundColor = 'transparent';
+            });
+
+            // 2. 尝试清除iframe内部背景（需同源）
+            function clearIframeBackground(iframe) {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    iframeDoc.body.style.backgroundColor = 'transparent';
+                    
+                    // 清除常见图表容器的背景
+                    const chartElements = iframeDoc.querySelectorAll([
+                        '.chart', 
+                        '[class*="graph"]', 
+                        '[class*="container"]',
+                        '[class*="main"]'
+                    ].join(','));
+                    
+                    chartElements.forEach(el => {
+                        el.style.backgroundColor = 'transparent';
+                    });
+                } catch (e) {
+                    console.log('优化iframe背景（部分限制）:', e);
+                }
+            }
+
+            // 3. 对已加载的iframe立即执行
+            iframes.forEach(iframe => {
+                if (iframe.contentDocument) {
+                    clearIframeBackground(iframe);
+                }
+            });
+
+            // 4. 对动态加载的iframe添加监听
+            const observer = new MutationObserver(mutations => {
+                mutations.forEach(mutation => {
+                    mutation.addedNodes.forEach(node => {
+                        if (node.tagName === 'IFRAME') {
+                            node.addEventListener('load', () => clearIframeBackground(node));
+                        }
+                    });
                 });
+            });
+
+            observer.observe(document.body, { 
+                childList: true, 
+                subtree: true 
             });
         });
     </script>
