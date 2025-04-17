@@ -148,6 +148,9 @@
     </style>
 </head>
 
+
+
+
 <body>
     <div class="container">
         <header>
@@ -164,7 +167,8 @@
                 <li>GitHub上的开源项目
                     <a href="https://github.com/Elenore1997/HongLou" target="_blank" rel="noopener noreferrer" class="monospace">HongLou</a>
                     收集整理了登场人物及人物关系数据，
-                    暂时用到小说中的登场人物词表<span class="monospace">character.txt</span>，带有"nr"标签，帮助jieba分词的时候更加准确
+                    暂时用到小说中的登场人物词表<span class="monospace">character.txt</span>，带有"nr"标签，帮助jieba分词的时候更加准确；
+                    暂时仅考虑贾宝玉=宝玉, 林黛玉=黛玉, 薛宝钗=宝钗这三个“同人异名”的情形
                 <li>本页面背景图为[清]孙温《全本红楼梦图》第二十三回《西厢记妙词通戏语 牡丹亭艳曲警芳心》，取其"共读"之美意。感谢知友开源：
                   <a href="https://zhuanlan.zhihu.com/p/339261803" target="_blank" rel="noopener noreferrer">雲绯的文章 - 知乎</a></li>
                 <li>感兴趣的读者可以查看本项目用到的外部原始数据：
@@ -191,11 +195,11 @@
                 <li>利用词频分析，辅助验证人物重要性</li>
                 <li>通过与DeepSeek多轮交互，得到Python实现
                     <a href="HongLouMeng-Python/20250416_HongLouMeng_freq.py" class="file-link" target="_blank" rel="noopener noreferrer">代码</a>
-                    ，主要使用了jieba, pyecharts等库，生成了
-                    <a href="HongLouMeng-Python/output/character_wordcloud.csv" class="file-link" target="_blank" rel="noopener noreferrer">全文中所有人物的出场频次</a>、
+                    ，主要使用jieba, pyecharts等库，生成
+                    <a href="HongLouMeng-Python/output/character_wordcloud.csv" class="file-link" target="_blank" rel="noopener noreferrer">全文中所有人物出场频次</a>、
                     <a href="HongLouMeng-Python/output/top3_characters_per_chapter.csv" class="file-link" target="_blank" rel="noopener noreferrer">每个章回出场频次top3的人物</a>、
                     <a href="HongLouMeng-Python/output/main_characters_appear.csv" class="file-link" target="_blank" rel="noopener noreferrer">宝黛钗三人在每个章回的出场频次</a></li>
-                <li>以下词云图可视化了全文中所有人物的出场频次：</li>
+                <li>以下词云图可视化了全文中所有人物的出场频次，注意到黛玉出场频次排第2位，由此可见黛玉是仅次于宝玉的主角：</li>
                     <div class="chart-container">
                         <iframe src="HongLouMeng-Python/output/character_wordcloud.html" width="100%" height="600px" frameborder="0"></iframe>
                     </div>
@@ -203,7 +207,7 @@
                     <div class="chart-container">
                         <iframe src="HongLouMeng-Python/output/top3_appear_per_chapter.html" width="100%" height="600px" frameborder="0"></iframe>
                     </div>
-                <li>以下柱状图可视化了宝黛钗三人在每个章回的出场频次：</li>
+                <li>以下柱状图可视化了宝黛钗三人在每个章回的出场频次，除了黛玉出场更早，可以看出在第97回（焚稿断痴情）之前的绝大多数章回，黛玉的出场频次都高于宝钗：</li>
                     <div class="chart-container">
                         <iframe src="HongLouMeng-Python/output/main_characters_appear.html" width="100%" height="600px" frameborder="0"></iframe>
                     </div>
@@ -213,11 +217,30 @@
         <section class="projects">
             <h2>人物共现分析</h2>
             <ul>
-                <li>原始文本需要的预处理包括：繁体化为简体，删去批语、按语和注释，分割章回</li>
+                <li>利用词频分析，辅助验证人物关系的紧密程度</li>
                 <li>通过与DeepSeek多轮交互，得到Python实现
-                    <a href="HongLouMeng-Python/20250416_HongLouMeng_text.py" class="file-link" target="_blank" rel="noopener noreferrer">代码</a></li>
-                <li>感兴趣的读者可以查看经过预处理的文本：
-                    <a href="HongLouMeng-Python/data/红楼梦_full.txt" class="file-link" target="_blank" rel="noopener noreferrer">红楼梦通行本简体中文分章回正文</a></li>
+                    <a href="HongLouMeng-Python/20250416_HongLouMeng_cooc.py" class="file-link" target="_blank" rel="noopener noreferrer">代码</a>
+                    ，主要使用jieba, pyecharts等库，实现中文分句，以3句为窗口大小，分析人物共现关系</li>
+                <li>以下网络图可视化了全文出场频次前120位人物的共现关系，鼠标悬停在节点上可显示每个人物的出场频次和主要共现前5位人物及次数，在边上可显示出两个人物之间的共现次数：</li>
+                    <div class="chart-container">
+                        <iframe src="HongLouMeng-Python/output/co_occurrence.html" width="100%" height="600px" frameborder="0"></iframe>
+                    </div>
+                <li>以下网络图可视化了宝玉的共现关系：</li>
+                    <div class="chart-container">
+                        <iframe src="HongLouMeng-Python/output/co_occurrence_baoyu.html" width="100%" height="600px" frameborder="0"></iframe>
+                    </div>
+                <li>以下网络图可视化了黛玉的共现关系：</li>
+                    <div class="chart-container">
+                        <iframe src="HongLouMeng-Python/output/co_occurrence_daiyu.html" width="100%" height="600px" frameborder="0"></iframe>
+                    </div>     
+                <li>以下网络图可视化了宝钗的共现关系：</li>
+                    <div class="chart-container">
+                        <iframe src="HongLouMeng-Python/output/co_occurrence_baochai.html" width="100%" height="600px" frameborder="0"></iframe>
+                    </div>    
+                <li>从以上共现关系图，可见与宝玉紧密程度断层式最靠前的两位是袭人和黛玉（二者相差不大，考虑到我们暂时没有处理“林妹妹”“颦儿”等对黛玉的称呼，可能还有误差），
+                其后依次为他奶奶、他娘和他宝姐姐；
+                与黛玉关系最紧密的毫无疑问是宝玉，其次分别是宝钗和潇湘馆丫鬟紫鹃，宝钗和紫鹃与黛玉之间的共现次数非常接近，宝二爷断层式领先；
+                与宝钗关系最紧密的前两位是宝玉和黛玉</li>      
             </ul>
         </section>
 
@@ -225,6 +248,8 @@
             <p><a href="/">← 返回主页</a></p>
         </footer>
     </div>
+
+
 
     <script>
         // 自动确保所有文件链接在新标签页打开
