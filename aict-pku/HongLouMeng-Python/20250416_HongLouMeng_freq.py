@@ -51,7 +51,7 @@ def generate_character_wordcloud():
 
     # 生成词云
     wc = (
-        WordCloud()
+        WordCloud(init_opts=opts.InitOpts(width="720px", height="720px"))  # 设置宽高为720px
         .add("", wordcloud_data, word_size_range=[20, 100], shape=SymbolType.DIAMOND)
         .set_global_opts(
             title_opts=opts.TitleOpts(title="《红楼梦》人物词云"),
@@ -179,8 +179,8 @@ def top3_appear_per_chapter():
     # 生成并列柱状图
     bar = Bar(init_opts=opts.InitOpts(
         theme=ThemeType.LIGHT,
-        width="1600px",
-        height="600px"
+        width="1080px",
+        height="500px"
     ))
 
     # 自定义x轴标签格式
