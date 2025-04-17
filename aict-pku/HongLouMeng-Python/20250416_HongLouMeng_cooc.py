@@ -219,8 +219,8 @@ def create_graph(freq, co_occur, co_occur_detail, output_file, main_char=None):
     # 创建图表
     graph = (
         Graph(init_opts=opts.InitOpts(
-            width="1080px",
-            height="960px",
+            width="720px",
+            height="720px",
             theme=ThemeType.LIGHT,
             page_title="红楼梦人物共现关系",
             js_host=CurrentConfig.ONLINE_HOST
