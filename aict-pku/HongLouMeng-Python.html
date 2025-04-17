@@ -94,6 +94,12 @@
             color: #74c0fc;
             text-decoration: underline;
         }
+
+        /* 文件链接特殊样式 */
+        a.file-link {
+            border-bottom: 1px dashed rgba(77, 171, 247, 0.4);
+            padding-bottom: 1px;
+        }
         
         ul {
             padding-left: 1.5rem;
@@ -104,7 +110,7 @@
             position: relative;
         }
         
-        /* 优化后的图表容器样式 - 单层40%透明背景 */
+        /* 图表容器样式 */
         .chart-container {
             background-color: rgba(245, 245, 245, 0.4);
             border-radius: 8px;
@@ -112,14 +118,13 @@
             margin: 15px 0;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(1px);
-            overflow: hidden; /* 确保圆角裁剪iframe内容 */
+            overflow: hidden;
         }
         
-        /* 强制iframe透明无边框 */
         .chart-container iframe {
             background-color: transparent !important;
             border: none;
-            display: block; /* 移除iframe默认的内联间隙 */
+            display: block;
         }
         
         @media (max-width: 600px) {
@@ -159,13 +164,13 @@
                 <li>GitHub上的开源项目
                     <a href="https://github.com/Elenore1997/HongLou" target="_blank" rel="noopener noreferrer" class="monospace">HongLou</a>
                     收集整理了登场人物及人物关系数据，
-                    暂时用到小说中的登场人物词表<span class="monospace">character.txt</span>，带有"nr"标签，帮助结巴分词的时候更加准确
+                    暂时用到小说中的登场人物词表<span class="monospace">character.txt</span>，带有"nr"标签，帮助jieba分词的时候更加准确
                 <li>本页面背景图为[清]孙温《全本红楼梦图》第二十三回《西厢记妙词通戏语 牡丹亭艳曲警芳心》，取其"共读"之美意。感谢知友开源：
                   <a href="https://zhuanlan.zhihu.com/p/339261803" target="_blank" rel="noopener noreferrer">雲绯的文章 - 知乎</a></li>
                 <li>感兴趣的读者可以查看本项目用到的外部原始数据：
-                    <a href="HongLouMeng-Python/data/紅樓夢-通行版一百二十回.txt" target="_blank" rel="noopener noreferrer">原始文本</a>
+                    <a href="HongLouMeng-Python/data/紅樓夢-通行版一百二十回.txt" class="file-link" target="_blank" rel="noopener noreferrer">原始文本</a>
                     和
-                    <a href="HongLouMeng-Python/data/红楼梦_character.txt" target="_blank" rel="noopener noreferrer">人物词表</a>，若有侵权请联系删除</li>
+                    <a href="HongLouMeng-Python/data/红楼梦_character.txt" class="file-link" target="_blank" rel="noopener noreferrer">人物词表</a>，若有侵权请联系删除</li>
             </ul>
         </section>
         
@@ -174,9 +179,9 @@
             <ul>
                 <li>原始文本需要的预处理包括：繁体化为简体，删去批语、按语和注释，分割章回</li>
                 <li>通过与DeepSeek多轮交互，得到Python实现
-                    <a href="HongLouMeng-Python/20250416_HongLouMeng_text.py" target="_blank" rel="noopener noreferrer">代码</a></li>
+                    <a href="HongLouMeng-Python/20250416_HongLouMeng_text.py" class="file-link" target="_blank" rel="noopener noreferrer">代码</a></li>
                 <li>感兴趣的读者可以查看经过预处理的文本：
-                    <a href="HongLouMeng-Python/data/红楼梦_full.txt" target="_blank" rel="noopener noreferrer">红楼梦通行本简体中文分章回全文</a></li>
+                    <a href="HongLouMeng-Python/data/红楼梦_full.txt" class="file-link" target="_blank" rel="noopener noreferrer">红楼梦通行本简体中文分章回全文</a></li>
             </ul>
         </section>
                 
@@ -185,11 +190,11 @@
             <ul>
                 <li>利用词频分析，辅助验证人物重要性</li>
                 <li>通过与DeepSeek多轮交互，得到Python实现
-                    <a href="HongLouMeng-Python/20250416_HongLouMeng_freq.py" target="_blank" rel="noopener noreferrer">代码</a>
+                    <a href="HongLouMeng-Python/20250416_HongLouMeng_freq.py" class="file-link" target="_blank" rel="noopener noreferrer">代码</a>
                     ，主要使用了jieba, pyecharts等库，生成了
-                    <a href="HongLouMeng-Python/output/character_wordcloud.csv" target="_blank" rel="noopener noreferrer">全文中所有人物的出场频次</a>、
-                    <a href="HongLouMeng-Python/output/top3_characters_per_chapter.csv" target="_blank" rel="noopener noreferrer">每个章回出场频次top3的人物</a>、
-                    <a href="HongLouMeng-Python/output/main_characters_appear.csv" target="_blank" rel="noopener noreferrer">宝黛钗三人在每个章回的出场频次</a></li>
+                    <a href="HongLouMeng-Python/output/character_wordcloud.csv" class="file-link" target="_blank" rel="noopener noreferrer">全文中所有人物的出场频次</a>、
+                    <a href="HongLouMeng-Python/output/top3_characters_per_chapter.csv" class="file-link" target="_blank" rel="noopener noreferrer">每个章回出场频次top3的人物</a>、
+                    <a href="HongLouMeng-Python/output/main_characters_appear.csv" class="file-link" target="_blank" rel="noopener noreferrer">宝黛钗三人在每个章回的出场频次</a></li>
                 <li>以下词云图可视化了全文中所有人物的出场频次：</li>
                     <div class="chart-container">
                         <iframe src="HongLouMeng-Python/output/character_wordcloud.html" width="100%" height="600px" frameborder="0"></iframe>
@@ -210,9 +215,9 @@
             <ul>
                 <li>原始文本需要的预处理包括：繁体化为简体，删去批语、按语和注释，分割章回</li>
                 <li>通过与DeepSeek多轮交互，得到Python实现
-                    <a href="HongLouMeng-Python/20250416_HongLouMeng_text.py" target="_blank" rel="noopener noreferrer">代码</a></li>
+                    <a href="HongLouMeng-Python/20250416_HongLouMeng_text.py" class="file-link" target="_blank" rel="noopener noreferrer">代码</a></li>
                 <li>感兴趣的读者可以查看经过预处理的文本：
-                    <a href="HongLouMeng-Python/data/红楼梦_full.txt" target="_blank" rel="noopener noreferrer">红楼梦通行本简体中文分章回正文</a></li>
+                    <a href="HongLouMeng-Python/data/红楼梦_full.txt" class="file-link" target="_blank" rel="noopener noreferrer">红楼梦通行本简体中文分章回正文</a></li>
             </ul>
         </section>
 
@@ -222,57 +227,35 @@
     </div>
 
     <script>
-        // 确保所有图表背景透明化
+        // 自动确保所有文件链接在新标签页打开
         document.addEventListener('DOMContentLoaded', function() {
-            // 1. 移除iframe默认背景
-            const iframes = document.querySelectorAll('.chart-container iframe');
-            iframes.forEach(iframe => {
+            const fileExtensions = ['.txt', '.py', '.csv', '.html'];
+            document.querySelectorAll('a[href]').forEach(link => {
+                const href = link.getAttribute('href').toLowerCase();
+                if (fileExtensions.some(ext => href.endsWith(ext))) {
+                    if (!link.hasAttribute('target')) {
+                        link.setAttribute('target', '_blank');
+                    }
+                    if (!link.hasAttribute('rel')) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                    }
+                    if (!link.classList.contains('file-link')) {
+                        link.classList.add('file-link');
+                    }
+                }
+            });
+
+            // 图表背景透明化
+            document.querySelectorAll('.chart-container iframe').forEach(iframe => {
                 iframe.style.backgroundColor = 'transparent';
-            });
-
-            // 2. 尝试清除iframe内部背景（需同源）
-            function clearIframeBackground(iframe) {
-                try {
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    iframeDoc.body.style.backgroundColor = 'transparent';
-                    
-                    // 清除常见图表容器的背景
-                    const chartElements = iframeDoc.querySelectorAll([
-                        '.chart', 
-                        '[class*="graph"]', 
-                        '[class*="container"]',
-                        '[class*="main"]'
-                    ].join(','));
-                    
-                    chartElements.forEach(el => {
-                        el.style.backgroundColor = 'transparent';
-                    });
-                } catch (e) {
-                    console.log('优化iframe背景（部分限制）:', e);
-                }
-            }
-
-            // 3. 对已加载的iframe立即执行
-            iframes.forEach(iframe => {
-                if (iframe.contentDocument) {
-                    clearIframeBackground(iframe);
-                }
-            });
-
-            // 4. 对动态加载的iframe添加监听
-            const observer = new MutationObserver(mutations => {
-                mutations.forEach(mutation => {
-                    mutation.addedNodes.forEach(node => {
-                        if (node.tagName === 'IFRAME') {
-                            node.addEventListener('load', () => clearIframeBackground(node));
-                        }
-                    });
+                iframe.addEventListener('load', function() {
+                    try {
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        iframeDoc.body.style.backgroundColor = 'transparent';
+                    } catch (e) {
+                        console.log('优化iframe背景:', e);
+                    }
                 });
-            });
-
-            observer.observe(document.body, { 
-                childList: true, 
-                subtree: true 
             });
         });
     </script>
