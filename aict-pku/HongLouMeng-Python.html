@@ -197,5 +197,37 @@
             <p><a href="/">← 返回主页</a></p>
         </footer>
     </div>
+
+
+    <script>
+        // 等待所有 iframe 加载完成
+        window.addEventListener('load', function() {
+            const iframes = document.querySelectorAll('.iframe-container');
+
+            iframes.forEach(iframe => {
+                iframe.onload = function() {
+                    try {
+                        // 获取 iframe 的内容文档
+                        const iframeDoc = iframe.contentWindow.document;
+
+                        // 动态添加样式规则，将文字颜色改为白色
+                        const style = iframeDoc.createElement('style');
+                        style.type = 'text/css';
+                        style.innerHTML = `
+                            body, p, span, div, a, h1, h2, h3, h4, h5, h6 {
+                                color: white !important;
+                            }
+                        `;
+                        iframeDoc.head.appendChild(style);
+                    } catch (e) {
+                        console.error("无法修改 iframe 内容：", e);
+                    }
+                };
+            });
+        });
+    </script>
+
+
+    
 </body>
 </html>
