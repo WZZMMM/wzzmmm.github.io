@@ -146,18 +146,53 @@
                     <a href="HongLouMeng-Python/data/紅樓夢-通行版一百二十回.txt" target="_blank" rel="noopener noreferrer">原始文本</a>
                     和
                     <a href="HongLouMeng-Python/data/红楼梦_character.txt" target="_blank" rel="noopener noreferrer">人物词表</a></li>
+                    ，若有侵权请联系删除
             </ul>
         </section>
         
         <section class="projects">
-            <h2>人物词频分析</h2>
+            <h2>文本数据预处理</h2>
             <ul>
-                <li><a href="aict-pku/farmland19962010_mapTimeline.html">耕地保护指标分省地图（待完善）</a></li>
-                <li><a href="aict-pku/SearchEngines.html">一个简单的集成搜索引擎</a></li>
-                <li><a href="aict-pku/HongLongMeng-Python.html">与Python共读《红楼梦》</a></li>
+                <li>原始文本需要的预处理包括：繁体化为简体，删去批语、按语和注释，分割章回</li>
+                <li>通过与DeepSeek多轮交互，得到Python实现
+                    <a href="HongLouMeng-Python/20250416_HongLouMeng_text.py" target="_blank" rel="noopener noreferrer">代码</a></li>
+                <li>感兴趣的读者可以查看经过预处理的文本：
+                    <a href="HongLouMeng-Python/data/红楼梦_full.txt" target="_blank" rel="noopener noreferrer">红楼梦通行本简体中文分章回全文</a></li>
             </ul>
         </section>
+                
+        <section class="projects">
+            <h2>人物词频分析</h2>
+            <ul>
+                <li>利用词频分析，辅助验证人物重要性</li>
+                <li>通过与DeepSeek多轮交互，得到Python实现
+                    <a href="HongLouMeng-Python/20250416_HongLouMeng_freq.py" target="_blank" rel="noopener noreferrer">代码</a>
+                    ，主要使用了jieba, pyecharts等库，生成了
+                    <a href="HongLouMeng-Python/output/character_wordcloud.csv" target="_blank" rel="noopener noreferrer">全文中所有人物的出场频次</a>、
+                    <a href="HongLouMeng-Python/output/top3_characters_per_chapter.csv" target="_blank" rel="noopener noreferrer">每个章回出场频次top3的人物</a>、
+                    <a href="HongLouMeng-Python/output/main_characters_appear.csv" target="_blank" rel="noopener noreferrer">宝黛钗三人在每个章回的出场频次</a></li>
+                <li>以下词云图可视化了全文中所有人物的出场频次：</li>
+                    <iframe src="HongLouMeng-Python/output/character_wordcloud.html" width="100%" height="600px" frameborder="0" allowfullscreen></iframe>
+                <li>以下柱状图可视化了每个章回出场频次top3的人物：</li>
+                    <iframe src="HongLouMeng-Python/output/top3_appear_per_chapter.html" width="100%" height="600px" frameborder="0" allowfullscreen></iframe>
+                <li>以下柱状图可视化了宝黛钗三人在每个章回的出场频次：</li>
+                    <iframe src="HongLouMeng-Python/output/main_characters_appear.html" width="100%" height="600px" frameborder="0" allowfullscreen></iframe>
+            </ul>
+        </section>
+
         
+        <section class="projects">
+            <h2>人物共现分析</h2>
+            <ul>
+                <li>原始文本需要的预处理包括：繁体化为简体，删去批语、按语和注释，分割章回</li>
+                <li>通过与DeepSeek多轮交互，得到Python实现
+                    <a href="HongLouMeng-Python/20250416_HongLouMeng_text.py" target="_blank" rel="noopener noreferrer">代码</a></li>
+                <li>感兴趣的读者可以查看经过预处理的文本：
+                    <a href="HongLouMeng-Python/data/红楼梦_full.txt" target="_blank" rel="noopener noreferrer">红楼梦通行本简体中文分章回全文</a></li>
+            </ul>
+        </section>
+
+
         <footer style="text-align: center; margin-top: 2rem; color: #aaa;">
             <p><a href="/">← 返回主页</a></p>
         </footer>
