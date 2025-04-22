@@ -161,13 +161,39 @@
             cursor: pointer;
             transition: all 0.2s;
             color: var(--text-color);
+            position: relative;
         }
         
         .custom-select .option img {
             width: 24px;
             height: 24px;
             filter: invert(1);
-            margin-right: 10px;
+        }
+        
+        /* Tooltip样式 */
+        .custom-select .option::before {
+            content: attr(data-name);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+            pointer-events: none;
+            z-index: 1001;
+        }
+        
+        .custom-select .option:hover::before {
+            opacity: 1;
+            visibility: visible;
+            margin-bottom: 8px;
         }
         
         .custom-select .option:hover {
@@ -307,17 +333,17 @@
                     <img src="https://www.bing.com/favicon.ico" alt="Bing">
                 </div>
                 <div class="options">
-                    <div class="option" data-url="https://www.bing.com/search" data-param="q" data-name="Bing" title="Bing">
-                        <img src="https://www.bing.com/favicon.ico" alt="Bing"> Bing
+                    <div class="option" data-url="https://www.bing.com/search" data-param="q" data-name="Bing">
+                        <img src="https://www.bing.com/favicon.ico" alt="Bing">
                     </div>
-                    <div class="option" data-url="https://www.google.com/search" data-param="q" data-name="Google" title="Google">
-                        <img src="https://www.google.com/favicon.ico" alt="Google"> Google
+                    <div class="option" data-url="https://www.google.com/search" data-param="q" data-name="Google">
+                        <img src="https://www.google.com/favicon.ico" alt="Google">
                     </div>
-                    <div class="option" data-url="https://www.baidu.com/s" data-param="wd" data-name="百度" title="百度">
-                        <img src="https://www.baidu.com/favicon.ico" alt="百度"> 百度
+                    <div class="option" data-url="https://www.baidu.com/s" data-param="wd" data-name="百度">
+                        <img src="https://www.baidu.com/favicon.ico" alt="百度">
                     </div>
-                    <div class="option" data-url="https://duckduckgo.com/" data-param="q" data-name="DuckDuckGo" title="DuckDuckGo">
-                        <img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo"> DuckDuckGo
+                    <div class="option" data-url="https://duckduckgo.com/" data-param="q" data-name="DuckDuckGo">
+                        <img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo">
                     </div>
                 </div>
             </div>
@@ -352,19 +378,12 @@
         document.querySelectorAll('.option').forEach(option => {
             option.addEventListener('click', () => {
                 const img = option.querySelector('img').cloneNode(true);
-                const engineName = option.dataset.name || '';
-
+                
                 selectedEngine.innerHTML = '';
                 selectedEngine.appendChild(img);
-                if (engineName) {
-                    const nameSpan = document.createElement('span');
-                    nameSpan.textContent = engineName;
-                    selectedEngine.appendChild(nameSpan);
-                }
-
                 selectedEngine.dataset.url = option.dataset.url;
                 selectedEngine.dataset.param = option.dataset.param;
-                selectedEngine.title = option.title;
+                selectedEngine.title = option.dataset.name;
 
                 engineSelect.classList.remove('active');
             });
