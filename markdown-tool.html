@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Markdown 转 HTML | WZM</title>
+  <link rel="preconnect" href="https://fonts.loli.net">
+  <link href="https://fonts.loli.net/css?family=Inter:400,500,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.loli.net/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --accent: #2563eb;
+      --accent-weak: #e0e7ff;
+      --border: #e5e7eb;
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1115;
+        --card: #161b22;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --accent: #8ab4f8;
+        --accent-weak: #1e2735;
+        --border: #2d3643;
+        --shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.08), transparent 28%),
+                  radial-gradient(circle at 80% 0%, rgba(16, 185, 129, 0.08), transparent 24%),
+                  var(--bg);
+      color: var(--text);
+      padding: 28px 12px 48px;
+    }
+
+    a { color: var(--accent); }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 20px;
+    }
+
+    header.card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .actions a {
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: var(--accent-weak);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 960px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .stack { display: flex; flex-direction: column; gap: 10px; }
+
+    label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    textarea, input[type="file"] {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      background: color-mix(in srgb, var(--card) 92%, transparent);
+      color: var(--text);
+      resize: vertical;
+      min-height: 140px;
+      font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      outline: none;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+    }
+
+    textarea[readonly] { background: color-mix(in srgb, var(--card) 96%, transparent); }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button, .file-button {
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--accent);
+      color: #fff;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 600;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.18);
+    }
+
+    button.secondary {
+      background: var(--card);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    button:hover:not(:disabled), .file-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .file-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card);
+      color: var(--text);
+      box-shadow: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .file-button input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      background: var(--accent-weak);
+      color: var(--accent);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      font-weight: 600;
+    }
+
+    .preview {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--card);
+    }
+
+    iframe {
+      width: 100%;
+      height: 520px;
+      border: none;
+      background: var(--card);
+    }
+
+    .howto ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .status {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+</head>
+<body>
+  <main class="page">
+    <header class="card">
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <h1 style="flex: 1 1 auto;">Markdown 转 HTML（自动跟随深浅色）</h1>
+        <span class="badge">默认排版：PT Serif 经典样式</span>
+      </div>
+      <p class="lead">粘贴或上传 Markdown，生成带有 Typora 样式（缩进与页边距已缩小、自动深浅色）的独立 HTML。可直接托管到 GitHub Pages。</p>
+      <div class="actions">
+        <a href="/">← 返回主页</a>
+        <a href="reading/econ-ss/meta/20251210-Dell(2025JEL)-zh-D.html" target="_blank" rel="noopener">参考样式文件</a>
+      </div>
+    </header>
+
+    <section class="grid">
+      <div class="card stack">
+        <div class="stack">
+          <label for="md-input">在此粘贴 Markdown</label>
+          <textarea id="md-input" placeholder="# 标题\n\n在这里粘贴 Markdown 或点击下方上传文件……"></textarea>
+          <div class="button-row">
+            <label class="file-button">上传 .md
+              <input type="file" id="file-input" accept=".md,.markdown,.txt">
+            </label>
+            <button type="button" class="secondary" id="sample-btn">填充示例</button>
+            <span class="hint">会自动应用缩小后的缩进 / 页边距，并随系统切换浅/深色</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card stack">
+        <div class="button-row">
+          <button type="button" id="convert-btn">转换 & 预览</button>
+          <button type="button" class="secondary" id="copy-btn" disabled>复制 HTML</button>
+          <button type="button" class="secondary" id="download-btn" disabled>下载 HTML</button>
+        </div>
+        <label for="html-output">生成后的完整 HTML（可直接部署到 GitHub Pages）</label>
+        <textarea id="html-output" readonly placeholder="点击“转换 & 预览”后会生成完整 HTML"></textarea>
+        <span class="status" id="status"></span>
+      </div>
+    </section>
+
+    <section class="card stack">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <div>
+          <h2 style="margin: 0 0 6px;">实时预览</h2>
+          <p class="lead" style="margin: 0;">展示生成 HTML 的最终效果，跟随系统深浅色。</p>
+        </div>
+        <span class="badge">缩进与页边距已调小</span>
+      </div>
+      <div class="preview">
+        <iframe id="preview-frame" title="Markdown HTML 预览"></iframe>
+      </div>
+    </section>
+
+    <section class="card howto">
+      <h3 style="margin-top: 0;">如何在 GitHub 上配置</h3>
+      <ul>
+        <li>仓库名保持 <code>用户名.github.io</code>（已满足），GitHub Pages 会自动托管根目录。</li>
+        <li>将生成的 HTML 文件（或本页面）保存在仓库根目录下，例如 <code>markdown-tool.html</code>。</li>
+        <li>访问 <code>https://用户名.github.io/markdown-tool.html</code> 即可在线使用本工具。</li>
+        <li>若想发布转换后的文章，点击“下载 HTML”得到文件，放入仓库并在导航处添加链接即可。</li>
+      </ul>
+    </section>
+  </main>
+
+  <script id="export-style" type="text/plain">:root {
+  --bg-color: #f3f2ee;
+  --text-color: #1f0909;
+  --muted-color: #555;
+  --link-color: #065588;
+  --code-bg: #dadada;
+  --border-color: #c5c5c5;
+  --indent-size: 1.35em;
+  --heading-border: #c5c5c5;
+  --select-text-bg-color: #b5d6fc;
+  --select-text-font-color: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #0f1115;
+    --text-color: #e6e8ec;
+    --muted-color: #c7c9d3;
+    --link-color: #8ab4f8;
+    --code-bg: #1d2633;
+    --border-color: #3f4959;
+    --heading-border: #3f4959;
+    --select-text-bg-color: #2f4b80;
+    --select-text-font-color: #fff;
+  }
+}
+
+html, body {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: "PT Serif", "Times New Roman", Times, serif;
+  line-height: 1.5em;
+}
+
+body {
+  margin: 0;
+}
+
+body.typora-export {
+  padding: 16px 18px;
+}
+
+#write {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 20px 18px 36px;
+  word-break: normal;
+  overflow-wrap: break-word;
+  background: inherit;
+  color: inherit;
+}
+
+#write.first-line-indent p { text-indent: var(--indent-size); }
+#write.first-line-indent li { margin-left: calc(var(--indent-size) * 0.9); }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  margin: 0.95em 0 0.65em;
+}
+
+h1 {
+  font-size: 1.875em;
+  line-height: 1.3em;
+  border-bottom: 1px solid var(--heading-border);
+  padding-bottom: 0.6em;
+}
+
+h2, h3 {
+  font-size: 1.3125em;
+  line-height: 1.25;
+}
+
+h3 { font-weight: normal; }
+h4 { font-size: 1.125em; }
+h5, h6 { font-size: 1em; }
+
+p, blockquote, .md-fences, pre {
+  margin: 0.75em 0;
+}
+
+blockquote {
+  font-style: italic;
+  border-left: 4px solid var(--border-color);
+  margin-left: 1.1em;
+  padding-left: 0.85em;
+  color: var(--muted-color);
+}
+
+ul, ol {
+  margin: 0 0 0.95em 1.25em;
+}
+
+ol li { list-style-type: decimal; }
+ul li { list-style-type: disc; }
+
+code, .md-fences {
+  background-color: var(--code-bg);
+}
+
+code {
+  padding: 0 3px;
+  font-family: "Lucida Console", Consolas, "Courier", monospace;
+}
+
+.md-fences {
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+pre, code, tt {
+  font-size: 0.92em;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover, a:active {
+  text-decoration: underline;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0.85em 0;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.35em 0.4em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+thead th {
+  text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+  background: color-mix(in srgb, var(--code-bg) 35%, transparent);
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  margin: 1.3em 0;
+}
+
+.md-toc {
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--code-bg) 40%, transparent);
+}
+
+.md-toc-item { color: var(--link-color); }
+
+.footnote-line { margin-top: 0.55em; font-size: 0.82em; color: var(--muted-color); }
+
+.in-text-selection, ::selection {
+  background: var(--select-text-bg-color);
+  color: var(--select-text-font-color);
+}
+  </script>
+
+  <script>
+    const mdInput = document.getElementById('md-input');
+    const htmlOutput = document.getElementById('html-output');
+    const statusEl = document.getElementById('status');
+    const previewFrame = document.getElementById('preview-frame');
+
+    const baseStyle = document.getElementById('export-style').textContent;
+
+    const buildHtml = (bodyContent) => `<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>导出的 Markdown</title>
+  <link href="https://fonts.loli.net/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext" rel="stylesheet">
+  <style>${baseStyle}</style>
+</head>
+<body class="typora-export">
+  <div id="write" class="first-line-indent">
+  ${bodyContent}
+  </div>
+</body>
+</html>`;
+
+    const setStatus = (text, success = true) => {
+      statusEl.textContent = text;
+      statusEl.style.color = success ? 'var(--muted)' : '#d14343';
+    };
+
+    const updatePreview = (html) => {
+      const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+      doc.open();
+      doc.write(html);
+      doc.close();
+    };
+
+    const escapeHtml = (str = '') => str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+
+    const applyInline = (text) => {
+      let out = escapeHtml(text);
+      out = out.replace(/`([^`]+)`/g, '<code>$1</code>');
+      out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      out = out.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+      out = out.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+      out = out.replace(/(?<!_)_([^_]+)_(?!_)/g, '<em>$1</em>');
+      out = out.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2">$1</a>');
+      return out;
+    };
+
+    const fallbackMarkdown = (markdown) => {
+      const lines = markdown.replace(/\r\n?/g, '\n').split('\n');
+      let htmlParts = [];
+      let paragraphBuffer = [];
+      let inCode = false;
+      let codeLines = [];
+      let codeLang = '';
+      let listType = null;
+      let listItems = [];
+
+      const flushParagraph = () => {
+        if (!paragraphBuffer.length) return;
+        htmlParts.push(`<p>${applyInline(paragraphBuffer.join(' '))}</p>`);
+        paragraphBuffer = [];
+      };
+
+      const closeList = () => {
+        if (!listType) return;
+        htmlParts.push(`<${listType}>${listItems.join('')}</${listType}>`);
+        listType = null;
+        listItems = [];
+      };
+
+      for (const line of lines) {
+        const fence = line.match(/^```(\w+)?\s*$/);
+        if (fence) {
+          if (inCode) {
+            htmlParts.push(
+              `<pre class="md-fences"><code class="language-${codeLang}">${escapeHtml(codeLines.join('\n'))}</code></pre>`
+            );
+            inCode = false;
+            codeLines = [];
+            codeLang = '';
+          } else {
+            flushParagraph();
+            closeList();
+            inCode = true;
+            codeLang = fence[1] || '';
+          }
+          continue;
+        }
+
+        if (inCode) {
+          codeLines.push(line);
+          continue;
+        }
+
+        if (!line.trim()) {
+          flushParagraph();
+          closeList();
+          continue;
+        }
+
+        if (/^([-*_])\s*\1\s*\1\s*$/.test(line.trim())) {
+          flushParagraph();
+          closeList();
+          htmlParts.push('<hr>');
+          continue;
+        }
+
+        const heading = line.match(/^(#{1,6})\s+(.*)$/);
+        if (heading) {
+          flushParagraph();
+          closeList();
+          const level = heading[1].length;
+          htmlParts.push(`<h${level}>${applyInline(heading[2])}</h${level}>`);
+          continue;
+        }
+
+        const blockquote = line.match(/^>\s?(.*)$/);
+        if (blockquote) {
+          flushParagraph();
+          closeList();
+          htmlParts.push(`<blockquote>${applyInline(blockquote[1])}</blockquote>`);
+          continue;
+        }
+
+        const list = line.match(/^(\s*)([-*+]|\d+\.)\s+(.*)$/);
+        if (list) {
+          flushParagraph();
+          const isOrdered = /\d+\./.test(list[2]);
+          const type = isOrdered ? 'ol' : 'ul';
+          if (listType && listType !== type) closeList();
+          if (!listType) listType = type;
+          listItems.push(`<li>${applyInline(list[3])}</li>`);
+          continue;
+        }
+
+        paragraphBuffer.push(line.trim());
+      }
+
+      if (inCode) {
+        htmlParts.push(
+          `<pre class="md-fences"><code class="language-${codeLang}">${escapeHtml(codeLines.join('\n'))}</code></pre>`
+        );
+      }
+      flushParagraph();
+      closeList();
+      return htmlParts.join('\n');
+    };
+
+    const parseMarkdown = (raw) => {
+      if (window.marked?.parse) {
+        return window.marked.parse(raw, { breaks: true, mangle: false, headerIds: true });
+      }
+      return fallbackMarkdown(raw);
+    };
+
+    const sanitizeHtml = (html) => {
+      if (window.DOMPurify?.sanitize) {
+        return window.DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
+      }
+      return html.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
+    };
+
+    const handleConvert = () => {
+      const raw = mdInput.value.trim();
+      if (!raw) {
+        setStatus('请先粘贴或上传 Markdown。', false);
+        return;
+      }
+      const parsedHtml = parseMarkdown(raw);
+      const safeHtml = sanitizeHtml(parsedHtml);
+      const fullHtml = buildHtml(safeHtml);
+      htmlOutput.value = fullHtml;
+      updatePreview(fullHtml);
+      document.getElementById('copy-btn').disabled = false;
+      document.getElementById('download-btn').disabled = false;
+      setStatus(window.marked ? '转换完成，可复制或下载生成的 HTML。' : '已使用内置解析器转换（CDN 受限时同样可用）。');
+    };
+
+    document.getElementById('convert-btn').addEventListener('click', handleConvert);
+
+    document.getElementById('copy-btn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(htmlOutput.value);
+        setStatus('已复制到剪贴板。');
+      } catch {
+        setStatus('复制失败，请手动选择文本。', false);
+      }
+    });
+
+    document.getElementById('download-btn').addEventListener('click', () => {
+      const blob = new Blob([htmlOutput.value], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'markdown-export.html';
+      a.click();
+      URL.revokeObjectURL(url);
+      setStatus('已下载 HTML。');
+    });
+
+    document.getElementById('file-input').addEventListener('change', (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        mdInput.value = reader.result;
+        setStatus(`已载入文件：${file.name}`);
+      };
+      reader.readAsText(file, 'utf-8');
+    });
+
+    document.getElementById('sample-btn').addEventListener('click', () => {
+      const sample = `# 面向经济学家的深度学习\n\n> 缩小了缩进与页边距，并支持系统的深浅色模式。\n\n## 亮点\n- 粘贴或上传 Markdown\n- 一键转换为独立 HTML\n- 跟随系统主题自动切换\n\n### 示例公式\n$$y = X\\beta + \\epsilon$$\n\n### 代码示例\n\`\`\`python\nimport torch\nprint(\"hello\")\n\`\`\``;
+      mdInput.value = sample;
+      setStatus('已填充示例内容，点击“转换 & 预览”查看效果。');
+    });
+  </script>
+</body>
+</html>
