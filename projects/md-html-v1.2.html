@@ -539,8 +539,8 @@ $$
         htmlParts.push('.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }');
         htmlParts.push('.footnote-ref:hover { text-decoration: underline; }');
         htmlParts.push('.sidenote { position: absolute; left: -200px; width: 180px; font-size: 0.75em; line-height: 1.4; color: var(--footnote-text); margin-top: 0; padding: 8px 10px; }');
-        htmlParts.push('.sidenote a:link, .sidenote a:visited { color: #97b6b1; text-decoration: none; }');
-        htmlParts.push('.sidenote a:hover { text-decoration: underline; }');
+        htmlParts.push('#write .sidenote a, #write .sidenote a:link, #write .sidenote a:visited { color: #97b6b1; text-decoration: none; }');
+        htmlParts.push('#write .sidenote a:hover { text-decoration: underline; }');
         htmlParts.push('mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }');
         htmlParts.push('.nav-buttons { position: fixed; right: 30px; bottom: 30px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s ease; z-index: 1000; }');
         htmlParts.push('.nav-buttons.visible { opacity: 1; }');
