@@ -693,7 +693,7 @@ hr {
     });
 
     document.getElementById('sample-btn').addEventListener('click', () => {
-      const sample = `# 面向经济学家的深度学习\n\n> 缩小了缩进与页边距，并支持系统的深浅色模式。\n\n## 亮点\n- 粘贴或上传 Markdown\n- 一键转换为独立 HTML\n- 跟随系统主题自动切换\n\n### 示例公式\n$$y = X\\beta + \\epsilon$$\n\n### 代码示例\n\`\`\`python\nimport torch\nprint(\"hello\")\n\`\`\``;
+      const sample = `# 面向经济学家的深度学习\n\n> 缩小了缩进与页边距，并支持系统的深浅色模式。\n\n## 亮点\n- 粘贴或上传 Markdown\n- 一键转换为独立 HTML\n- 跟随系统主题自动切换\n\n### 示例文本\n*支持浅/深色，缩小缩进与页边距*\n\n### 代码示例\n\`\`\`python\nimport torch\nprint(\"hello\")\n\`\`\``;
       mdInput.value = sample;
       setStatus('已填充示例内容，点击“转换 & 预览”查看效果。');
     });
