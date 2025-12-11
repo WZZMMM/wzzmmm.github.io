@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown to HTML Tool v0.5</title>
+    <title>Markdown to HTML Tool v1.0</title>
     <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
-    <!-- 修复：使用明确版本的 marked CDN 路径，避免 404 -->
+    <!-- 使用明确版本的 marked CDN 路径，避免 404 -->
     <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 
     <script>
@@ -22,8 +22,7 @@
                 processHtmlClass: 'tex2jax_process'
             }
         };
-        // 记录脚本加载情况
-        console.log('md-html-v0.5: base scripts initialized');
+        console.log('md-html-v1.0: base scripts initialized');
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
@@ -163,7 +162,7 @@
 <body>
 
 <header>
-    <div style="font-weight: bold; font-size: 1.1em;">Markdown to HTML Tool v0.5</div>
+    <div style="font-weight: bold; font-size: 1.1em;">Markdown to HTML Tool v1.0</div>
     <div class="toolbar-group">
         <label for="fileInput" class="file-upload-label">📁 上传 Markdown</label>
         <input type="file" id="fileInput" accept=".md,.txt">
@@ -185,13 +184,13 @@
     const previewArea = document.getElementById('write');
     const fileInput = document.getElementById('fileInput');
 
-    // --- v0.5 更新：完整的测试示例 ---
-    const defaultText = `# 测试示例 v0.5
+    // --- v1.0：完整的测试示例 ---
+    const defaultText = `# 测试示例 v1.0
 
-这是 **Markdown to HTML Tool v0.5** 的功能演示。
+这是 **Markdown to HTML Tool v1.0** 的功能演示。
 
-- 本网页端工具为使用\`gemini-3-pro\`氛围编程 (vibe coding) 的产出，在5轮对话后实现，旨在实现 Markdown 转特定格式 HTML 的功能。
-- 本网页端工具仅通过您的浏览器在本地运行，**不会**保留、上传或分析您输入的任何数据。
+- 本网页端工具为使用Github Copilot调用\`Gemini-3-Pro\`和\`GPT-5\`氛围编程 (vibe coding) 的产出，旨在实现 Markdown 转特定格式 HTML 的功能。
+- 本网页端工具仅通过您的浏览器在本地运行，**不会**保留或分析您输入的任何数据。
 
 ## 1. 基础排版
 ### 1.1 列表展示
@@ -211,7 +210,7 @@
 | $D_i$ | 虚拟变量 | 0/1 |
 
 ## 2. 数学公式 (MathJax)
-**行内公式**：根据欧拉方程 $u'(c_t) = \\\beta E_t [R_{t+1} u'(c_{t+1})]$，我们可以推导消费路径。
+**行内公式**：根据欧拉方程 $u'(c_t) = \\beta E_t [R_{t+1} u'(c_{t+1})]$，我们可以推导消费路径。
 
 **块级公式 (Block Math)**：
 考虑如下的一般均衡模型的一阶条件：
@@ -282,7 +281,7 @@ $$
             return match;
         });
 
-        // Markdown 解析（使用安全封装）
+        // Markdown 解析（安全封装）
         let html = safeMarkedParse(text);
 
         // 还原公式
@@ -337,7 +336,7 @@ $$
         reader.readAsText(file);
     });
 
-    // --- v0.5 更新：自定义文件名导出 ---
+    // --- v1.0：自定义文件名导出 ---
     function downloadHtml() {
         let fileName = prompt("请输入导出的文件名 (无需后缀):", "document-export");
         if (fileName === null) return;
