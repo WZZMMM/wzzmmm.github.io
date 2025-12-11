@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markdown to HTML Tool v0.5</title>
     <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
+
+    <!-- 修复：使用明确版本的 marked CDN 路径，避免 404 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+
     <script>
         window.MathJax = {
             tex: {
@@ -20,6 +22,8 @@
                 processHtmlClass: 'tex2jax_process'
             }
         };
+        // 记录脚本加载情况
+        console.log('md-html-v0.5: base scripts initialized');
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
@@ -186,7 +190,7 @@
 
 这是 **Markdown to HTML Tool v0.5** 的功能演示。
 
-- 本网页端工具为使用`gemini-3-pro`氛围编程 (vibe coding) 的产出，在5轮对话后实现，旨在实现 Markdown 转特定格式 HTML 的功能。
+- 本网页端工具为使用\`gemini-3-pro\`氛围编程 (vibe coding) 的产出，在5轮对话后实现，旨在实现 Markdown 转特定格式 HTML 的功能。
 - 本网页端工具仅通过您的浏览器在本地运行，**不会**保留、上传或分析您输入的任何数据。
 
 ## 1. 基础排版
@@ -207,7 +211,7 @@
 | $D_i$ | 虚拟变量 | 0/1 |
 
 ## 2. 数学公式 (MathJax)
-**行内公式**：根据欧拉方程 $u'(c_t) = \\beta E_t [R_{t+1} u'(c_{t+1})]$，我们可以推导消费路径。
+**行内公式**：根据欧拉方程 $u'(c_t) = \\\beta E_t [R_{t+1} u'(c_{t+1})]$，我们可以推导消费路径。
 
 **块级公式 (Block Math)**：
 考虑如下的一般均衡模型的一阶条件：
@@ -236,7 +240,16 @@ $$
 
     inputArea.value = defaultText;
 
-    // --- 核心解析器 (保持不变) ---
+    function safeMarkedParse(text) {
+        if (window.marked && typeof window.marked.parse === 'function') {
+            return window.marked.parse(text);
+        } else {
+            console.error('marked 未加载，请检查 CDN 或改用本地文件。');
+            return text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+        }
+    }
+
+    // --- 核心解析器 ---
     function parseAcademicMarkdown(text) {
         let mathBlocks = [];
         let footnotes = {};
@@ -269,21 +282,21 @@ $$
             return match;
         });
 
-        // Markdown 解析
-        let html = marked.parse(text);
+        // Markdown 解析（使用安全封装）
+        let html = safeMarkedParse(text);
 
         // 还原公式
         html = html.replace(/MATH_BLOCK_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
         html = html.replace(/MATH_INLINE_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
 
         // 生成脚注区域
-        if (Object.keys(footnotes).length > 0) {
+        if (Object.keys(footnotes).length > 0 && window.marked && typeof window.marked.parseInline === 'function') {
             let footnoteHtml = '<div class="footnotes"><hr><ol>';
             const sortedKeys = Object.keys(footnotes).sort((a, b) => footnotes[a].id - footnotes[b].id);
             sortedKeys.forEach(key => {
                 const item = footnotes[key];
                 footnoteHtml += `<li id="fn-${item.id}">
-                    ${marked.parseInline(item.content)} 
+                    ${window.marked.parseInline(item.content)} 
                     <a href="#fnref-${item.id}" class="footnote-backref">↩</a>
                 </li>`;
             });
@@ -296,7 +309,8 @@ $$
 
     function render() {
         const mdText = inputArea.value;
-        previewArea.innerHTML = parseAcademicMarkdown(mdText);
+        const html = parseAcademicMarkdown(mdText);
+        previewArea.innerHTML = html;
         
         if (window.MathJax && window.MathJax.typesetPromise) {
             window.MathJax.typesetPromise([previewArea]).catch((err) => console.log(err));
@@ -309,6 +323,7 @@ $$
         timeoutId = setTimeout(render, 300);
     });
 
+    // 初始渲染
     setTimeout(render, 200);
 
     fileInput.addEventListener('change', (e) => {
@@ -324,21 +339,15 @@ $$
 
     // --- v0.5 更新：自定义文件名导出 ---
     function downloadHtml() {
-        // 1. 获取用户想要的文件名
         let fileName = prompt("请输入导出的文件名 (无需后缀):", "document-export");
-        
-        // 如果用户点击取消或未输入，则终止
         if (fileName === null) return;
         if (fileName.trim() === "") fileName = "document-export";
-        
-        // 自动补充 .html 后缀
         if (!fileName.toLowerCase().endsWith(".html")) {
             fileName += ".html";
         }
 
         const rawMarkdown = inputArea.value;
         const cleanHtml = parseAcademicMarkdown(rawMarkdown);
-
         const cssContent = document.getElementById('theme-style').innerHTML;
         
         const htmlTemplate = `<!DOCTYPE html>
@@ -373,7 +382,7 @@ ${cleanHtml}
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = fileName; // 使用用户输入的文件名
+        a.download = fileName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -382,5 +391,4 @@ ${cleanHtml}
 </script>
 
 </body>
-
 </html>
