@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown to HTML Tool v1.2</title>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                tags: 'ams'
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+        console.log('md-html-v1.2: base scripts initialized');
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style id="theme-style">
+        :root {
+            --bg-color: #f3f2ee;
+            --text-color: #1f0909;
+            --link-color: #065588;
+            --code-bg: #dadada;
+            --border-color: #c5c5c5;
+            --blockquote-color: #656565;
+            --blockquote-border: #bababa;
+            --footnote-text: #555;
+
+            --toc-bg: #ffffffcc;
+            --toc-text: #333;
+            --toc-border: #ddd;
+            --toc-link: #065588;
+
+            /* 滚动条颜色 */
+            --scrollbar-thumb: #c0c0c0;
+            --scrollbar-thumb-hover: #a0a0a0;
+            --scrollbar-track: transparent;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #202124;
+                --text-color: #e8eaed;
+                --link-color: #8ab4f8;
+                --code-bg: #3c4043;
+                --border-color: #5f6368;
+                --blockquote-color: #bdc1c6;
+                --blockquote-border: #5f6368;
+                --footnote-text: #9aa0a6;
+
+                --toc-bg: #2b2b2bcc;
+                --toc-text: #ddd;
+                --toc-border: #4a4a4a;
+                --toc-link: #8ab4f8;
+
+                --scrollbar-thumb: #5f6368;
+                --scrollbar-thumb-hover: #80868b;
+            }
+        }
+
+        /* 现代化滚动条样式 - Webkit浏览器 (Chrome, Safari, Edge) */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 4px;
+            transition: background 0.2s ease;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--scrollbar-thumb-hover);
+        }
+        ::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+
+        /* Firefox 滚动条 */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "PT Serif", "Times New Roman", Times, serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toolbar-group { display: flex; gap: 10px; }
+
+        button, .file-upload-label {
+            padding: 6px 12px;
+            cursor: pointer;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 4px;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+
+        button:hover, .file-upload-label:hover { opacity: 0.8; background-color: var(--code-bg); }
+        input[type="file"] { display: none; }
+
+        /* 容器布局 */
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        .container.row { flex-direction: row; }
+        .container.column { flex-direction: column; }
+
+        /* 编辑区 - 清理边框，只保留一条分割线 */
+        .editor-pane {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-color);
+            overflow: hidden;
+        }
+
+        /* 左右布局：编辑区右侧一条灰线 */
+        .container.row .editor-pane {
+            width: 50%;
+            border-right: 1px solid var(--border-color);
+            border-bottom: none;
+        }
+
+        /* 上下布局：编辑区底部一条灰线 */
+        .container.column .editor-pane {
+            height: 50%;
+            border-bottom: 1px solid var(--border-color);
+            border-right: none;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            border: none;
+            resize: none;
+            padding: 20px;
+            font-family: "Consolas", "Monaco", monospace;
+            font-size: 14px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        /* 预览区 - 无额外边框 */
+        .preview-pane {
+            padding: 20px 40px;
+            overflow-y: auto;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            background: var(--bg-color);
+        }
+
+        .container.row .preview-pane {
+            width: 50%;
+        }
+
+        .container.column .preview-pane {
+            height: 50%;
+        }
+
+        /* TOC 侧边栏 */
+        .toc-sidebar {
+            position: sticky;
+            top: 10px;
+            align-self: flex-start;
+            width: 280px;
+            max-height: calc(100vh - 80px);
+            overflow: auto;
+            margin: 20px;
+            padding: 14px 14px 14px 18px;
+            background: var(--toc-bg);
+            border: 1px solid var(--toc-border);
+            border-radius: 8px;
+            color: var(--toc-text);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }
+        .toc-list { list-style: none; margin: 0; padding: 0; }
+        .toc-list li { margin: 4px 0; }
+        .toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; }
+        .toc-indent-2 { margin-left: 10px; font-size: 13.5px; }
+        .toc-indent-3 { margin-left: 20px; font-size: 13px; }
+        .toc-empty { color: #999; font-size: 13px; }
+
+        /* 核心内容样式 */
+        #write { max-width: 900px; margin: 0 auto; padding-bottom: 80px; }
+        #write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); }
+        #write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
+        #write h2 { font-size: 1.5em; }
+        #write h3 { font-size: 1.3em; font-weight: normal; }
+        #write a { color: var(--link-color); text-decoration: none; }
+        #write a:hover { text-decoration: underline; }
+        #write ul, #write ol { padding-left: 1.5em; margin-left: 0; margin-bottom: 1em; }
+        #write li { margin-bottom: 0.3em; }
+        #write blockquote { font-style: italic; border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }
+        #write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
+        #write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
+        #write thead { background-color: var(--code-bg); }
+        #write code { font-family: "Consolas", monospace; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+        #write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 4px; }
+        #write pre code { padding: 0; background-color: transparent; }
+        #write img { max-width: 100%; display: block; margin: 1em auto; }
+
+        .footnotes { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--border-color); font-size: 0.9em; color: var(--footnote-text); }
+        .footnotes ol { padding-left: 1.5em; }
+        .footnote-ref { font-size: 0.75em; vertical-align: super; margin-left: 2px; color: var(--link-color); }
+        .footnote-backref { text-decoration: none; border: none; margin-left: 5px; color: var(--link-color); }
+        mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+
+        @media (max-width: 1024px) {
+            .toc-sidebar { display: none; }
+            .container.row .preview-pane { width: 50%; }
+        }
+        @media (max-width: 768px) {
+            .container, .container.row, .container.column { flex-direction: column; }
+            .editor-pane, .preview-pane { width: 100% !important; height: 50% !important; }
+            .container .editor-pane { border-right: none; border-bottom: 1px solid var(--border-color); }
+            #write { padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div style="font-weight: bold; font-size: 1.1em;">Markdown to HTML Tool v1.2</div>
+    <div class="toolbar-group">
+        <label for="fileInput" class="file-upload-label">📁 上传 Markdown</label>
+        <input type="file" id="fileInput" accept=".md,.txt">
+        <button id="toggleLayoutBtn">切换布局</button>
+        <button onclick="downloadHtml()">⬇️ 导出 HTML</button>
+    </div>
+</header>
+
+<div id="container" class="container row">
+    <div class="editor-pane">
+        <textarea id="markdown-input" placeholder="输入 Markdown..."></textarea>
+    </div>
+
+    <nav id="toc" class="toc-sidebar" aria-label="目录" style="display:none">
+        <div class="toc-title">目录</div>
+        <ul class="toc-list"></ul>
+    </nav>
+
+    <div class="preview-pane">
+        <div id="write"></div>
+    </div>
+</div>
+
+<script>
+    const inputArea = document.getElementById('markdown-input');
+    const previewArea = document.getElementById('write');
+    const fileInput = document.getElementById('fileInput');
+    const tocNav = document.getElementById('toc');
+    const tocList = tocNav.querySelector('.toc-list');
+    const container = document.getElementById('container');
+    const toggleLayoutBtn = document.getElementById('toggleLayoutBtn');
+
+    const defaultText = `# 测试示例 v1.2
+
+[TOC]
+
+这是 **Markdown to HTML Tool v1.2** 的功能演示。
+
+- 本网页端工具为使用Github Copilot调用\`Gemini-3-Pro\`和\`GPT-5\`氛围编程 (vibe coding) 的产出，旨在实现 Markdown 转特定格式 HTML 的功能。
+- 本网页端工具仅通过您的浏览器在本地运行，**不会**保留或分析您输入的任何数据。
+
+## 1. 基础排版
+### 1.1 列表展示
+* **无序列表**：
+    * 经济学 (Economics)
+    * 计量经济学 (Econometrics)
+* **有序列表**：
+    1.  第一步：数据收集
+    2.  第二步：模型设定
+    3.  第三步：假设检验
+
+### 1.2 表格 (Table)
+| 变量名 | 描述 | 数据类型 |
+| :--- | :--- | :--- |
+| GDP | 国内生产总值 | 连续变量 |
+| $r_t$ | 实际利率 | 连续变量 |
+| $D_i$ | 虚拟变量 | 0/1 |
+
+## 2. 数学公式 (MathJax)
+**行内公式**：根据欧拉方程 $u'(c_t) = \\beta E_t [R_{t+1} u'(c_{t+1})]$，我们可以推导消费路径。
+
+**块级公式 (Block Math)**：
+考虑如下的一般均衡模型的一阶条件：
+$$
+\\mathcal{L} = \\sum_{t=0}^{\\infty} \\beta^t \\left[ \\frac{c_t^{1-\\sigma}}{1-\\sigma} - \\lambda_t (c_t + k_{t+1} - f(k_t) - (1-\\delta)k_t) \\right]
+$$
+
+## 3. 多媒体与链接
+### 3.1 外部链接
+关于作者更多信息，请访问 [WZM的个人主页](https://wzzmmm.github.io/)。
+
+### 3.2 图片引用
+![示例图片](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Latent_growth_curve_model.svg/640px-Latent_growth_curve_model.svg.png)
+*(图注：这是一个来自维基共享资源的潜变量增长曲线模型示例)*
+
+## 4. 引用 (Footnotes)
+在许多宏观经济模型中，理性预期是一个核心假设[^1]。当然，行为经济学对此提出了挑战[^2]。
+
+[^1]: 参见 Muth (1961) 关于理性预期的开创性论文。
+[^2]: 参见 Thaler (2015) *Misbehaving: The Making of Behavioral Economics*.
+
+---
+> **内容声明**：
+> 大语言模型的幻觉可能加剧了学术研究中的"胡扯"(bullshit)，本示例中的所有内容均仅为示例。
+`;
+
+    inputArea.value = defaultText;
+
+    // 布局切换
+    let isRowLayout = true;
+    toggleLayoutBtn.addEventListener('click', () => {
+        isRowLayout = !isRowLayout;
+        container.classList.toggle('row', isRowLayout);
+        container.classList.toggle('column', !isRowLayout);
+    });
+
+    function safeMarkedParse(text) {
+        if (window.marked && typeof window.marked.parse === 'function') {
+            return window.marked.parse(text);
+        } else {
+            console.error('marked 未加载，请检查 CDN 或改用本地文件。');
+            return text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+        }
+    }
+
+    function normalizeId(str) {
+        return str
+            .toLowerCase()
+            .replace(/[^\w\u4e00-\u9fa5\- ]+/g, '')
+            .trim()
+            .replace(/\s+/g, '-');
+    }
+
+    function buildToc() {
+        const headings = previewArea.querySelectorAll('h1, h2, h3');
+        tocList.innerHTML = '';
+        if (headings.length === 0) {
+            tocList.innerHTML = '<li class="toc-empty">文档中未找到标题</li>';
+            return;
+        }
+        const frag = document.createDocumentFragment();
+        headings.forEach(h => {
+            if (!h.id || h.id.trim() === '') {
+                h.id = normalizeId(h.textContent) || ('heading-' + Math.random().toString(36).slice(2));
+            }
+            const level = parseInt(h.tagName.substring(1), 10);
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.className = 'toc-link ' + (level === 2 ? 'toc-indent-2' : level === 3 ? 'toc-indent-3' : '');
+            a.href = '#' + h.id;
+            a.textContent = h.textContent;
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+            li.appendChild(a);
+            frag.appendChild(li);
+        });
+        tocList.appendChild(frag);
+    }
+
+    function parseAcademicMarkdown(text) {
+        let mathBlocks = [];
+        let footnotes = {};
+        let footnoteIndex = 1;
+
+        const hasToc = /^\s*\[TOC\]\s*$/m.test(text);
+        text = text.replace(/^\s*\[TOC\]\s*$/m, '');
+
+        text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
+            mathBlocks.push(match);
+            return "MATH_BLOCK_PLACEHOLDER_" + (mathBlocks.length - 1);
+        });
+        text = text.replace(/\$([^$\n]+?)\$/g, (match) => {
+            mathBlocks.push(match);
+            return "MATH_INLINE_PLACEHOLDER_" + (mathBlocks.length - 1);
+        });
+
+        const footnoteDefRegex = /^\[\^([^\]]+)\]:\s*(.*)$/gm;
+        text = text.replace(footnoteDefRegex, (match, label, content) => {
+            footnotes[label] = { id: footnoteIndex++, content: content };
+            return "";
+        });
+
+        text = text.replace(/\[\^([^\]]+)\]/g, (match, label) => {
+            if (footnotes[label]) {
+                const id = footnotes[label].id;
+                return `<sup><a href="#fn-${id}" id="fnref-${id}" class="footnote-ref">${id}</a></sup>`;
+            }
+            return match;
+        });
+
+        let html = safeMarkedParse(text);
+
+        html = html.replace(/MATH_BLOCK_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
+        html = html.replace(/MATH_INLINE_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
+
+        if (Object.keys(footnotes).length > 0 && window.marked && typeof window.marked.parseInline === 'function') {
+            let footnoteHtml = '<div class="footnotes"><hr><ol>';
+            const sortedKeys = Object.keys(footnotes).sort((a, b) => footnotes[a].id - footnotes[b].id);
+            sortedKeys.forEach(key => {
+                const item = footnotes[key];
+                footnoteHtml += `<li id="fn-${item.id}">
+                    ${window.marked.parseInline(item.content)} 
+                    <a href="#fnref-${item.id}" class="footnote-backref">↩</a>
+                </li>`;
+            });
+            footnoteHtml += '</ol></div>';
+            html += footnoteHtml;
+        }
+
+        previewArea.innerHTML = html;
+
+        if (hasToc) {
+            tocNav.style.display = 'block';
+            buildToc();
+        } else {
+            tocNav.style.display = 'none';
+            tocList.innerHTML = '';
+        }
+
+        return previewArea.innerHTML;
+    }
+
+    function render() {
+        const mdText = inputArea.value;
+        const html = parseAcademicMarkdown(mdText);
+        previewArea.innerHTML = html;
+        
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise([previewArea]).catch((err) => console.log(err));
+        }
+    }
+
+    let timeoutId;
+    inputArea.addEventListener('input', () => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(render, 300);
+    });
+
+    setTimeout(render, 200);
+
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            inputArea.value = e.target.result;
+            render();
+        };
+        reader.readAsText(file);
+    });
+
+    function downloadHtml() {
+        let fileName = prompt("请输入导出的文件名 (无需后缀):", "document-export");
+        if (fileName === null) return;
+        if (fileName.trim() === "") fileName = "document-export";
+        if (!fileName.toLowerCase().endsWith(".html")) {
+            fileName += ".html";
+        }
+
+        const rawMarkdown = inputArea.value;
+        const cleanHtml = parseAcademicMarkdown(rawMarkdown);
+        const cssContent = document.getElementById('theme-style').innerHTML;
+        
+        const tocHtml = tocNav.style.display !== 'none' ? tocNav.outerHTML : '';
+
+        const htmlTemplate = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${fileName}</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\\\(', '\\\\)']], displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']], tags: 'ams' },
+    svg: { fontCache: 'global' }
+};
+<\/script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"><\/script>
+<style>
+${cssContent}
+body { height: auto; display: block; overflow-y: auto; }
+#write { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+.editor-pane { display: none; }
+.container { display: flex; }
+.preview-pane { width: calc(100% - 320px); }
+</style>
+</head>
+<body>
+<div class="container">
+${tocHtml}
+<div class="preview-pane"><div id="write">
+${cleanHtml}
+</div></div>
+</div>
+</body>
+</html>`;
+
+        const blob = new Blob([htmlTemplate], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+</script>
+
+</body>
+</html>
