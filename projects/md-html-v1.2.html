@@ -127,15 +127,21 @@
         }
 
         .container.row .editor-pane {
-            width: 50%;
+            width: 40%;
             border-right: 1px solid var(--border-color);
             border-bottom: none;
+        }
+        .container.row .preview-pane {
+            width: 60%;
         }
 
         .container.column .editor-pane {
             height: 50%;
             border-bottom: 1px solid var(--border-color);
             border-right: none;
+        }
+        .container.column .preview-pane {
+            height: 50%;
         }
 
         textarea {
@@ -156,103 +162,6 @@
             scroll-behavior: smooth;
             background: var(--bg-color);
             position: relative;
-        }
-
-        .container.row .preview-pane { width: 50%; }
-        .container.column .preview-pane { height: 50%; }
-
-        /* 左侧边栏容器 */
-        .left-sidebar {
-            position: fixed;
-            left: calc(50% + 20px);
-            top: 70px;
-            width: 260px;
-            max-height: calc(100vh - 100px);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 100;
-            pointer-events: none;
-        }
-        .left-sidebar > * { pointer-events: auto; }
-
-        /* TOC 目录栏 - 占50%高度 */
-        .toc-sidebar {
-            max-height: calc(50vh - 60px);
-            overflow-y: auto;
-            padding: 12px 14px;
-            background: var(--toc-bg);
-            border: 1px solid var(--toc-border);
-            border-radius: 8px;
-            color: var(--toc-text);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        .toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }
-        .toc-list { list-style: none; margin: 0; padding: 0; }
-        .toc-list li { margin: 4px 0; }
-        .toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; }
-        .toc-link:hover { text-decoration: underline; }
-        .toc-indent-2 { margin-left: 10px; font-size: 13.5px; }
-        .toc-indent-3 { margin-left: 20px; font-size: 13px; }
-        .toc-empty { color: #999; font-size: 13px; }
-
-        /* 脚注悬浮区 - 占50%高度 */
-        .footnote-sidebar {
-            max-height: calc(50vh - 60px);
-            overflow-y: auto;
-            padding: 12px 14px;
-            background: var(--toc-bg);
-            border: 1px solid var(--toc-border);
-            border-radius: 8px;
-            color: var(--footnote-text);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            font-size: 0.85em;
-        }
-        .footnote-sidebar-title { font-weight: bold; margin: 0 0 8px 0; font-size: 13px; }
-        .footnote-item {
-            padding: 6px 0;
-            border-bottom: 1px solid var(--border-color);
-            display: none;
-        }
-        .footnote-item:last-child { border-bottom: none; }
-        .footnote-item.active { display: block; }
-        .footnote-label {
-            font-weight: bold;
-            color: var(--link-color);
-            margin-right: 6px;
-        }
-
-        /* 回到顶端/底端按钮 */
-        .nav-buttons {
-            position: fixed;
-            right: 30px;
-            bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1000;
-        }
-        .nav-buttons.visible { opacity: 1; }
-        .nav-btn {
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 50%;
-            background: var(--nav-btn-color);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            transition: transform 0.2s, background 0.2s;
-        }
-        .nav-btn:hover {
-            transform: scale(1.1);
-            background: var(--link-color);
         }
 
         #write { max-width: 900px; margin: 0 auto; padding-bottom: 80px; }
@@ -287,19 +196,38 @@
 
         mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
 
-        @media (max-width: 1200px) {
-            .left-sidebar { display: none; }
-            .footnotes {
-                display: block;
-                margin-top: 3em;
-                padding-top: 1em;
-                border-top: 1px solid var(--border-color);
-                font-size: 0.9em;
-                color: var(--footnote-text);
-            }
-            .footnotes ol { padding-left: 1.5em; list-style: none; }
-            .footnotes li { margin-bottom: 0.5em; }
+        .nav-buttons {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
         }
+        .nav-buttons.visible { opacity: 1; }
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: var(--nav-btn-color);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: transform 0.2s, background 0.2s;
+        }
+        .nav-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
         @media (max-width: 768px) {
             .container, .container.row, .container.column { flex-direction: column; }
             .editor-pane, .preview-pane { width: 100% !important; height: 50% !important; }
@@ -331,19 +259,6 @@
     </div>
 </div>
 
-<!-- 左侧边栏：TOC + 脚注 -->
-<div id="leftSidebar" class="left-sidebar" style="display:none;">
-    <nav id="toc" class="toc-sidebar" aria-label="目录">
-        <div class="toc-title">TOC</div>
-        <ul class="toc-list"></ul>
-    </nav>
-    <div id="footnoteSidebar" class="footnote-sidebar">
-        <div class="footnote-sidebar-title">Notes</div>
-        <div id="footnoteContent"></div>
-    </div>
-</div>
-
-<!-- 回到顶端/底端按钮 -->
 <div id="navButtons" class="nav-buttons">
     <button class="nav-btn" id="scrollTopBtn" title="回到顶端">↑</button>
     <button class="nav-btn" id="scrollBottomBtn" title="回到底端">↓</button>
@@ -354,13 +269,8 @@
     const previewArea = document.getElementById('write');
     const previewPane = document.getElementById('previewPane');
     const fileInput = document.getElementById('fileInput');
-    const tocNav = document.getElementById('toc');
-    const tocList = tocNav.querySelector('.toc-list');
     const container = document.getElementById('container');
     const toggleLayoutBtn = document.getElementById('toggleLayoutBtn');
-    const leftSidebar = document.getElementById('leftSidebar');
-    const footnoteSidebar = document.getElementById('footnoteSidebar');
-    const footnoteContent = document.getElementById('footnoteContent');
     const navButtons = document.getElementById('navButtons');
     const scrollTopBtn = document.getElementById('scrollTopBtn');
     const scrollBottomBtn = document.getElementById('scrollBottomBtn');
@@ -374,7 +284,7 @@
 这是 **Markdown to HTML Tool v1.2** 的功能演示。
 
 - 本网页端工具为使用Github Copilot调用\`Gemini-3-Pro\`和\`GPT-5\`氛围编程 (vibe coding) 的产出，旨在实现 Markdown 转特定格式 HTML 的功能。
-- 本网页端工具仅通过您的浏览器在本地运行，**不会**保留或分析您输入的任何数据。
+- 本网页端工具仅通过您的浏览器在本地运行，**不会**��留或分析您输入的任何数据。
 
 ## 1. 基础排版
 ### 1.1 列表展示
@@ -424,25 +334,13 @@ $$
 
     inputArea.value = defaultText;
 
-    // 布局切换
     let isRowLayout = true;
     toggleLayoutBtn.addEventListener('click', () => {
         isRowLayout = !isRowLayout;
         container.classList.toggle('row', isRowLayout);
         container.classList.toggle('column', !isRowLayout);
-        updateSidebarPosition();
     });
 
-    // 更新侧边栏位置
-    function updateSidebarPosition() {
-        if (isRowLayout) {
-            leftSidebar.style.left = 'calc(50% + 20px)';
-        } else {
-            leftSidebar.style.left = '20px';
-        }
-    }
-
-    // 滚动显示/隐藏导航按钮
     let scrollTimeout;
     previewPane.addEventListener('scroll', () => {
         navButtons.classList.add('visible');
@@ -450,9 +348,6 @@ $$
         scrollTimeout = setTimeout(() => {
             navButtons.classList.remove('visible');
         }, 2000);
-
-        // 更新悬浮脚注
-        updateActiveFootnote();
     });
 
     scrollTopBtn.addEventListener('click', () => {
@@ -476,85 +371,6 @@ $$
         return str.toLowerCase().replace(/[^\w\u4e00-\u9fa5\- ]+/g, '').trim().replace(/\s+/g, '-');
     }
 
-    function buildToc() {
-        const headings = previewArea.querySelectorAll('h1, h2, h3');
-        tocList.innerHTML = '';
-        if (headings.length === 0) {
-            tocList.innerHTML = '<li class="toc-empty">文档中未找到标题</li>';
-            return;
-        }
-        const frag = document.createDocumentFragment();
-        headings.forEach(h => {
-            if (!h.id || h.id.trim() === '') {
-                h.id = normalizeId(h.textContent) || ('heading-' + Math.random().toString(36).slice(2));
-            }
-            const level = parseInt(h.tagName.substring(1), 10);
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.className = 'toc-link ' + (level === 2 ? 'toc-indent-2' : level === 3 ? 'toc-indent-3' : '');
-            a.href = '#' + h.id;
-            a.textContent = h.textContent;
-            a.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-            li.appendChild(a);
-            frag.appendChild(li);
-        });
-        tocList.appendChild(frag);
-    }
-
-    function buildFootnoteSidebar() {
-        footnoteContent.innerHTML = '';
-        const labels = Object.keys(footnotesData);
-        if (labels.length === 0) {
-            footnoteSidebar.style.display = 'none';
-            return;
-        }
-        footnoteSidebar.style.display = 'block';
-        labels.forEach(label => {
-            const item = footnotesData[label];
-            const div = document.createElement('div');
-            div.className = 'footnote-item';
-            div.id = 'fn-sidebar-' + label.replace(/[^\w]/g, '_');
-            div.dataset.label = label;
-            div.innerHTML = `<span class="footnote-label">[${label}]</span><span>${item.content}</span>`;
-            footnoteContent.appendChild(div);
-        });
-    }
-
-    function updateActiveFootnote() {
-        const refs = previewArea.querySelectorAll('.footnote-ref');
-        const viewportTop = previewPane.scrollTop;
-        const viewportBottom = viewportTop + previewPane.clientHeight;
-
-        // 找到当前可见的脚注引用
-        let activeLabels = [];
-        refs.forEach(ref => {
-            const rect = ref.getBoundingClientRect();
-            const paneRect = previewPane.getBoundingClientRect();
-            const relativeTop = rect.top - paneRect.top + previewPane.scrollTop;
-            if (relativeTop >= viewportTop - 50 && relativeTop <= viewportBottom + 50) {
-                activeLabels.push(ref.dataset.label);
-            }
-        });
-
-        // 更新侧边栏显示
-        const allItems = footnoteContent.querySelectorAll('.footnote-item');
-        allItems.forEach(item => {
-            if (activeLabels.includes(item.dataset.label)) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-
-        // 如果没有活动的，显示第一个
-        if (activeLabels.length === 0 && allItems.length > 0) {
-            allItems[0].classList.add('active');
-        }
-    }
-
     function parseAcademicMarkdown(text) {
         let mathBlocks = [];
         footnotesData = {};
@@ -562,7 +378,6 @@ $$
         const hasToc = /^\s*\[TOC\]\s*$/m.test(text);
         text = text.replace(/^\s*\[TOC\]\s*$/m, '');
 
-        // 保护数学公式
         text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
             mathBlocks.push(match);
             return "MATH_BLOCK_PLACEHOLDER_" + (mathBlocks.length - 1);
@@ -572,78 +387,45 @@ $$
             return "MATH_INLINE_PLACEHOLDER_" + (mathBlocks.length - 1);
         });
 
-        // 提取脚注定义 - 保留原始标签
         const footnoteDefRegex = /^\[\^([^\]]+)\]:\s*(.*)$/gm;
         text = text.replace(footnoteDefRegex, (match, label, content) => {
             footnotesData[label] = { label: label, content: content };
             return "";
         });
 
-        // 替换脚注引用 - 使用原始标签
         text = text.replace(/\[\^([^\]]+)\]/g, (match, label) => {
             if (footnotesData[label]) {
-                return `<sup><a href="javascript:void(0)" class="footnote-ref" data-label="${label}" onclick="showFootnote('${label}')">${label}</a></sup>`;
+                return `<sup><a href="#fn-${encodeURIComponent(label)}" id="fnref-${encodeURIComponent(label)}" class="footnote-ref">[${label}]</a></sup>`;
             }
             return match;
         });
 
         let html = safeMarkedParse(text);
 
-        // 还原数学公式
         html = html.replace(/MATH_BLOCK_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
         html = html.replace(/MATH_INLINE_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
 
-        // 生成隐藏的脚注区域（用于小屏幕）
         if (Object.keys(footnotesData).length > 0 && window.marked && typeof window.marked.parseInline === 'function') {
             let footnoteHtml = '<div class="footnotes"><hr><ol>';
             Object.keys(footnotesData).forEach(label => {
                 const item = footnotesData[label];
-                footnoteHtml += `<li><strong>[${label}]</strong> ${window.marked.parseInline(item.content)}</li>`;
+                footnoteHtml += `<li id="fn-${encodeURIComponent(label)}"><strong>[${label}]</strong> ${window.marked.parseInline(item.content)} <a href="#fnref-${encodeURIComponent(label)}" class="footnote-backref">↩</a></li>`;
             });
             footnoteHtml += '</ol></div>';
             html += footnoteHtml;
         }
 
-        previewArea.innerHTML = html;
-
-        if (hasToc || Object.keys(footnotesData).length > 0) {
-            leftSidebar.style.display = 'flex';
-            if (hasToc) {
-                tocNav.style.display = 'block';
-                buildToc();
-            } else {
-                tocNav.style.display = 'none';
-            }
-            buildFootnoteSidebar();
-            updateActiveFootnote();
-        } else {
-            leftSidebar.style.display = 'none';
-        }
-
-        return previewArea.innerHTML;
+        return { html, hasToc, footnotesData };
     }
-
-    // 点击脚注引用时高亮侧边栏对应项
-    window.showFootnote = function(label) {
-        const allItems = footnoteContent.querySelectorAll('.footnote-item');
-        allItems.forEach(item => item.classList.remove('active'));
-        const target = footnoteContent.querySelector(`[data-label="${label}"]`);
-        if (target) {
-            target.classList.add('active');
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    };
 
     function render() {
         const mdText = inputArea.value;
-        const html = parseAcademicMarkdown(mdText);
-        previewArea.innerHTML = html;
+        const result = parseAcademicMarkdown(mdText);
+        previewArea.innerHTML = result.html;
         
         if (window.MathJax && window.MathJax.typesetPromise) {
             window.MathJax.typesetPromise([previewArea]).catch((err) => console.log(err));
         }
-
-        updateSidebarPosition();
     }
 
     let timeoutId;
@@ -674,42 +456,284 @@ $$
         }
 
         const rawMarkdown = inputArea.value;
-        const cleanHtml = parseAcademicMarkdown(rawMarkdown);
-        const cssContent = document.getElementById('theme-style').innerHTML;
+        const result = parseAcademicMarkdown(rawMarkdown);
         
-        const tocHtml = tocNav.style.display !== 'none' ? tocNav.outerHTML : '';
+        let tocHtml = '';
+        if (result.hasToc) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = result.html;
+            const headings = tempDiv.querySelectorAll('h1, h2, h3');
+            
+            if (headings.length > 0) {
+                tocHtml = '<nav class="toc-sidebar" aria-label="目录"><div class="toc-title">TOC</div><ul class="toc-list">';
+                headings.forEach((h, idx) => {
+                    const level = parseInt(h.tagName.substring(1), 10);
+                    const id = h.id || ('heading-' + idx);
+                    h.id = id;
+                    const indent = level === 2 ? 'toc-indent-2' : level === 3 ? 'toc-indent-3' : '';
+                    tocHtml += `<li><a href="#${id}" class="toc-link ${indent}">${h.textContent}</a></li>`;
+                });
+                tocHtml += '</ul></nav>';
+                result.html = tempDiv.innerHTML;
+            }
+        }
+
+        let footnotesHtml = '';
+        if (Object.keys(result.footnotesData).length > 0) {
+            footnotesHtml = '<div class="footnote-column">';
+            Object.keys(result.footnotesData).forEach(label => {
+                const item = result.footnotesData[label];
+                const content = window.marked && typeof window.marked.parseInline === 'function' 
+                    ? window.marked.parseInline(item.content) 
+                    : item.content;
+                footnotesHtml += `<div class="footnote-item" id="fn-${encodeURIComponent(label)}"><span class="footnote-label">[${label}]</span> ${content} <a href="#fnref-${encodeURIComponent(label)}" class="footnote-backref">↩</a></div>`;
+            });
+            footnotesHtml += '</div>';
+        }
 
         const htmlTemplate = `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${fileName}</title>
+<title>${fileName.replace('.html', '')}</title>
 <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <script>
 window.MathJax = {
     tex: { inlineMath: [['$', '$'], ['\\\\(', '\\\\)']], displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']], tags: 'ams' },
     svg: { fontCache: 'global' }
 };
-<\/script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"><\/script>
+<\\/script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"><\\/script>
 <style>
-${cssContent}
-body { height: auto; display: block; overflow-y: auto; }
-#write { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
-.editor-pane { display: none; }
-.container { display: flex; }
-.preview-pane { width: calc(100% - 320px); }
-.footnotes { display: block; margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--border-color); font-size: 0.9em; }
+:root {
+    --bg-color: #f3f2ee;
+    --text-color: #1f0909;
+    --link-color: #8dd4e8;
+    --code-bg: #dadada;
+    --border-color: #c5c5c5;
+    --blockquote-color: #656565;
+    --blockquote-border: #bababa;
+    --footnote-text: #555;
+    --toc-bg: #ffffffcc;
+    --toc-text: #333;
+    --toc-border: #ddd;
+    --toc-link: #8dd4e8;
+    --nav-btn-color: #6ab0c2;
+    --scrollbar-thumb: #c0c0c0;
+    --scrollbar-thumb-hover: #a0a0a0;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #202124;
+        --text-color: #e8eaed;
+        --link-color: #8dd4e8;
+        --code-bg: #3c4043;
+        --border-color: #5f6368;
+        --blockquote-color: #bdc1c6;
+        --blockquote-border: #5f6368;
+        --footnote-text: #9aa0a6;
+        --toc-bg: #2b2b2bcc;
+        --toc-text: #ddd;
+        --toc-border: #4a4a4a;
+        --toc-link: #8dd4e8;
+        --nav-btn-color: #5a9aaa;
+        --scrollbar-thumb: #5f6368;
+        --scrollbar-thumb-hover: #80868b;
+    }
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+
+body {
+    margin: 0; padding: 0;
+    font-family: "PT Serif", "Times New Roman", Times, serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.page-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 30px;
+}
+
+.left-column {
+    width: 220px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+    max-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+}
+
+.toc-sidebar {
+    max-height: 45vh;
+    overflow-y: auto;
+    padding: 12px 14px;
+    background: var(--toc-bg);
+    border: 1px solid var(--toc-border);
+    border-radius: 8px;
+    color: var(--toc-text);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 15px;
+}
+.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-list li { margin: 4px 0; }
+.toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; display: block; }
+.toc-link:hover { text-decoration: underline; }
+.toc-indent-2 { margin-left: 12px; font-size: 13.5px; }
+.toc-indent-3 { margin-left: 24px; font-size: 13px; }
+
+.footnote-column {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 0.85em;
+    color: var(--footnote-text);
+    padding-top: 10px;
+}
+.footnote-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+    line-height: 1.5;
+}
+.footnote-item:last-child { border-bottom: none; }
+.footnote-label {
+    font-weight: bold;
+    color: var(--link-color);
+    margin-right: 6px;
+}
+.footnote-backref {
+    color: var(--link-color);
+    text-decoration: none;
+    margin-left: 5px;
+}
+.footnote-backref:hover { text-decoration: underline; }
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+#write { max-width: 900px; padding-bottom: 80px; }
+#write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); }
+#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
+#write h2 { font-size: 1.5em; }
+#write h3 { font-size: 1.3em; font-weight: normal; }
+#write a { color: var(--link-color); text-decoration: none; }
+#write a:hover { text-decoration: underline; }
+#write ul, #write ol { padding-left: 1.5em; margin-left: 0; margin-bottom: 1em; }
+#write li { margin-bottom: 0.3em; }
+#write blockquote { font-style: italic; border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }
+#write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
+#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
+#write thead { background-color: var(--code-bg); }
+#write code { font-family: "Consolas", monospace; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+#write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 4px; }
+#write pre code { padding: 0; background-color: transparent; }
+#write img { max-width: 100%; display: block; margin: 1em auto; }
+
+.footnote-ref {
+    font-size: 0.8em;
+    vertical-align: super;
+    margin-left: 2px;
+    color: var(--link-color);
+    text-decoration: none;
+}
+.footnote-ref:hover { text-decoration: underline; }
+
+.footnotes { display: none; }
+
+mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+
+.nav-buttons {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+.nav-buttons.visible { opacity: 1; }
+.nav-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: var(--nav-btn-color);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: transform 0.2s, background 0.2s;
+}
+.nav-btn:hover {
+    transform: scale(1.1);
+    background: var(--link-color);
+}
+
+@media (max-width: 900px) {
+    .page-container { flex-direction: column; padding: 15px; }
+    .left-column { 
+        width: 100%; 
+        position: static; 
+        max-height: none;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .toc-sidebar { max-height: 200px; flex: 1; min-width: 200px; margin-bottom: 0; }
+    .footnote-column { flex: 1; min-width: 200px; max-height: 200px; }
+    .nav-buttons { right: 15px; bottom: 15px; }
+}
 </style>
 </head>
 <body>
-<div class="container">
-${tocHtml}
-<div class="preview-pane"><div id="write">
-${cleanHtml}
-</div></div>
+
+<div class="page-container">
+    <div class="left-column">
+        ${tocHtml}
+        ${footnotesHtml}
+    </div>
+    <div class="main-content">
+        <div id="write">
+${result.html}
+        </div>
+    </div>
 </div>
+
+<div id="navButtons" class="nav-buttons">
+    <button class="nav-btn" id="scrollTopBtn" title="回到顶端" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+    <button class="nav-btn" id="scrollBottomBtn" title="回到底端" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">↓</button>
+</div>
+
+<script>
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+    document.getElementById('navButtons').classList.add('visible');
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+        document.getElementById('navButtons').classList.remove('visible');
+    }, 2000);
+});
+<\\/script>
+
 </body>
 </html>`;
 
