@@ -389,7 +389,9 @@ $$
         text = text.replace(/\[\^([^\]]+)\]/g, (match, label) => {
             if (footnotesData[label]) {
                 const safeLabel = escapeHtml(label);
-                return '<sup><a href="#fn-' + safeLabel + '" id="fnref-' + safeLabel + '" class="footnote-ref">[' + safeLabel + ']</a></sup>';
+                const content = escapeHtml(footnotesData[label].content);
+                // Create sidenote inline with the reference
+                return '<sup class="footnote-ref-wrapper"><a href="#fn-' + safeLabel + '" id="fnref-' + safeLabel + '" class="footnote-ref">[' + safeLabel + ']</a><span class="sidenote" id="fn-' + safeLabel + '">' + content + '</span></sup>';
             }
             return match;
         });
@@ -464,22 +466,7 @@ $$
             }
         }
 
-        // 生成脚注
-        let footnotesHtml = '';
-        const fnKeys = Object.keys(result.footnotesData);
-        if (fnKeys.length > 0) {
-            footnotesHtml = '<div class="footnote-column">';
-            fnKeys.forEach(label => {
-                const item = result.footnotesData[label];
-                const safeLabel = escapeHtml(label);
-                let content = item.content;
-                if (window.marked && typeof window.marked.parseInline === 'function') {
-                    content = window.marked.parseInline(item.content);
-                }
-                footnotesHtml += '<div class="footnote-item" id="fn-' + safeLabel + '"><span class="footnote-label">[' + safeLabel + ']</span> ' + content + ' <a href="#fnref-' + safeLabel + '" class="footnote-backref">↩</a></div>';
-            });
-            footnotesHtml += '</div>';
-        }
+        // 脚注现在作为 sidenotes 内联在主内容中，不再需要单独的脚注列
 
         // 构建导出HTML - 使用字符串拼接避免模板字符串问题
         let htmlParts = [];
@@ -506,8 +493,8 @@ $$
         htmlParts.push('::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }');
         htmlParts.push('* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }');
         htmlParts.push('body { margin: 0; padding: 0; font-family: "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }');
-        htmlParts.push('.page-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 20px; gap: 30px; }');
-        htmlParts.push('.left-column { width: 220px; flex-shrink: 0; position: sticky; top: 20px; align-self: flex-start; max-height: calc(100vh - 40px); display: flex; flex-direction: column; }');
+        htmlParts.push('.page-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 20px; gap: 20px; }');
+        htmlParts.push('.left-column { width: 15%; flex-shrink: 0; position: sticky; top: 20px; align-self: flex-start; max-height: calc(100vh - 40px); display: flex; flex-direction: column; }');
         htmlParts.push('.toc-sidebar { max-height: 45vh; overflow-y: auto; padding: 12px 14px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 15px; }');
         htmlParts.push('.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }');
         htmlParts.push('.toc-list { list-style: none; margin: 0; padding: 0; }');
@@ -516,13 +503,7 @@ $$
         htmlParts.push('.toc-link:hover { text-decoration: underline; }');
         htmlParts.push('.toc-indent-2 { margin-left: 12px; font-size: 13.5px; }');
         htmlParts.push('.toc-indent-3 { margin-left: 24px; font-size: 13px; }');
-        htmlParts.push('.footnote-column { flex: 1; overflow-y: auto; font-size: 0.85em; color: var(--footnote-text); padding-top: 10px; }');
-        htmlParts.push('.footnote-item { padding: 8px 0; border-bottom: 1px solid var(--border-color); line-height: 1.5; }');
-        htmlParts.push('.footnote-item:last-child { border-bottom: none; }');
-        htmlParts.push('.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 6px; }');
-        htmlParts.push('.footnote-backref { color: var(--link-color); text-decoration: none; margin-left: 5px; }');
-        htmlParts.push('.footnote-backref:hover { text-decoration: underline; }');
-        htmlParts.push('.main-content { flex: 1; min-width: 0; }');
+        htmlParts.push('.main-content { flex: 1; min-width: 0; padding-right: 5%; position: relative; }');
         htmlParts.push('#write { max-width: 900px; padding-bottom: 80px; }');
         htmlParts.push('#write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); }');
         htmlParts.push('#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }');
@@ -542,19 +523,21 @@ $$
         htmlParts.push('#write img { max-width: 100%; display: block; margin: 1em auto; }');
         htmlParts.push('.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }');
         htmlParts.push('.footnote-ref:hover { text-decoration: underline; }');
+        htmlParts.push('.sidenote { position: absolute; left: -200px; width: 180px; font-size: 0.75em; line-height: 1.4; color: var(--footnote-text); margin-top: 0; padding: 8px 10px; }');
+        htmlParts.push('.sidenote a:link, .sidenote a:visited { color: #97b6b1; text-decoration: none; }');
+        htmlParts.push('.sidenote a:hover { text-decoration: underline; }');
         htmlParts.push('mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }');
         htmlParts.push('.nav-buttons { position: fixed; right: 30px; bottom: 30px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s ease; z-index: 1000; }');
         htmlParts.push('.nav-buttons.visible { opacity: 1; }');
         htmlParts.push('.nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, background 0.2s; }');
         htmlParts.push('.nav-btn:hover { transform: scale(1.1); background: var(--link-color); }');
-        htmlParts.push('@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; gap: 15px; } .toc-sidebar { max-height: 200px; flex: 1; min-width: 200px; margin-bottom: 0; } .footnote-column { flex: 1; min-width: 200px; max-height: 200px; } .nav-buttons { right: 15px; bottom: 15px; } }');
+        htmlParts.push('@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; } .toc-sidebar { max-height: 200px; } .main-content { padding-right: 0; } .sidenote { position: static; left: auto; width: 100%; margin-top: 0.5em; padding: 8px; background: var(--code-bg); border-left: 2px solid var(--border-color); } .nav-buttons { right: 15px; bottom: 15px; } }');
         htmlParts.push('</style>');
         htmlParts.push('</head>');
         htmlParts.push('<body>');
         htmlParts.push('<div class="page-container">');
         htmlParts.push('<div class="left-column">');
         htmlParts.push(tocHtml);
-        htmlParts.push(footnotesHtml);
         htmlParts.push('</div>');
         htmlParts.push('<div class="main-content">');
         htmlParts.push('<div id="write">');
