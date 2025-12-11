@@ -155,7 +155,7 @@
         }
 
         #write { max-width: 900px; margin: 0 auto; padding-bottom: 80px; }
-        #write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); }
+        #write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); text-align: center; }
         #write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
         #write h2 { font-size: 1.5em; }
         #write h3 { font-size: 1.3em; font-weight: normal; }
@@ -314,7 +314,7 @@ $$
 
 [^*]: 参见 Muth (1961) 关于理性预期的开创性论文。
 [^†]: 参见 Thaler (2015) *Misbehaving: The Making of Behavioral Economics*.
-[^1]: 这是一个数字标注的脚注示例。
+[^1]: 这是一个数字标注的脚注示例，包含一个[链接](https://example.com)来测试颜色。
 
 ---
 > **内容声明**：
@@ -469,6 +469,7 @@ $$
         const fnKeys = Object.keys(result.footnotesData);
         if (fnKeys.length > 0) {
             footnotesHtml = '<div class="footnote-column">';
+            // 这里仅仅生成dom结构，排序和位置由后面的js控制
             fnKeys.forEach(label => {
                 const item = result.footnotesData[label];
                 const safeLabel = escapeHtml(label);
@@ -476,12 +477,13 @@ $$
                 if (window.marked && typeof window.marked.parseInline === 'function') {
                     content = window.marked.parseInline(item.content);
                 }
-                footnotesHtml += '<div class="footnote-item" id="fn-' + safeLabel + '"><span class="footnote-label">[' + safeLabel + ']</span> ' + content + ' <a href="#fnref-' + safeLabel + '" class="footnote-backref">↩</a></div>';
+                // ID 用于 JS 查找，style="display:none" 初始隐藏，由JS定位后显示
+                footnotesHtml += '<div class="footnote-item" id="fn-' + safeLabel + '" style="display:none;"><span class="footnote-label">[' + safeLabel + ']</span> ' + content + ' <a href="#fnref-' + safeLabel + '" class="footnote-backref">↩</a></div>';
             });
             footnotesHtml += '</div>';
         }
 
-        // 构建导出HTML - 使用字符串拼接避免模板字符串问题
+        // 构建导出HTML
         let htmlParts = [];
         htmlParts.push('<!DOCTYPE html>');
         htmlParts.push('<html>');
@@ -497,18 +499,26 @@ $$
         htmlParts.push('};');
         htmlParts.push('</' + 'script>');
         htmlParts.push('<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></' + 'script>');
+        
+        // CSS 部分
         htmlParts.push('<style>');
-        htmlParts.push(':root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #8dd4e8; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #8dd4e8; --nav-btn-color: #6ab0c2; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; }');
-        htmlParts.push('@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #8dd4e8; --code-bg: #3c4043; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #8dd4e8; --nav-btn-color: #5a9aaa; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; } }');
+        htmlParts.push(':root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #8dd4e8; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #8dd4e8; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; --nav-btn-color: #6ab0c2; }');
+        htmlParts.push('@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #8dd4e8; --code-bg: #3c4043; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #8dd4e8; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; --nav-btn-color: #5a9aaa; } }');
         htmlParts.push('::-webkit-scrollbar { width: 8px; height: 8px; }');
         htmlParts.push('::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }');
         htmlParts.push('::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }');
         htmlParts.push('::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }');
         htmlParts.push('* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }');
         htmlParts.push('body { margin: 0; padding: 0; font-family: "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }');
-        htmlParts.push('.page-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 20px; gap: 30px; }');
-        htmlParts.push('.left-column { width: 220px; flex-shrink: 0; position: sticky; top: 20px; align-self: flex-start; max-height: calc(100vh - 40px); display: flex; flex-direction: column; }');
-        htmlParts.push('.toc-sidebar { max-height: 45vh; overflow-y: auto; padding: 12px 14px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 15px; }');
+        
+        // 布局容器
+        htmlParts.push('.page-container { display: flex; flex-direction: row; max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }');
+        
+        // 左栏：宽度 20%，右侧有竖线，position relative
+        htmlParts.push('.left-column { width: 20%; min-width: 200px; flex-shrink: 0; position: relative; margin-right: 30px; border-right: 1px solid var(--border-color); padding-right: 20px; }');
+        
+        // TOC：普通文档流，不 sticky，最大高度 40vh
+        htmlParts.push('.toc-sidebar { max-height: 40vh; overflow-y: auto; padding: 10px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); font-size: 0.9em; margin-bottom: 30px; }');
         htmlParts.push('.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }');
         htmlParts.push('.toc-list { list-style: none; margin: 0; padding: 0; }');
         htmlParts.push('.toc-list li { margin: 4px 0; }');
@@ -516,15 +526,20 @@ $$
         htmlParts.push('.toc-link:hover { text-decoration: underline; }');
         htmlParts.push('.toc-indent-2 { margin-left: 12px; font-size: 13.5px; }');
         htmlParts.push('.toc-indent-3 { margin-left: 24px; font-size: 13px; }');
-        htmlParts.push('.footnote-column { flex: 1; overflow-y: auto; font-size: 0.85em; color: var(--footnote-text); padding-top: 10px; }');
-        htmlParts.push('.footnote-item { padding: 8px 0; border-bottom: 1px solid var(--border-color); line-height: 1.5; }');
-        htmlParts.push('.footnote-item:last-child { border-bottom: none; }');
-        htmlParts.push('.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 6px; }');
+        
+        // 脚注容器与单项：左侧无竖线，绝对定位
+        htmlParts.push('.footnote-column { position: relative; width: 100%; }');
+        htmlParts.push('.footnote-item { position: absolute; left: 0; width: 100%; font-size: 0.85em; color: var(--footnote-text); padding-bottom: 10px; box-sizing: border-box; transition: top 0.3s ease; }');
+        htmlParts.push('.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 4px; }');
         htmlParts.push('.footnote-backref { color: var(--link-color); text-decoration: none; margin-left: 5px; }');
         htmlParts.push('.footnote-backref:hover { text-decoration: underline; }');
-        htmlParts.push('.main-content { flex: 1; min-width: 0; }');
+        htmlParts.push('.footnote-item a:not(.footnote-backref) { color: #97b6b1; text-decoration: none; }');
+        htmlParts.push('.footnote-item a:not(.footnote-backref):hover { text-decoration: underline; }');
+        
+        // 主内容：标题居中
+        htmlParts.push('.main-content { flex: 1; min-width: 0; padding-right: 5%; }');
         htmlParts.push('#write { max-width: 900px; padding-bottom: 80px; }');
-        htmlParts.push('#write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); }');
+        htmlParts.push('#write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); text-align: center; }');
         htmlParts.push('#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }');
         htmlParts.push('#write h2 { font-size: 1.5em; }');
         htmlParts.push('#write h3 { font-size: 1.3em; font-weight: normal; }');
@@ -547,7 +562,7 @@ $$
         htmlParts.push('.nav-buttons.visible { opacity: 1; }');
         htmlParts.push('.nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, background 0.2s; }');
         htmlParts.push('.nav-btn:hover { transform: scale(1.1); background: var(--link-color); }');
-        htmlParts.push('@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; gap: 15px; } .toc-sidebar { max-height: 200px; flex: 1; min-width: 200px; margin-bottom: 0; } .footnote-column { flex: 1; min-width: 200px; max-height: 200px; } .nav-buttons { right: 15px; bottom: 15px; } }');
+        htmlParts.push('@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; gap: 20px; margin-right: 0; border-right: none; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 20px; } .toc-sidebar { width: 100%; position: static; max-height: 200px; } .footnote-column { position: static; width: 100%; } .footnote-item { position: static; border-bottom: 1px solid var(--border-color); } .main-content { padding-right: 0; } }');
         htmlParts.push('</style>');
         htmlParts.push('</head>');
         htmlParts.push('<body>');
@@ -566,6 +581,8 @@ $$
         htmlParts.push('<button class="nav-btn" onclick="window.scrollTo({top:0,behavior:\'smooth\'})" title="回到顶端">↑</button>');
         htmlParts.push('<button class="nav-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:\'smooth\'})" title="回到底端">↓</button>');
         htmlParts.push('</div>');
+        
+        // JS 逻辑
         htmlParts.push('<script>');
         htmlParts.push('var scrollTimeout;');
         htmlParts.push('window.addEventListener("scroll", function() {');
@@ -575,7 +592,56 @@ $$
         htmlParts.push('        document.getElementById("navButtons").classList.remove("visible");');
         htmlParts.push('    }, 2000);');
         htmlParts.push('});');
+        
+        // 核心：对齐逻辑修改
+        htmlParts.push('function alignFootnotes() {');
+        htmlParts.push('    const refs = Array.from(document.querySelectorAll(".footnote-ref"));'); // 获取所有引用
+        htmlParts.push('    const notes = Array.from(document.querySelectorAll(".footnote-item"));');
+        htmlParts.push('    const toc = document.querySelector(".toc-sidebar");');
+        htmlParts.push('    const leftCol = document.querySelector(".left-column");');
+        htmlParts.push('    const noteMap = {};');
+        htmlParts.push('    notes.forEach(note => { noteMap[note.id.replace("fn-", "")] = note; });');
+        
+        // 计算起始高度：TOC 高度 + 间距
+        htmlParts.push('    let currentY = toc ? (toc.offsetHeight + 20) : 0;');
+        
+        // 获取容器位置
+        htmlParts.push('    const leftColRect = leftCol.getBoundingClientRect();');
+        
+        // 遍历正文中出现的引用（顺序即为自然阅读顺序）
+        htmlParts.push('    refs.forEach(ref => {');
+        htmlParts.push('        const label = ref.getAttribute("href").replace("#fn-", "");');
+        htmlParts.push('        const note = noteMap[label];');
+        htmlParts.push('        if (note) {');
+        htmlParts.push('            const refRect = ref.getBoundingClientRect();');
+        // 计算引用点相对于左栏顶部的距离
+        htmlParts.push('            let desiredTop = refRect.top - leftColRect.top;');
+        // 略微下垂效果（+5px），让文本基线更接近
+        htmlParts.push('            desiredTop += 5;');
+        
+        // 碰撞检测：不能高于上一个元素
+        htmlParts.push('            if (desiredTop < currentY) { desiredTop = currentY; }');
+        
+        htmlParts.push('            note.style.top = desiredTop + "px";');
+        htmlParts.push('            note.style.display = "block";');
+        
+        // 更新下一个可用位置
+        htmlParts.push('            currentY = desiredTop + note.offsetHeight + 15;'); // 15px 间距
+        htmlParts.push('        }');
+        htmlParts.push('    });');
+        
+        // 撑开容器
+        htmlParts.push('    const fnCol = document.querySelector(".footnote-column");');
+        htmlParts.push('    if(fnCol) fnCol.style.height = currentY + "px";');
+        htmlParts.push('}');
+        
+        htmlParts.push('window.addEventListener("load", alignFootnotes);');
+        htmlParts.push('window.addEventListener("resize", alignFootnotes);');
+        htmlParts.push('if(window.MathJax) {');
+        htmlParts.push('    MathJax.startup.promise.then(() => { setTimeout(alignFootnotes, 1000); });');
+        htmlParts.push('}');
         htmlParts.push('</' + 'script>');
+        
         htmlParts.push('</body>');
         htmlParts.push('</html>');
 
