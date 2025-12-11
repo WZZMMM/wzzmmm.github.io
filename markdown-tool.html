@@ -633,6 +633,9 @@ hr {
       if (window.marked?.parse) {
         return window.marked.parse(raw, { breaks: true, mangle: false, headerIds: true });
       }
+      if (typeof window.marked === 'function') {
+        return window.marked(raw, { breaks: true, mangle: false, headerIds: true });
+      }
       return fallbackMarkdown(raw);
     };
 
