@@ -186,6 +186,9 @@
 
 这是 **Markdown to HTML Tool v0.5** 的功能演示。
 
+- 本网页端工具为使用`gemini-3-pro`氛围编程 (vibe coding) 的产出，在5轮对话后实现，旨在实现 Markdown 转特定格式 HTML 的功能。
+- 本网页端工具仅通过您的浏览器在本地运行，**不会**保留、上传或分析您输入的任何数据。
+
 ## 1. 基础排版
 ### 1.1 列表展示
 * **无序列表**：
@@ -220,15 +223,15 @@ $$
 ![示例图片](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Latent_growth_curve_model.svg/640px-Latent_growth_curve_model.svg.png)
 *(图注：这是一个来自维基共享资源的潜变量增长曲线模型示例)*
 
-## 4. 学术引用 (Footnotes)
+## 4. 引用 (Footnotes)
 在许多宏观经济模型中，理性预期是一个核心假设[^1]。当然，行为经济学对此提出了挑战[^2]。
 
 [^1]: 参见 Muth (1961) 关于理性预期的开创性论文。
 [^2]: 参见 Thaler (2015) *Misbehaving: The Making of Behavioral Economics*.
 
 ---
-> **隐私声明**：
-> 本网页端工具仅在浏览器本地运行，旨在实现 Markdown 转特定格式 HTML 的功能。工具**不会**保留、上传或分析您输入的任何数据。
+> **内容声明**：
+> 大语言模型的幻觉可能加剧了学术研究中的“胡扯”(buulshit)，
 `;
 
     inputArea.value = defaultText;
@@ -379,4 +382,5 @@ ${cleanHtml}
 </script>
 
 </body>
+
 </html>
