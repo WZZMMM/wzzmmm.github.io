@@ -29,7 +29,7 @@
         :root {
             --bg-color: #f3f2ee;
             --text-color: #1f0909;
-            --link-color: #065588;
+            --link-color: #8dd4e8;
             --code-bg: #dadada;
             --border-color: #c5c5c5;
             --blockquote-color: #656565;
@@ -39,19 +39,20 @@
             --toc-bg: #ffffffcc;
             --toc-text: #333;
             --toc-border: #ddd;
-            --toc-link: #065588;
+            --toc-link: #8dd4e8;
 
-            /* 滚动条颜色 */
             --scrollbar-thumb: #c0c0c0;
             --scrollbar-thumb-hover: #a0a0a0;
             --scrollbar-track: transparent;
+
+            --nav-btn-color: #6ab0c2;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-color: #202124;
                 --text-color: #e8eaed;
-                --link-color: #8ab4f8;
+                --link-color: #8dd4e8;
                 --code-bg: #3c4043;
                 --border-color: #5f6368;
                 --blockquote-color: #bdc1c6;
@@ -61,43 +62,24 @@
                 --toc-bg: #2b2b2bcc;
                 --toc-text: #ddd;
                 --toc-border: #4a4a4a;
-                --toc-link: #8ab4f8;
+                --toc-link: #8dd4e8;
 
                 --scrollbar-thumb: #5f6368;
                 --scrollbar-thumb-hover: #80868b;
+
+                --nav-btn-color: #5a9aaa;
             }
         }
 
-        /* 现代化滚动条样式 - Webkit浏览器 (Chrome, Safari, Edge) */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--scrollbar-track);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--scrollbar-thumb);
-            border-radius: 4px;
-            transition: background 0.2s ease;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--scrollbar-thumb-hover);
-        }
-        ::-webkit-scrollbar-corner {
-            background: transparent;
-        }
-
-        /* Firefox 滚动条 */
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--scrollbar-track); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+        ::-webkit-scrollbar-corner { background: transparent; }
+        * { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: "PT Serif", "Times New Roman", Times, serif;
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -133,16 +115,10 @@
         button:hover, .file-upload-label:hover { opacity: 0.8; background-color: var(--code-bg); }
         input[type="file"] { display: none; }
 
-        /* 容器布局 */
-        .container {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
+        .container { display: flex; flex: 1; overflow: hidden; }
         .container.row { flex-direction: row; }
         .container.column { flex-direction: column; }
 
-        /* 编辑区 - 清理边框，只保留一条分割线 */
         .editor-pane {
             display: flex;
             flex-direction: column;
@@ -150,14 +126,12 @@
             overflow: hidden;
         }
 
-        /* 左右布局：编辑区右侧一条灰线 */
         .container.row .editor-pane {
             width: 50%;
             border-right: 1px solid var(--border-color);
             border-bottom: none;
         }
 
-        /* 上下布局：编辑区底部一条灰线 */
         .container.column .editor-pane {
             height: 50%;
             border-bottom: 1px solid var(--border-color);
@@ -165,11 +139,8 @@
         }
 
         textarea {
-            width: 100%;
-            height: 100%;
-            border: none;
-            resize: none;
-            padding: 20px;
+            width: 100%; height: 100%;
+            border: none; resize: none; padding: 20px;
             font-family: "Consolas", "Monaco", monospace;
             font-size: 14px;
             background-color: var(--bg-color);
@@ -178,33 +149,38 @@
             box-sizing: border-box;
         }
 
-        /* 预览区 - 无额外边框 */
         .preview-pane {
             padding: 20px 40px;
             overflow-y: auto;
             box-sizing: border-box;
             scroll-behavior: smooth;
             background: var(--bg-color);
+            position: relative;
         }
 
-        .container.row .preview-pane {
-            width: 50%;
-        }
+        .container.row .preview-pane { width: 50%; }
+        .container.column .preview-pane { height: 50%; }
 
-        .container.column .preview-pane {
-            height: 50%;
+        /* 左侧边栏容器 */
+        .left-sidebar {
+            position: fixed;
+            left: calc(50% + 20px);
+            top: 70px;
+            width: 260px;
+            max-height: calc(100vh - 100px);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+            pointer-events: none;
         }
+        .left-sidebar > * { pointer-events: auto; }
 
-        /* TOC 侧边栏 */
+        /* TOC 目录栏 - 占50%高度 */
         .toc-sidebar {
-            position: sticky;
-            top: 10px;
-            align-self: flex-start;
-            width: 280px;
-            max-height: calc(100vh - 80px);
-            overflow: auto;
-            margin: 20px;
-            padding: 14px 14px 14px 18px;
+            max-height: calc(50vh - 60px);
+            overflow-y: auto;
+            padding: 12px 14px;
             background: var(--toc-bg);
             border: 1px solid var(--toc-border);
             border-radius: 8px;
@@ -215,11 +191,70 @@
         .toc-list { list-style: none; margin: 0; padding: 0; }
         .toc-list li { margin: 4px 0; }
         .toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; }
+        .toc-link:hover { text-decoration: underline; }
         .toc-indent-2 { margin-left: 10px; font-size: 13.5px; }
         .toc-indent-3 { margin-left: 20px; font-size: 13px; }
         .toc-empty { color: #999; font-size: 13px; }
 
-        /* 核心内容样式 */
+        /* 脚注悬浮区 - 占50%高度 */
+        .footnote-sidebar {
+            max-height: calc(50vh - 60px);
+            overflow-y: auto;
+            padding: 12px 14px;
+            background: var(--toc-bg);
+            border: 1px solid var(--toc-border);
+            border-radius: 8px;
+            color: var(--footnote-text);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            font-size: 0.85em;
+        }
+        .footnote-sidebar-title { font-weight: bold; margin: 0 0 8px 0; font-size: 13px; }
+        .footnote-item {
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: none;
+        }
+        .footnote-item:last-child { border-bottom: none; }
+        .footnote-item.active { display: block; }
+        .footnote-label {
+            font-weight: bold;
+            color: var(--link-color);
+            margin-right: 6px;
+        }
+
+        /* 回到顶端/底端按钮 */
+        .nav-buttons {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        .nav-buttons.visible { opacity: 1; }
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: var(--nav-btn-color);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: transform 0.2s, background 0.2s;
+        }
+        .nav-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
         #write { max-width: 900px; margin: 0 auto; padding-bottom: 80px; }
         #write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); }
         #write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
@@ -238,21 +273,39 @@
         #write pre code { padding: 0; background-color: transparent; }
         #write img { max-width: 100%; display: block; margin: 1em auto; }
 
-        .footnotes { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--border-color); font-size: 0.9em; color: var(--footnote-text); }
-        .footnotes ol { padding-left: 1.5em; }
-        .footnote-ref { font-size: 0.75em; vertical-align: super; margin-left: 2px; color: var(--link-color); }
-        .footnote-backref { text-decoration: none; border: none; margin-left: 5px; color: var(--link-color); }
+        .footnote-ref {
+            font-size: 0.8em;
+            vertical-align: super;
+            margin-left: 2px;
+            color: var(--link-color);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .footnote-ref:hover { text-decoration: underline; }
+
+        .footnotes { display: none; }
+
         mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
 
-        @media (max-width: 1024px) {
-            .toc-sidebar { display: none; }
-            .container.row .preview-pane { width: 50%; }
+        @media (max-width: 1200px) {
+            .left-sidebar { display: none; }
+            .footnotes {
+                display: block;
+                margin-top: 3em;
+                padding-top: 1em;
+                border-top: 1px solid var(--border-color);
+                font-size: 0.9em;
+                color: var(--footnote-text);
+            }
+            .footnotes ol { padding-left: 1.5em; list-style: none; }
+            .footnotes li { margin-bottom: 0.5em; }
         }
         @media (max-width: 768px) {
             .container, .container.row, .container.column { flex-direction: column; }
             .editor-pane, .preview-pane { width: 100% !important; height: 50% !important; }
             .container .editor-pane { border-right: none; border-bottom: 1px solid var(--border-color); }
             #write { padding: 10px 20px; }
+            .nav-buttons { right: 15px; bottom: 15px; }
         }
     </style>
 </head>
@@ -273,24 +326,46 @@
         <textarea id="markdown-input" placeholder="输入 Markdown..."></textarea>
     </div>
 
-    <nav id="toc" class="toc-sidebar" aria-label="目录" style="display:none">
-        <div class="toc-title">目录</div>
-        <ul class="toc-list"></ul>
-    </nav>
-
-    <div class="preview-pane">
+    <div class="preview-pane" id="previewPane">
         <div id="write"></div>
     </div>
+</div>
+
+<!-- 左侧边栏：TOC + 脚注 -->
+<div id="leftSidebar" class="left-sidebar" style="display:none;">
+    <nav id="toc" class="toc-sidebar" aria-label="目录">
+        <div class="toc-title">TOC</div>
+        <ul class="toc-list"></ul>
+    </nav>
+    <div id="footnoteSidebar" class="footnote-sidebar">
+        <div class="footnote-sidebar-title">Notes</div>
+        <div id="footnoteContent"></div>
+    </div>
+</div>
+
+<!-- 回到顶端/底端按钮 -->
+<div id="navButtons" class="nav-buttons">
+    <button class="nav-btn" id="scrollTopBtn" title="回到顶端">↑</button>
+    <button class="nav-btn" id="scrollBottomBtn" title="回到底端">↓</button>
 </div>
 
 <script>
     const inputArea = document.getElementById('markdown-input');
     const previewArea = document.getElementById('write');
+    const previewPane = document.getElementById('previewPane');
     const fileInput = document.getElementById('fileInput');
     const tocNav = document.getElementById('toc');
     const tocList = tocNav.querySelector('.toc-list');
     const container = document.getElementById('container');
     const toggleLayoutBtn = document.getElementById('toggleLayoutBtn');
+    const leftSidebar = document.getElementById('leftSidebar');
+    const footnoteSidebar = document.getElementById('footnoteSidebar');
+    const footnoteContent = document.getElementById('footnoteContent');
+    const navButtons = document.getElementById('navButtons');
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    const scrollBottomBtn = document.getElementById('scrollBottomBtn');
+
+    let footnotesData = {};
 
     const defaultText = `# 测试示例 v1.2
 
@@ -336,10 +411,11 @@ $$
 *(图注：这是一个来自维基共享资源的潜变量增长曲线模型示例)*
 
 ## 4. 引用 (Footnotes)
-在许多宏观经济模型中，理性预期是一个核心假设[^1]。当然，行为经济学对此提出了挑战[^2]。
+在许多宏观经济模型中，理性预期是一个核心假设[^*]。当然，行为经济学对此提出了挑战[^†]。另一个例子[^1]。
 
-[^1]: 参见 Muth (1961) 关于理性预期的开创性论文。
-[^2]: 参见 Thaler (2015) *Misbehaving: The Making of Behavioral Economics*.
+[^*]: 参见 Muth (1961) 关于理性预期的开创性论文。
+[^†]: 参见 Thaler (2015) *Misbehaving: The Making of Behavioral Economics*.
+[^1]: 这是一个数字标注的脚注示例。
 
 ---
 > **内容声明**：
@@ -354,6 +430,37 @@ $$
         isRowLayout = !isRowLayout;
         container.classList.toggle('row', isRowLayout);
         container.classList.toggle('column', !isRowLayout);
+        updateSidebarPosition();
+    });
+
+    // 更新侧边栏位置
+    function updateSidebarPosition() {
+        if (isRowLayout) {
+            leftSidebar.style.left = 'calc(50% + 20px)';
+        } else {
+            leftSidebar.style.left = '20px';
+        }
+    }
+
+    // 滚动显示/隐藏导航按钮
+    let scrollTimeout;
+    previewPane.addEventListener('scroll', () => {
+        navButtons.classList.add('visible');
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            navButtons.classList.remove('visible');
+        }, 2000);
+
+        // 更新悬浮脚注
+        updateActiveFootnote();
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+        previewPane.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    scrollBottomBtn.addEventListener('click', () => {
+        previewPane.scrollTo({ top: previewPane.scrollHeight, behavior: 'smooth' });
     });
 
     function safeMarkedParse(text) {
@@ -366,11 +473,7 @@ $$
     }
 
     function normalizeId(str) {
-        return str
-            .toLowerCase()
-            .replace(/[^\w\u4e00-\u9fa5\- ]+/g, '')
-            .trim()
-            .replace(/\s+/g, '-');
+        return str.toLowerCase().replace(/[^\w\u4e00-\u9fa5\- ]+/g, '').trim().replace(/\s+/g, '-');
     }
 
     function buildToc() {
@@ -401,14 +504,65 @@ $$
         tocList.appendChild(frag);
     }
 
+    function buildFootnoteSidebar() {
+        footnoteContent.innerHTML = '';
+        const labels = Object.keys(footnotesData);
+        if (labels.length === 0) {
+            footnoteSidebar.style.display = 'none';
+            return;
+        }
+        footnoteSidebar.style.display = 'block';
+        labels.forEach(label => {
+            const item = footnotesData[label];
+            const div = document.createElement('div');
+            div.className = 'footnote-item';
+            div.id = 'fn-sidebar-' + label.replace(/[^\w]/g, '_');
+            div.dataset.label = label;
+            div.innerHTML = `<span class="footnote-label">[${label}]</span><span>${item.content}</span>`;
+            footnoteContent.appendChild(div);
+        });
+    }
+
+    function updateActiveFootnote() {
+        const refs = previewArea.querySelectorAll('.footnote-ref');
+        const viewportTop = previewPane.scrollTop;
+        const viewportBottom = viewportTop + previewPane.clientHeight;
+
+        // 找到当前可见的脚注引用
+        let activeLabels = [];
+        refs.forEach(ref => {
+            const rect = ref.getBoundingClientRect();
+            const paneRect = previewPane.getBoundingClientRect();
+            const relativeTop = rect.top - paneRect.top + previewPane.scrollTop;
+            if (relativeTop >= viewportTop - 50 && relativeTop <= viewportBottom + 50) {
+                activeLabels.push(ref.dataset.label);
+            }
+        });
+
+        // 更新侧边栏显示
+        const allItems = footnoteContent.querySelectorAll('.footnote-item');
+        allItems.forEach(item => {
+            if (activeLabels.includes(item.dataset.label)) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+
+        // 如果没有活动的，显示第一个
+        if (activeLabels.length === 0 && allItems.length > 0) {
+            allItems[0].classList.add('active');
+        }
+    }
+
     function parseAcademicMarkdown(text) {
         let mathBlocks = [];
-        let footnotes = {};
-        let footnoteIndex = 1;
+        footnotesData = {};
 
         const hasToc = /^\s*\[TOC\]\s*$/m.test(text);
         text = text.replace(/^\s*\[TOC\]\s*$/m, '');
 
+        // 保护数学公式
         text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
             mathBlocks.push(match);
             return "MATH_BLOCK_PLACEHOLDER_" + (mathBlocks.length - 1);
@@ -418,34 +572,33 @@ $$
             return "MATH_INLINE_PLACEHOLDER_" + (mathBlocks.length - 1);
         });
 
+        // 提取脚注定义 - 保留原始标签
         const footnoteDefRegex = /^\[\^([^\]]+)\]:\s*(.*)$/gm;
         text = text.replace(footnoteDefRegex, (match, label, content) => {
-            footnotes[label] = { id: footnoteIndex++, content: content };
+            footnotesData[label] = { label: label, content: content };
             return "";
         });
 
+        // 替换脚注引用 - 使用原始标签
         text = text.replace(/\[\^([^\]]+)\]/g, (match, label) => {
-            if (footnotes[label]) {
-                const id = footnotes[label].id;
-                return `<sup><a href="#fn-${id}" id="fnref-${id}" class="footnote-ref">${id}</a></sup>`;
+            if (footnotesData[label]) {
+                return `<sup><a href="javascript:void(0)" class="footnote-ref" data-label="${label}" onclick="showFootnote('${label}')">${label}</a></sup>`;
             }
             return match;
         });
 
         let html = safeMarkedParse(text);
 
+        // 还原数学公式
         html = html.replace(/MATH_BLOCK_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
         html = html.replace(/MATH_INLINE_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
 
-        if (Object.keys(footnotes).length > 0 && window.marked && typeof window.marked.parseInline === 'function') {
+        // 生成隐藏的脚注区域（用于小屏幕）
+        if (Object.keys(footnotesData).length > 0 && window.marked && typeof window.marked.parseInline === 'function') {
             let footnoteHtml = '<div class="footnotes"><hr><ol>';
-            const sortedKeys = Object.keys(footnotes).sort((a, b) => footnotes[a].id - footnotes[b].id);
-            sortedKeys.forEach(key => {
-                const item = footnotes[key];
-                footnoteHtml += `<li id="fn-${item.id}">
-                    ${window.marked.parseInline(item.content)} 
-                    <a href="#fnref-${item.id}" class="footnote-backref">↩</a>
-                </li>`;
+            Object.keys(footnotesData).forEach(label => {
+                const item = footnotesData[label];
+                footnoteHtml += `<li><strong>[${label}]</strong> ${window.marked.parseInline(item.content)}</li>`;
             });
             footnoteHtml += '</ol></div>';
             html += footnoteHtml;
@@ -453,16 +606,33 @@ $$
 
         previewArea.innerHTML = html;
 
-        if (hasToc) {
-            tocNav.style.display = 'block';
-            buildToc();
+        if (hasToc || Object.keys(footnotesData).length > 0) {
+            leftSidebar.style.display = 'flex';
+            if (hasToc) {
+                tocNav.style.display = 'block';
+                buildToc();
+            } else {
+                tocNav.style.display = 'none';
+            }
+            buildFootnoteSidebar();
+            updateActiveFootnote();
         } else {
-            tocNav.style.display = 'none';
-            tocList.innerHTML = '';
+            leftSidebar.style.display = 'none';
         }
 
         return previewArea.innerHTML;
     }
+
+    // 点击脚注引用时高亮侧边栏对应项
+    window.showFootnote = function(label) {
+        const allItems = footnoteContent.querySelectorAll('.footnote-item');
+        allItems.forEach(item => item.classList.remove('active'));
+        const target = footnoteContent.querySelector(`[data-label="${label}"]`);
+        if (target) {
+            target.classList.add('active');
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
 
     function render() {
         const mdText = inputArea.value;
@@ -472,6 +642,8 @@ $$
         if (window.MathJax && window.MathJax.typesetPromise) {
             window.MathJax.typesetPromise([previewArea]).catch((err) => console.log(err));
         }
+
+        updateSidebarPosition();
     }
 
     let timeoutId;
@@ -528,6 +700,7 @@ body { height: auto; display: block; overflow-y: auto; }
 .editor-pane { display: none; }
 .container { display: flex; }
 .preview-pane { width: calc(100% - 320px); }
+.footnotes { display: block; margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--border-color); font-size: 0.9em; }
 </style>
 </head>
 <body>
