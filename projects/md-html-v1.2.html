@@ -35,16 +35,13 @@
             --blockquote-color: #656565;
             --blockquote-border: #bababa;
             --footnote-text: #555;
-
             --toc-bg: #ffffffcc;
             --toc-text: #333;
             --toc-border: #ddd;
             --toc-link: #8dd4e8;
-
             --scrollbar-thumb: #c0c0c0;
             --scrollbar-thumb-hover: #a0a0a0;
             --scrollbar-track: transparent;
-
             --nav-btn-color: #6ab0c2;
         }
 
@@ -58,15 +55,12 @@
                 --blockquote-color: #bdc1c6;
                 --blockquote-border: #5f6368;
                 --footnote-text: #9aa0a6;
-
                 --toc-bg: #2b2b2bcc;
                 --toc-text: #ddd;
                 --toc-border: #4a4a4a;
                 --toc-link: #8dd4e8;
-
                 --scrollbar-thumb: #5f6368;
                 --scrollbar-thumb-hover: #80868b;
-
                 --nav-btn-color: #5a9aaa;
             }
         }
@@ -131,18 +125,14 @@
             border-right: 1px solid var(--border-color);
             border-bottom: none;
         }
-        .container.row .preview-pane {
-            width: 60%;
-        }
+        .container.row .preview-pane { width: 60%; }
 
         .container.column .editor-pane {
             height: 50%;
             border-bottom: 1px solid var(--border-color);
             border-right: none;
         }
-        .container.column .preview-pane {
-            height: 50%;
-        }
+        .container.column .preview-pane { height: 50%; }
 
         textarea {
             width: 100%; height: 100%;
@@ -253,7 +243,6 @@
     <div class="editor-pane">
         <textarea id="markdown-input" placeholder="输入 Markdown..."></textarea>
     </div>
-
     <div class="preview-pane" id="previewPane">
         <div id="write"></div>
     </div>
@@ -284,7 +273,7 @@
 这是 **Markdown to HTML Tool v1.2** 的功能演示。
 
 - 本网页端工具为使用Github Copilot调用\`Gemini-3-Pro\`和\`GPT-5\`氛围编程 (vibe coding) 的产出，旨在实现 Markdown 转特定格式 HTML 的功能。
-- 本网页端工具仅通过您的浏览器在本地运行，**不会**��留或分析您输入的任何数据。
+- 本网页端工具仅通过您的浏览器在本地运行，**不会**保留或分析您输入的任何数据。
 
 ## 1. 基础排版
 ### 1.1 列表展示
@@ -362,13 +351,17 @@ $$
         if (window.marked && typeof window.marked.parse === 'function') {
             return window.marked.parse(text);
         } else {
-            console.error('marked 未加载，请检查 CDN 或改用本地文件。');
+            console.error('marked 未加载');
             return text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
         }
     }
 
     function normalizeId(str) {
         return str.toLowerCase().replace(/[^\w\u4e00-\u9fa5\- ]+/g, '').trim().replace(/\s+/g, '-');
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
     function parseAcademicMarkdown(text) {
@@ -395,7 +388,8 @@ $$
 
         text = text.replace(/\[\^([^\]]+)\]/g, (match, label) => {
             if (footnotesData[label]) {
-                return `<sup><a href="#fn-${encodeURIComponent(label)}" id="fnref-${encodeURIComponent(label)}" class="footnote-ref">[${label}]</a></sup>`;
+                const safeLabel = escapeHtml(label);
+                return '<sup><a href="#fn-' + safeLabel + '" id="fnref-' + safeLabel + '" class="footnote-ref">[' + safeLabel + ']</a></sup>';
             }
             return match;
         });
@@ -404,16 +398,6 @@ $$
 
         html = html.replace(/MATH_BLOCK_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
         html = html.replace(/MATH_INLINE_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
-
-        if (Object.keys(footnotesData).length > 0 && window.marked && typeof window.marked.parseInline === 'function') {
-            let footnoteHtml = '<div class="footnotes"><hr><ol>';
-            Object.keys(footnotesData).forEach(label => {
-                const item = footnotesData[label];
-                footnoteHtml += `<li id="fn-${encodeURIComponent(label)}"><strong>[${label}]</strong> ${window.marked.parseInline(item.content)} <a href="#fnref-${encodeURIComponent(label)}" class="footnote-backref">↩</a></li>`;
-            });
-            footnoteHtml += '</ol></div>';
-            html += footnoteHtml;
-        }
 
         return { html, hasToc, footnotesData };
     }
@@ -458,6 +442,7 @@ $$
         const rawMarkdown = inputArea.value;
         const result = parseAcademicMarkdown(rawMarkdown);
         
+        // 生成TOC
         let tocHtml = '';
         if (result.hasToc) {
             const tempDiv = document.createElement('div');
@@ -468,276 +453,134 @@ $$
                 tocHtml = '<nav class="toc-sidebar" aria-label="目录"><div class="toc-title">TOC</div><ul class="toc-list">';
                 headings.forEach((h, idx) => {
                     const level = parseInt(h.tagName.substring(1), 10);
-                    const id = h.id || ('heading-' + idx);
+                    let id = normalizeId(h.textContent);
+                    if (!id) id = 'heading-' + idx;
                     h.id = id;
                     const indent = level === 2 ? 'toc-indent-2' : level === 3 ? 'toc-indent-3' : '';
-                    tocHtml += `<li><a href="#${id}" class="toc-link ${indent}">${h.textContent}</a></li>`;
+                    tocHtml += '<li><a href="#' + id + '" class="toc-link ' + indent + '">' + escapeHtml(h.textContent) + '</a></li>';
                 });
                 tocHtml += '</ul></nav>';
                 result.html = tempDiv.innerHTML;
             }
         }
 
+        // 生成脚注
         let footnotesHtml = '';
-        if (Object.keys(result.footnotesData).length > 0) {
+        const fnKeys = Object.keys(result.footnotesData);
+        if (fnKeys.length > 0) {
             footnotesHtml = '<div class="footnote-column">';
-            Object.keys(result.footnotesData).forEach(label => {
+            fnKeys.forEach(label => {
                 const item = result.footnotesData[label];
-                const content = window.marked && typeof window.marked.parseInline === 'function' 
-                    ? window.marked.parseInline(item.content) 
-                    : item.content;
-                footnotesHtml += `<div class="footnote-item" id="fn-${encodeURIComponent(label)}"><span class="footnote-label">[${label}]</span> ${content} <a href="#fnref-${encodeURIComponent(label)}" class="footnote-backref">↩</a></div>`;
+                const safeLabel = escapeHtml(label);
+                let content = item.content;
+                if (window.marked && typeof window.marked.parseInline === 'function') {
+                    content = window.marked.parseInline(item.content);
+                }
+                footnotesHtml += '<div class="footnote-item" id="fn-' + safeLabel + '"><span class="footnote-label">[' + safeLabel + ']</span> ' + content + ' <a href="#fnref-' + safeLabel + '" class="footnote-backref">↩</a></div>';
             });
             footnotesHtml += '</div>';
         }
 
-        const htmlTemplate = `<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${fileName.replace('.html', '')}</title>
-<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<script>
-window.MathJax = {
-    tex: { inlineMath: [['$', '$'], ['\\\\(', '\\\\)']], displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']], tags: 'ams' },
-    svg: { fontCache: 'global' }
-};
-<\\/script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"><\\/script>
-<style>
-:root {
-    --bg-color: #f3f2ee;
-    --text-color: #1f0909;
-    --link-color: #8dd4e8;
-    --code-bg: #dadada;
-    --border-color: #c5c5c5;
-    --blockquote-color: #656565;
-    --blockquote-border: #bababa;
-    --footnote-text: #555;
-    --toc-bg: #ffffffcc;
-    --toc-text: #333;
-    --toc-border: #ddd;
-    --toc-link: #8dd4e8;
-    --nav-btn-color: #6ab0c2;
-    --scrollbar-thumb: #c0c0c0;
-    --scrollbar-thumb-hover: #a0a0a0;
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-color: #202124;
-        --text-color: #e8eaed;
-        --link-color: #8dd4e8;
-        --code-bg: #3c4043;
-        --border-color: #5f6368;
-        --blockquote-color: #bdc1c6;
-        --blockquote-border: #5f6368;
-        --footnote-text: #9aa0a6;
-        --toc-bg: #2b2b2bcc;
-        --toc-text: #ddd;
-        --toc-border: #4a4a4a;
-        --toc-link: #8dd4e8;
-        --nav-btn-color: #5a9aaa;
-        --scrollbar-thumb: #5f6368;
-        --scrollbar-thumb-hover: #80868b;
-    }
-}
+        // 构建导出HTML - 使用字符串拼接避免模板字符串问题
+        let htmlParts = [];
+        htmlParts.push('<!DOCTYPE html>');
+        htmlParts.push('<html>');
+        htmlParts.push('<head>');
+        htmlParts.push('<meta charset="UTF-8">');
+        htmlParts.push('<meta name="viewport" content="width=device-width, initial-scale=1">');
+        htmlParts.push('<title>' + escapeHtml(fileName.replace('.html', '')) + '</title>');
+        htmlParts.push('<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">');
+        htmlParts.push('<script>');
+        htmlParts.push('window.MathJax = {');
+        htmlParts.push('    tex: { inlineMath: [["$", "$"], ["\\\\(", "\\\\)"]], displayMath: [["$$", "$$"], ["\\\\[", "\\\\]"]], tags: "ams" },');
+        htmlParts.push('    svg: { fontCache: "global" }');
+        htmlParts.push('};');
+        htmlParts.push('</' + 'script>');
+        htmlParts.push('<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></' + 'script>');
+        htmlParts.push('<style>');
+        htmlParts.push(':root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #8dd4e8; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #8dd4e8; --nav-btn-color: #6ab0c2; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; }');
+        htmlParts.push('@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #8dd4e8; --code-bg: #3c4043; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #8dd4e8; --nav-btn-color: #5a9aaa; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; } }');
+        htmlParts.push('::-webkit-scrollbar { width: 8px; height: 8px; }');
+        htmlParts.push('::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }');
+        htmlParts.push('::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }');
+        htmlParts.push('::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }');
+        htmlParts.push('* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }');
+        htmlParts.push('body { margin: 0; padding: 0; font-family: "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }');
+        htmlParts.push('.page-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 20px; gap: 30px; }');
+        htmlParts.push('.left-column { width: 220px; flex-shrink: 0; position: sticky; top: 20px; align-self: flex-start; max-height: calc(100vh - 40px); display: flex; flex-direction: column; }');
+        htmlParts.push('.toc-sidebar { max-height: 45vh; overflow-y: auto; padding: 12px 14px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 15px; }');
+        htmlParts.push('.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }');
+        htmlParts.push('.toc-list { list-style: none; margin: 0; padding: 0; }');
+        htmlParts.push('.toc-list li { margin: 4px 0; }');
+        htmlParts.push('.toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; display: block; }');
+        htmlParts.push('.toc-link:hover { text-decoration: underline; }');
+        htmlParts.push('.toc-indent-2 { margin-left: 12px; font-size: 13.5px; }');
+        htmlParts.push('.toc-indent-3 { margin-left: 24px; font-size: 13px; }');
+        htmlParts.push('.footnote-column { flex: 1; overflow-y: auto; font-size: 0.85em; color: var(--footnote-text); padding-top: 10px; }');
+        htmlParts.push('.footnote-item { padding: 8px 0; border-bottom: 1px solid var(--border-color); line-height: 1.5; }');
+        htmlParts.push('.footnote-item:last-child { border-bottom: none; }');
+        htmlParts.push('.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 6px; }');
+        htmlParts.push('.footnote-backref { color: var(--link-color); text-decoration: none; margin-left: 5px; }');
+        htmlParts.push('.footnote-backref:hover { text-decoration: underline; }');
+        htmlParts.push('.main-content { flex: 1; min-width: 0; }');
+        htmlParts.push('#write { max-width: 900px; padding-bottom: 80px; }');
+        htmlParts.push('#write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); }');
+        htmlParts.push('#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }');
+        htmlParts.push('#write h2 { font-size: 1.5em; }');
+        htmlParts.push('#write h3 { font-size: 1.3em; font-weight: normal; }');
+        htmlParts.push('#write a { color: var(--link-color); text-decoration: none; }');
+        htmlParts.push('#write a:hover { text-decoration: underline; }');
+        htmlParts.push('#write ul, #write ol { padding-left: 1.5em; margin-left: 0; margin-bottom: 1em; }');
+        htmlParts.push('#write li { margin-bottom: 0.3em; }');
+        htmlParts.push('#write blockquote { font-style: italic; border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }');
+        htmlParts.push('#write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }');
+        htmlParts.push('#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }');
+        htmlParts.push('#write thead { background-color: var(--code-bg); }');
+        htmlParts.push('#write code { font-family: "Consolas", monospace; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }');
+        htmlParts.push('#write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 4px; }');
+        htmlParts.push('#write pre code { padding: 0; background-color: transparent; }');
+        htmlParts.push('#write img { max-width: 100%; display: block; margin: 1em auto; }');
+        htmlParts.push('.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }');
+        htmlParts.push('.footnote-ref:hover { text-decoration: underline; }');
+        htmlParts.push('mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }');
+        htmlParts.push('.nav-buttons { position: fixed; right: 30px; bottom: 30px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s ease; z-index: 1000; }');
+        htmlParts.push('.nav-buttons.visible { opacity: 1; }');
+        htmlParts.push('.nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, background 0.2s; }');
+        htmlParts.push('.nav-btn:hover { transform: scale(1.1); background: var(--link-color); }');
+        htmlParts.push('@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; gap: 15px; } .toc-sidebar { max-height: 200px; flex: 1; min-width: 200px; margin-bottom: 0; } .footnote-column { flex: 1; min-width: 200px; max-height: 200px; } .nav-buttons { right: 15px; bottom: 15px; } }');
+        htmlParts.push('</style>');
+        htmlParts.push('</head>');
+        htmlParts.push('<body>');
+        htmlParts.push('<div class="page-container">');
+        htmlParts.push('<div class="left-column">');
+        htmlParts.push(tocHtml);
+        htmlParts.push(footnotesHtml);
+        htmlParts.push('</div>');
+        htmlParts.push('<div class="main-content">');
+        htmlParts.push('<div id="write">');
+        htmlParts.push(result.html);
+        htmlParts.push('</div>');
+        htmlParts.push('</div>');
+        htmlParts.push('</div>');
+        htmlParts.push('<div id="navButtons" class="nav-buttons">');
+        htmlParts.push('<button class="nav-btn" onclick="window.scrollTo({top:0,behavior:\'smooth\'})" title="回到顶端">↑</button>');
+        htmlParts.push('<button class="nav-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:\'smooth\'})" title="回到底端">↓</button>');
+        htmlParts.push('</div>');
+        htmlParts.push('<script>');
+        htmlParts.push('var scrollTimeout;');
+        htmlParts.push('window.addEventListener("scroll", function() {');
+        htmlParts.push('    document.getElementById("navButtons").classList.add("visible");');
+        htmlParts.push('    clearTimeout(scrollTimeout);');
+        htmlParts.push('    scrollTimeout = setTimeout(function() {');
+        htmlParts.push('        document.getElementById("navButtons").classList.remove("visible");');
+        htmlParts.push('    }, 2000);');
+        htmlParts.push('});');
+        htmlParts.push('</' + 'script>');
+        htmlParts.push('</body>');
+        htmlParts.push('</html>');
 
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
-::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
-* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
-
-body {
-    margin: 0; padding: 0;
-    font-family: "PT Serif", "Times New Roman", Times, serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    line-height: 1.6;
-}
-
-.page-container {
-    display: flex;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
-    gap: 30px;
-}
-
-.left-column {
-    width: 220px;
-    flex-shrink: 0;
-    position: sticky;
-    top: 20px;
-    align-self: flex-start;
-    max-height: calc(100vh - 40px);
-    display: flex;
-    flex-direction: column;
-}
-
-.toc-sidebar {
-    max-height: 45vh;
-    overflow-y: auto;
-    padding: 12px 14px;
-    background: var(--toc-bg);
-    border: 1px solid var(--toc-border);
-    border-radius: 8px;
-    color: var(--toc-text);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    margin-bottom: 15px;
-}
-.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }
-.toc-list { list-style: none; margin: 0; padding: 0; }
-.toc-list li { margin: 4px 0; }
-.toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; display: block; }
-.toc-link:hover { text-decoration: underline; }
-.toc-indent-2 { margin-left: 12px; font-size: 13.5px; }
-.toc-indent-3 { margin-left: 24px; font-size: 13px; }
-
-.footnote-column {
-    flex: 1;
-    overflow-y: auto;
-    font-size: 0.85em;
-    color: var(--footnote-text);
-    padding-top: 10px;
-}
-.footnote-item {
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border-color);
-    line-height: 1.5;
-}
-.footnote-item:last-child { border-bottom: none; }
-.footnote-label {
-    font-weight: bold;
-    color: var(--link-color);
-    margin-right: 6px;
-}
-.footnote-backref {
-    color: var(--link-color);
-    text-decoration: none;
-    margin-left: 5px;
-}
-.footnote-backref:hover { text-decoration: underline; }
-
-.main-content {
-    flex: 1;
-    min-width: 0;
-}
-
-#write { max-width: 900px; padding-bottom: 80px; }
-#write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); }
-#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
-#write h2 { font-size: 1.5em; }
-#write h3 { font-size: 1.3em; font-weight: normal; }
-#write a { color: var(--link-color); text-decoration: none; }
-#write a:hover { text-decoration: underline; }
-#write ul, #write ol { padding-left: 1.5em; margin-left: 0; margin-bottom: 1em; }
-#write li { margin-bottom: 0.3em; }
-#write blockquote { font-style: italic; border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }
-#write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
-#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
-#write thead { background-color: var(--code-bg); }
-#write code { font-family: "Consolas", monospace; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
-#write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 4px; }
-#write pre code { padding: 0; background-color: transparent; }
-#write img { max-width: 100%; display: block; margin: 1em auto; }
-
-.footnote-ref {
-    font-size: 0.8em;
-    vertical-align: super;
-    margin-left: 2px;
-    color: var(--link-color);
-    text-decoration: none;
-}
-.footnote-ref:hover { text-decoration: underline; }
-
-.footnotes { display: none; }
-
-mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
-
-.nav-buttons {
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 1000;
-}
-.nav-buttons.visible { opacity: 1; }
-.nav-btn {
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    background: var(--nav-btn-color);
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    transition: transform 0.2s, background 0.2s;
-}
-.nav-btn:hover {
-    transform: scale(1.1);
-    background: var(--link-color);
-}
-
-@media (max-width: 900px) {
-    .page-container { flex-direction: column; padding: 15px; }
-    .left-column { 
-        width: 100%; 
-        position: static; 
-        max-height: none;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-    .toc-sidebar { max-height: 200px; flex: 1; min-width: 200px; margin-bottom: 0; }
-    .footnote-column { flex: 1; min-width: 200px; max-height: 200px; }
-    .nav-buttons { right: 15px; bottom: 15px; }
-}
-</style>
-</head>
-<body>
-
-<div class="page-container">
-    <div class="left-column">
-        ${tocHtml}
-        ${footnotesHtml}
-    </div>
-    <div class="main-content">
-        <div id="write">
-${result.html}
-        </div>
-    </div>
-</div>
-
-<div id="navButtons" class="nav-buttons">
-    <button class="nav-btn" id="scrollTopBtn" title="回到顶端" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-    <button class="nav-btn" id="scrollBottomBtn" title="回到底端" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">↓</button>
-</div>
-
-<script>
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-    document.getElementById('navButtons').classList.add('visible');
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-        document.getElementById('navButtons').classList.remove('visible');
-    }, 2000);
-});
-<\\/script>
-
-</body>
-</html>`;
-
-        const blob = new Blob([htmlTemplate], { type: 'text/html' });
+        const finalHtml = htmlParts.join('\n');
+        const blob = new Blob([finalHtml], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
