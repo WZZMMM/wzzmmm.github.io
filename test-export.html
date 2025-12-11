@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>test-export</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+    tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], tags: "ams" },
+    svg: { fontCache: "global" }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #8dd4e8; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #8dd4e8; --nav-btn-color: #6ab0c2; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; }
+@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #8dd4e8; --code-bg: #3c4043; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #8dd4e8; --nav-btn-color: #5a9aaa; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; } }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+body { margin: 0; padding: 0; font-family: "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+.page-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 20px; gap: 20px; }
+.left-column { width: 15%; flex-shrink: 0; position: sticky; top: 20px; align-self: flex-start; max-height: calc(100vh - 40px); display: flex; flex-direction: column; }
+.toc-sidebar { max-height: 45vh; overflow-y: auto; padding: 12px 14px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 15px; }
+.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-list li { margin: 4px 0; }
+.toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; display: block; }
+.toc-link:hover { text-decoration: underline; }
+.toc-indent-2 { margin-left: 12px; font-size: 13.5px; }
+.toc-indent-3 { margin-left: 24px; font-size: 13px; }
+.main-content { flex: 1; min-width: 0; padding-right: 5%; position: relative; }
+#write { max-width: 900px; padding-bottom: 80px; }
+#write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); }
+#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
+#write h2 { font-size: 1.5em; }
+#write h3 { font-size: 1.3em; font-weight: normal; }
+#write a { color: var(--link-color); text-decoration: none; }
+#write a:hover { text-decoration: underline; }
+#write ul, #write ol { padding-left: 1.5em; margin-left: 0; margin-bottom: 1em; }
+#write li { margin-bottom: 0.3em; }
+#write blockquote { font-style: italic; border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }
+#write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
+#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
+#write thead { background-color: var(--code-bg); }
+#write code { font-family: "Consolas", monospace; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+#write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 4px; }
+#write pre code { padding: 0; background-color: transparent; }
+#write img { max-width: 100%; display: block; margin: 1em auto; }
+.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }
+.footnote-ref:hover { text-decoration: underline; }
+.sidenote { position: absolute; left: -200px; width: 180px; font-size: 0.75em; line-height: 1.4; color: var(--footnote-text); margin-top: 0; padding: 8px 10px; }
+.sidenote a:link, .sidenote a:visited { color: #97b6b1; text-decoration: none; }
+.sidenote a:hover { text-decoration: underline; }
+mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+.nav-buttons { position: fixed; right: 30px; bottom: 30px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s ease; z-index: 1000; }
+.nav-buttons.visible { opacity: 1; }
+.nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, background 0.2s; }
+.nav-btn:hover { transform: scale(1.1); background: var(--link-color); }
+@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; } .toc-sidebar { max-height: 200px; } .main-content { padding-right: 0; } .sidenote { position: static; left: auto; width: 100%; margin-top: 0.5em; padding: 8px; background: var(--code-bg); border-left: 2px solid var(--border-color); } .nav-buttons { right: 15px; bottom: 15px; } }
+</style>
+</head>
+<body>
+<div class="page-container">
+<div class="left-column">
+
+</div>
+<div class="main-content">
+<div id="write">
+# 测试示例 v1.2<br><br>这是 **Markdown to HTML Tool v1.2** 的功能演示。<br><br>- 本网页端工具为使用Github Copilot调用`Gemini-3-Pro`和`GPT-5`氛围编程 (vibe coding) 的产出，旨在实现 Markdown 转特定格式 HTML 的功能。<br>- 本网页端工具仅通过您的浏览器在本地运行，**不会**保留或分析您输入的任何数据。<br><br>## 1. 基础排版<br>### 1.1 列表展示<br>* **无序列表**：<br>    * 经济学 (Economics)<br>    * 计量经济学 (Econometrics)<br>* **有序列表**：<br>    1.  第一步：数据收集<br>    2.  第二步：模型设定<br>    3.  第三步：假设检验<br><br>### 1.2 表格 (Table)<br>| 变量名 | 描述 | 数据类型 |<br>| :--- | :--- | :--- |<br>| GDP | 国内生产总值 | 连续变量 |<br>| $r_t$ | 实际利率 | 连续变量 |<br>| $D_i$ | 虚拟变量 | 0/1 |<br><br>## 2. 数学公式 (MathJax)<br>**行内公式**：根据欧拉方程 $u'(c_t) = \beta E_t [R_{t+1} u'(c_{t+1})]$，我们可以推导消费路径。<br><br>**块级公式 (Block Math)**：<br>考虑如下的一般均衡模型的一阶条件：<br>$$
+\mathcal{L} = \sum_{t=0}^{\infty} \beta^t \left[ \frac{c_t^{1-\sigma}}{1-\sigma} - \lambda_t (c_t + k_{t+1} - f(k_t) - (1-\delta)k_t) \right]
+$$<br><br>## 3. 多媒体与链接<br>### 3.1 外部链接<br>关于作者更多信息，请访问 [WZM的个人主页](https://wzzmmm.github.io/)。<br><br>### 3.2 图片引用<br>![示例图片](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Latent_growth_curve_model.svg/640px-Latent_growth_curve_model.svg.png)<br>*(图注：这是一个来自维基共享资源的潜变量增长曲线模型示例)*<br><br>## 4. 引用 (Footnotes)<br>在许多宏观经济模型中，理性预期是一个核心假设&lt;sup class="footnote-ref-wrapper"&gt;&lt;a href="#fn-*" id="fnref-*" class="footnote-ref"&gt;[*]&lt;/a&gt;&lt;span class="sidenote" id="fn-*"&gt;参见 Muth (1961) 关于理性预期的开创性论文。&lt;/span&gt;&lt;/sup&gt;。当然，行为经济学对此提出了挑战&lt;sup class="footnote-ref-wrapper"&gt;&lt;a href="#fn-†" id="fnref-†" class="footnote-ref"&gt;[†]&lt;/a&gt;&lt;span class="sidenote" id="fn-†"&gt;参见 Thaler (2015) *Misbehaving: The Making of Behavioral Economics*.&lt;/span&gt;&lt;/sup&gt;。另一个例子&lt;sup class="footnote-ref-wrapper"&gt;&lt;a href="#fn-1" id="fnref-1" class="footnote-ref"&gt;[1]&lt;/a&gt;&lt;span class="sidenote" id="fn-1"&gt;这是一个数字标注的脚注示例。&lt;/span&gt;&lt;/sup&gt;。<br><br><br><br><br><br>---<br>&gt; **内容声明**：<br>&gt; 大语言模型的幻觉可能加剧了学术研究中的"胡扯"(bullshit)，本示例中的所有内容均仅为示例。<br>
+</div>
+</div>
+</div>
+<div id="navButtons" class="nav-buttons">
+<button class="nav-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶端">↑</button>
+<button class="nav-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" title="回到底端">↓</button>
+</div>
+<script>
+var scrollTimeout;
+window.addEventListener("scroll", function() {
+    document.getElementById("navButtons").classList.add("visible");
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function() {
+        document.getElementById("navButtons").classList.remove("visible");
+    }, 2000);
+});
+</script>
+</body>
+</html>

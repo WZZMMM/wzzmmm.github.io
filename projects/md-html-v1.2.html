@@ -389,9 +389,8 @@ $$
         text = text.replace(/\[\^([^\]]+)\]/g, (match, label) => {
             if (footnotesData[label]) {
                 const safeLabel = escapeHtml(label);
-                const content = escapeHtml(footnotesData[label].content);
-                // Create sidenote inline with the reference
-                return '<sup class="footnote-ref-wrapper"><a href="#fn-' + safeLabel + '" id="fnref-' + safeLabel + '" class="footnote-ref">[' + safeLabel + ']</a><span class="sidenote" id="fn-' + safeLabel + '">' + content + '</span></sup>';
+                // Create a placeholder that will be replaced after markdown parsing
+                return 'FOOTNOTE_REF_PLACEHOLDER_' + safeLabel + '_END';
             }
             return match;
         });
@@ -400,6 +399,22 @@ $$
 
         html = html.replace(/MATH_BLOCK_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
         html = html.replace(/MATH_INLINE_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
+
+        // Now replace footnote placeholders with sidenotes (after markdown parsing)
+        html = html.replace(/FOOTNOTE_REF_PLACEHOLDER_([^_]+)_END/g, (match, safeLabel) => {
+            const item = footnotesData[safeLabel];
+            if (item) {
+                let content = item.content;
+                // Parse the footnote content as inline markdown
+                if (window.marked && typeof window.marked.parseInline === 'function') {
+                    content = window.marked.parseInline(item.content);
+                } else {
+                    content = escapeHtml(content);
+                }
+                return '<sup class="footnote-ref-wrapper"><a href="#fn-' + safeLabel + '" id="fnref-' + safeLabel + '" class="footnote-ref">[' + safeLabel + ']</a><span class="sidenote" id="fn-' + safeLabel + '">' + content + '</span></sup>';
+            }
+            return match;
+        });
 
         return { html, hasToc, footnotesData };
     }
