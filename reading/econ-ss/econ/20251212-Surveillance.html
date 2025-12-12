@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>document-export</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+    tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], tags: "ams" },
+    svg: { fontCache: "global" }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #8dd4e8; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #8dd4e8; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; --nav-btn-color: #6ab0c2; }
+@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #8dd4e8; --code-bg: #3c4043; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #8dd4e8; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; --nav-btn-color: #5a9aaa; } }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+body { margin: 0; padding: 0; font-family: "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+.page-container { display: flex; flex-direction: row; max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+.left-column { width: 20%; min-width: 200px; flex-shrink: 0; position: relative; margin-right: 30px; border-right: 1px solid var(--border-color); padding-right: 20px; }
+.toc-sidebar { max-height: 40vh; overflow-y: auto; padding: 10px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); font-size: 0.9em; margin-bottom: 30px; }
+.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-list li { margin: 4px 0; }
+.toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; display: block; }
+.toc-link:hover { text-decoration: underline; }
+.toc-indent-2 { margin-left: 12px; font-size: 13.5px; }
+.toc-indent-3 { margin-left: 24px; font-size: 13px; }
+.footnote-column { position: relative; width: 100%; }
+.footnote-item { position: absolute; left: 0; width: 100%; font-size: 0.85em; color: var(--footnote-text); padding-bottom: 10px; box-sizing: border-box; transition: top 0.3s ease; }
+.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 4px; }
+.footnote-backref { color: var(--link-color); text-decoration: none; margin-left: 5px; }
+.footnote-backref:hover { text-decoration: underline; }
+.footnote-item a:not(.footnote-backref) { color: #97b6b1; text-decoration: none; }
+.footnote-item a:not(.footnote-backref):hover { text-decoration: underline; }
+.main-content { flex: 1; min-width: 0; padding-right: 5%; }
+#write { max-width: 900px; padding-bottom: 80px; }
+#write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); text-align: center; }
+#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
+#write h2 { font-size: 1.5em; }
+#write h3 { font-size: 1.3em; font-weight: normal; }
+#write a { color: var(--link-color); text-decoration: none; }
+#write a:hover { text-decoration: underline; }
+#write ul, #write ol { padding-left: 1.5em; margin-left: 0; margin-bottom: 1em; }
+#write li { margin-bottom: 0.3em; }
+#write blockquote { font-style: italic; border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }
+#write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
+#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
+#write thead { background-color: var(--code-bg); }
+#write code { font-family: "Consolas", monospace; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+#write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 4px; }
+#write pre code { padding: 0; background-color: transparent; }
+#write img { max-width: 100%; display: block; margin: 1em auto; }
+.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }
+.footnote-ref:hover { text-decoration: underline; }
+mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+.nav-buttons { position: fixed; right: 30px; bottom: 30px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s ease; z-index: 1000; }
+.nav-buttons.visible { opacity: 1; }
+.nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, background 0.2s; }
+.nav-btn:hover { transform: scale(1.1); background: var(--link-color); }
+@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; gap: 20px; margin-right: 0; border-right: none; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 20px; } .toc-sidebar { width: 100%; position: static; max-height: 200px; } .footnote-column { position: static; width: 100%; } .footnote-item { position: static; border-bottom: 1px solid var(--border-color); } .main-content { padding-right: 0; } }
+</style>
+</head>
+<body>
+<div class="page-container">
+<div class="left-column">
+<nav class="toc-sidebar" aria-label="目录"><div class="toc-title">TOC</div><ul class="toc-list"><li><a href="#9_digital-governance" class="toc-link ">9_Digital Governance</a></li><li><a href="#declaration-of-generative-ai-and-ai-assisted-technologies-in-the-writing-process" class="toc-link toc-indent-2">Declaration of Generative AI and AI-assisted technologies in the writing process</a></li><li><a href="#ma-xu-you-and-feng-2026-jde" class="toc-link toc-indent-2">Ma, Xu, You, and Feng (2026 JDE)</a></li><li><a href="#abstract" class="toc-link toc-indent-3">Abstract</a></li><li><a href="#research-question" class="toc-link toc-indent-3">Research Question</a></li><li><a href="#data" class="toc-link toc-indent-3">Data</a></li><li><a href="#method" class="toc-link toc-indent-3">Method</a></li><li><a href="#contribution" class="toc-link toc-indent-3">Contribution</a></li><li><a href="#results" class="toc-link toc-indent-3">Results</a></li><li><a href="#conclusion" class="toc-link toc-indent-3">Conclusion</a></li><li><a href="#stars-4" class="toc-link toc-indent-3">Stars: 4</a></li><li><a href="#comments" class="toc-link toc-indent-3">Comments</a></li><li><a href="#kala-and-lyons-2025-nber" class="toc-link toc-indent-2">Kala and Lyons (2025 NBER)</a></li><li><a href="#abstract" class="toc-link toc-indent-3">Abstract</a></li><li><a href="#research-question" class="toc-link toc-indent-3">Research Question</a></li><li><a href="#data" class="toc-link toc-indent-3">Data</a></li><li><a href="#method" class="toc-link toc-indent-3">Method</a></li><li><a href="#contribution" class="toc-link toc-indent-3">Contribution</a></li><li><a href="#results" class="toc-link toc-indent-3">Results</a></li><li><a href="#conclusion" class="toc-link toc-indent-3">Conclusion</a></li><li><a href="#stars-3" class="toc-link toc-indent-3">Stars: 3</a></li></ul></nav>
+
+</div>
+<div class="main-content">
+<div id="write">
+<h1 id="9_digital-governance">9_Digital Governance</h1>
+<p>I choose two papers about <strong>digital surveillance</strong>: One is about "surveillance cameras" as a powerful tool of digital governance in the societal level, while the other is not closely related to today's topic (perhaps it should be included in the previous topics) and is about "workplace surveillance."</p>
+<h2 id="declaration-of-generative-ai-and-ai-assisted-technologies-in-the-writing-process">Declaration of Generative AI and AI-assisted technologies in the writing process</h2>
+<p>During the preparation of this work, the author used OpenAI’s ChatGPT to improve the readability of some sentences. After using this tool, the author reviewed and edited the content as needed and takes full responsibility for the content of the publication.</p>
+<hr>
+<h2 id="ma-xu-you-and-feng-2026-jde">Ma, Xu, You, and Feng (2026 JDE)</h2>
+<ul>
+<li><strong>Title</strong>: Keeping an eye on the villain: assessing the impact of surveillance cameras on crime </li>
+<li><strong>DOI</strong>: <a href="https://www.sciencedirect.com/science/article/pii/S0304387825001087">10.1016/j.jdeveco.2025.103557</a></li>
+</ul>
+<h3 id="abstract">Abstract</h3>
+<ul>
+<li>This study estimates the causal impact of the massive installation of surveillance cameras on crime, using novel data from China between 2014 and 2019. </li>
+<li>Leveraging the preexisting presence of local camera manufacturers as an instrument for camera deployment intensity, we find that cities with denser surveillance networks experienced significantly steeper declines in crime. The reduction is more pronounced for publicly visible crimes. </li>
+<li>Enhanced surveillance is linked to higher satisfaction with the government and a greater sense of security, which in turn leads to longer working hours. </li>
+<li>A back-of-envelope calculation shows that preventing a crime costs approximately $6,373, which is highly cost-effective.</li>
+<li><em>Keywords</em>: Surveillance cameras, Crime deterrence, Cost of safety</li>
+</ul>
+<h3 id="research-question">Research Question</h3>
+<ul>
+<li>What's the causal impact of the massive installation of surveillance cameras on crime?  </li>
+<li>(Implicitly) How is the cost-benefit of the world’s most extensive surveillance network?</li>
+</ul>
+<h3 id="data">Data</h3>
+<ul>
+<li>Crime rates<ul>
+<li>China Judgments Online [CJO] database (2014-2019, 322 cities)</li>
+<li>Procuratorial Yearbook of China [PYC] manually collected (2009-2019, province level): 2009-2014 as placebo test</li>
+<li>We normalize the number of criminal cases by dividing each city’s total by its 2010 resident population (per 10,000 residents) to calculate crime rates.  </li>
+<li>The primary outcome variable is the growth rate of criminal cases, measured by the long difference in the logarithm of the total number of criminal cases between 2019 and 2014.</li>
+</ul>
+</li>
+<li>Density of surveillance cameras<ul>
+<li>Chinese Government Procurement [CGP] database: the number of contracts for surveillance cameras by city-year and the price of each procurement contract, sum to city-year level $\to$ calculate the total purchases of surveillance cameras from 2014 to 2019  </li>
+<li>To gauge the density of surveillance cameras, we normalize the cumulative number of contracts, the cumulative number of contracts with specified prices for cameras, and the total camera purchases from 2014 to 2019 by each city’s 2010 resident population (per 10,000 residents).</li>
+</ul>
+</li>
+<li>Instrumental variable and control variables  <ul>
+<li>State Administration for Industry and Commerce [SAIC] (via 天眼查): basic information of all firms that produced surveillance cameras, as well as firms that produced electronic products, prior to the extensive camera procurement and installation initiatives (we choose 2010)</li>
+<li>IV: the number of surveillance camera manufacturers, and alternatively, the number of electronic firms present in each city, in 2010. Both instruments use the number of <em>local</em> firms because municipal governments in China overwhelmingly favor local suppliers.  </li>
+<li>We construct other covariates that may influence the growth rate of crime using data from the 2005 and 2010 population censuses, the China City Statistical Yearbooks, and the China Economic Information Center (CEIC).</li>
+</ul>
+</li>
+<li>Descriptive statistics and Factors affecting surveillance cameras installation</li>
+</ul>
+<h3 id="method">Method</h3>
+<ul>
+<li><p>OLS
+$$
+  \Delta \log \left(C R I M E _ {c}\right) = \beta_ {1} \log \left(C A M E R A _ {c}\right) + \beta_ {2} \log \left(C R I M E _ {c, 2 0 1 4}\right)
+  + \Omega^ {\prime} X _ {c} + \varepsilon_ {c}
+  \tag{1}
+  $$</p>
+</li>
+<li><p>IV : the first-stage reg is
+$$
+  \log \left(C A M E R A _ {c}\right) = \beta {\rm asinh} \left(C A M E R A F I R M S _ {c, 2 0 1 0}\right)
+  + \gamma \log \left(C R I M E _ {c, 2 0 1 4}\right) + \tau X _ {c} + \epsilon_ {c}
+  \tag{2}
+  $$</p>
+</li>
+<li><p>Timing of the treatment effect  </p>
+<p>$$
+  \Delta \log C R I M E _ {c, 2 0 1 4 - t} = \beta_ {1} \log \mathrm {C a m e r a} _ {c, 2 0 1 4 - t} + \sum_ {t} X _ {c, t 0} * \delta_ {t} + \sum_ {t} \delta_ {t} + \epsilon_ {c t} \tag {3}
+  $$
+where the explanatory variable $𝐶𝑎𝑚𝑒𝑟𝑎𝑐_{2014−𝑡}$ is the cumulative investment in cameras per capita between $2014$ and year
+$t \in {2015, 2019}$. The first-stage reg is
+$$
+  \log C a m e r a _ {c, 2 0 1 4 - t} = \sum_ {t} \beta_ {1, t} C a m e r a F i r m s _ {c, 2 0 1 0} * \delta_ {t} + \sum_ {t} X _ {c, t 0} * \delta_ {t}  + \sum_ {t} \delta_ {t} + \epsilon_ {c t} 
+  \tag{4}
+  $$</p>
+</li>
+</ul>
+<h3 id="contribution">Contribution</h3>
+<ul>
+<li>First causal evidence on mass surveillance’s impact on crime in China, addressing scale effects beyond localized studies.</li>
+<li>Introduces novel data construction using textual analysis of judicial documents and procurement records.</li>
+<li>Expands to socioeconomic outcomes (e.g., government satisfaction, labor supply) and provides a cost-effectiveness analysis, showing diminishing returns but overall efficiency.</li>
+<li>Contributes to debates on privacy vs. security by documenting public support for surveillance in China’s context.</li>
+</ul>
+<h3 id="results">Results</h3>
+<ul>
+<li>Baseline IV: A 100% increase in per capita camera investment reduces crime rates by 10.1% (significant at 5% level).</li>
+<li>Heterogeneity: Stronger effects for publicly visible crimes (e.g., drug offenses: 14.3% reduction; property crime: 12.9% reduction). No significant impact on prostitution or gambling.</li>
+<li>Regional variation: Larger crime reduction in areas with higher minority shares or gender imbalances.</li>
+<li>Ancillary outcomes: Higher camera density correlates with increased sense of security, government satisfaction (0.081 points on a 1–5 scale), and labor supply (6.3% longer hours). Effects are slightly larger for women but not statistically significant.</li>
+<li>Cost-effectiveness: Preventing one crime costs about $6,373, with diminishing returns—costs triple as deployment scales from the 5th to 30th percentile of cities.</li>
+</ul>
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+<li>Massive surveillance camera deployment in China significantly deters crime, particularly offenses detectable in public spaces.</li>
+<li>The policy enhances public well-being by improving security perceptions and encouraging economic activity.</li>
+<li>Despite international criticisms on privacy concerns, the network is cost-effective compared to international benchmarks, supporting its viability as a crime-control tool.</li>
+</ul>
+<h3 id="stars-4">Stars: 4</h3>
+<ul>
+<li>rigor: 4</li>
+<li>innovation: 5</li>
+<li>writing style: 4</li>
+</ul>
+<h3 id="comments">Comments</h3>
+<ul>
+<li><p>This is some kind of "Tell China's stories well" (讲好中国故事), and it refutes the so-called "AI-tocracy" <a href="10.1093/qje/qjad012">(Beraja et al. 2023 QJE)</a> in some extent. It is a <em>real, novel, and major problem</em> that, for the first time, examines the causal relationship between broad <em>social surveillance</em> and crime deterrence using data collected through multiple channels.</p>
+<blockquote>
+<p>The widespread acceptance of surveillance cameras in China, as evidenced by local support, suggests the effectiveness of such technologies. This underscores the importance of context in policymaking concerning surveillance and privacy. Policymakers must acknowledge the varying perceptions of human rights and privacy in diverse cultural and political contexts. Hence, international criticisms of surveillance practices should consider these nuances rather than applying a uniform standard. For nations considering similar surveillance measures, it is imperative to understand the perspectives of their citizens, ensuring that policies not only bolster public safety but also uphold societal values and expectations. Finally, there is a compelling need to establish a framework for a comprehensive analysis of the benefits and costs of the widespread deployment of surveillance cameras, a task we defer to future research endeavors.  </p>
+</blockquote>
+</li>
+<li><p>Digital Village, as an important component of Digital China, not only related to Digital Agriculture, but also has been influencing many aspects of rural grassroots governance since the early 2010s. Perhaps there are more stories and data waiting for us to uncover.</p>
+</li>
+</ul>
+<hr>
+<h2 id="kala-and-lyons-2025-nber">Kala and Lyons (2025 NBER)</h2>
+<ul>
+<li><strong>Title</strong>: The effects of digital surveillance and managerial clarity on performance</li>
+<li><strong>DOI</strong>: 10.3386/w33348</li>
+</ul>
+<h3 id="abstract">Abstract</h3>
+<ul>
+<li>How managers frame the adoption of organizational practices may impact the returns to such practices, but managerial justification is often correlated with the use of particular practices or other dimensions of managerial quality. </li>
+<li>Using a randomized control trial, we study how the causal impacts of a frequently used monitoring management practice for remote work employers–digital worker surveillance–varies by randomly allocated justification for its use. In an online labor market, we divide workers into low and high-productivity performers, and randomize both whether surveillance is used and whether its use is justified based on the workers’ baseline productivity. </li>
+<li>We find that digital surveillance does not have significant effects on worker performance on average, but that not explaining the presence or elimination of digital surveillance based on worker performance significantly reduces worker output. </li>
+<li>Our results demonstrate a nuanced relationship between monitoring and worker performance that depends on how monitoring is rationalized to workers.</li>
+</ul>
+<h3 id="research-question">Research Question</h3>
+<ul>
+<li>What's the causal impact of digital worker surveillance vary depending on whether its use (or removal) is justified to workers based on their performance?</li>
+<li>Does managerial justification for monitoring decisions moderate the effects on worker performance and job satisfaction?</li>
+</ul>
+<h3 id="data">Data</h3>
+<ul>
+<li>RCT: 434 remote workers hired via the UpWork online labor platform. An 8-hour data entry job involving transferring financial data from poor-quality scanned PDFs into spreadsheets.</li>
+<li>Collected Data<ul>
+<li>Worker productivity (number of correct cell entries).</li>
+<li>Compliance with surveillance instructions.</li>
+<li>Post-task survey measures of job satisfaction (enjoyment, perceived fair pay, willingness to accept another job).</li>
+<li>Worker characteristics from UpWork profiles (location, gender, advertised wage) and survey-based measures of intrinsic / extrinsic motivation.</li>
+</ul>
+</li>
+</ul>
+<h3 id="method">Method</h3>
+<ul>
+<li><p>Experimental Design</p>
+<ol>
+<li><p>All workers performed the first 2 hours of the task under digital surveillance (UpWork's "Work Diary").</p>
+</li>
+<li><p>Workers were stratified into high- and low-productivity groups based on their initial performance relative to a baseline median.</p>
+</li>
+<li><p>For the final 6 hours, workers were randomly assigned to one of three conditions within their productivity group:</p>
+<ul>
+<li><p>High-productivity workers: (1) No surveillance-justified, (2) No surveillance-unjustified, (3) High-performance control (surveillance continues).</p>
+<ul>
+<li>Low-productivity workers: (1) Surveillance-justified, (2) Surveillance-unjustified, (3) Low-performance control (surveillance removed).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>Empirical Strategy: Intent-to-Treat (ITT) analysis. The primary estimates use a post-double selection LASSO estimator to select control variables for precision, but results are consistent with simple OLS.</p>
+</li>
+</ul>
+<h3 id="contribution">Contribution</h3>
+<ul>
+<li>Isolates the causal effect of <em>managerial justification</em> for a common monitoring practice (digital surveillance), which is often conflated with other managerial qualities in observational studies.</li>
+<li>Demonstrates that the <em>framing</em> of a management practice can be as important as the practice itself for determining its returns.</li>
+</ul>
+<h3 id="results">Results</h3>
+<ul>
+<li>Compliance<ul>
+<li>Workers complied near-perfectly when surveillance was required. High-productivity workers were significantly more likely to opt out of surveillance only when the option was justified by their performance.</li>
+</ul>
+</li>
+<li>Performance (Productivity)<ul>
+<li>Digital surveillance itself had no significant average effect on performance.</li>
+<li>However, <em>unjustified changes</em> significantly reduced performance: Low-productivity workers under <em>unjustified surveillance</em> and high-productivity workers in the <em>unjustified no-surveillance</em> group both saw performance drop by approximately 17% compared to their respective control groups.</li>
+<li>Performance changes were not driven by changes in error rates.</li>
+</ul>
+</li>
+<li>Job Satisfaction: <ul>
+<li>Effects were inconsistent. High-productivity workers in the unjustified no-surveillance group were less likely to accept a follow-up job. Low-productivity workers under (both justified and unjustified) surveillance were <em>more</em> likely to accept another job. Justified removal of surveillance made high-performers feel less fairly paid.</li>
+</ul>
+</li>
+</ul>
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+<li>The presence or absence of digital surveillance does not systematically affect worker performance in a setting where it is common.</li>
+<li>The key factor is <em>managerial justification</em>. Unexplained changes to monitoring conditions reduce worker performance.</li>
+<li>The results are consistent with the interpretation that worker performance is influenced by their perceptions of managerial capability, which is signaled by the clarity of managerial decisions.</li>
+</ul>
+<h3 id="stars-3">Stars: 3</h3>
+<ul>
+<li>rigor: 4</li>
+<li>innovation: 4</li>
+<li>writing style: 3</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div id="navButtons" class="nav-buttons">
+<button class="nav-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶端">↑</button>
+<button class="nav-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" title="回到底端">↓</button>
+</div>
+<script>
+var scrollTimeout;
+window.addEventListener("scroll", function() {
+    document.getElementById("navButtons").classList.add("visible");
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function() {
+        document.getElementById("navButtons").classList.remove("visible");
+    }, 2000);
+});
+function alignFootnotes() {
+    const refs = Array.from(document.querySelectorAll(".footnote-ref"));
+    const notes = Array.from(document.querySelectorAll(".footnote-item"));
+    const toc = document.querySelector(".toc-sidebar");
+    const leftCol = document.querySelector(".left-column");
+    const noteMap = {};
+    notes.forEach(note => { noteMap[note.id.replace("fn-", "")] = note; });
+    let currentY = toc ? (toc.offsetHeight + 20) : 0;
+    const leftColRect = leftCol.getBoundingClientRect();
+    refs.forEach(ref => {
+        const label = ref.getAttribute("href").replace("#fn-", "");
+        const note = noteMap[label];
+        if (note) {
+            const refRect = ref.getBoundingClientRect();
+            let desiredTop = refRect.top - leftColRect.top;
+            desiredTop += 5;
+            if (desiredTop < currentY) { desiredTop = currentY; }
+            note.style.top = desiredTop + "px";
+            note.style.display = "block";
+            currentY = desiredTop + note.offsetHeight + 15;
+        }
+    });
+    const fnCol = document.querySelector(".footnote-column");
+    if(fnCol) fnCol.style.height = currentY + "px";
+}
+window.addEventListener("load", alignFootnotes);
+window.addEventListener("resize", alignFootnotes);
+if(window.MathJax) {
+    MathJax.startup.promise.then(() => { setTimeout(alignFootnotes, 1000); });
+}
+</script>
+</body>
+</html>
