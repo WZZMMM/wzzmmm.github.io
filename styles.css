@@ -1,0 +1,37 @@
+/* --- 修复：使页面背景随系统深/浅色变化（避免拖动/overscroll 时出现白底） --- */
+:root{
+  --page-bg-light: #ffffff;
+  --page-bg-dark: #0b0b0b;
+  --overlay-light: rgba(255,255,255,0.6);
+  --overlay-dark: rgba(0,0,0,0.6);
+  --page-bg: var(--page-bg-light);
+  --overlay: var(--overlay-light);
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --page-bg: var(--page-bg-dark);
+    --overlay: var(--overlay-dark);
+  }
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --page-bg: var(--page-bg-light);
+    --overlay: var(--overlay-light);
+  }
+}
+
+html, body {
+  background-color: var(--page-bg);
+}
+
+/* 覆盖各页面内联或局部定义的 body::before 遮罩颜色，使其随深浅模式变化 */
+body::before {
+  background-color: var(--overlay) !important;
+}
+
+/* 确保页面主内容在遮罩之上 */
+.container {
+  position: relative;
+  z-index: 1;
+}
