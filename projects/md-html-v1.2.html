@@ -42,10 +42,7 @@
             
             
             --nav-btn-color: #6ab0c2;
-  --scrollbar-thumb: #c0c0c0;
-  --scrollbar-thumb-hover: #a0a0a0;
-  --scrollbar-track: transparent;
-}
+  }
 
         @media (prefers-color-scheme: dark) {
             :root {
@@ -523,8 +520,8 @@ $$
         
         // CSS 部分
         htmlParts.push('<style>');
-        htmlParts.push(':root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #8dd4e8; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #8dd4e8; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; --nav-btn-color: #6ab0c2; }');
-        htmlParts.push('@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #8dd4e8; --code-bg: #3c4043; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #8dd4e8; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; --nav-btn-color: #5a9aaa; } }');
+        htmlParts.push(':root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #8dd4e8; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #8dd4e8; --nav-btn-color: #6ab0c2; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; --scrollbar-track: transparent; }');
+        htmlParts.push('@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #8dd4e8; --code-bg: #3c4043; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #8dd4e8; --nav-btn-color: #5a9aaa; } }');
         htmlParts.push('::-webkit-scrollbar { width: 8px; height: 8px; }');
         htmlParts.push('::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }');
         htmlParts.push('::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }');
