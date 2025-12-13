@@ -464,12 +464,24 @@ $$
                     h.id = id;
                     
                     if (level === 1) {
+                        // Close previous H2 if open
+                        if (currentH2) {
+                            tocHtml += '</ul></details></li>';
+                            currentH2 = null;
+                        }
+                        // Close previous H1 if open
+                        if (currentH1) {
+                            tocHtml += '</ul></details></li>';
+                        }
                         // H1: open by default, shows H2
                         tocHtml += '<li><details open><summary class="toc-link toc-h1">' + escapeHtml(h.textContent) + '</summary><ul class="toc-sublist">';
                         currentH1 = { open: true };
-                        currentH2 = null;
                     } else if (level === 2) {
                         if (currentH1) {
+                            // Close previous H2 if open
+                            if (currentH2) {
+                                tocHtml += '</ul></details></li>';
+                            }
                             // H2 under H1: closed by default, hides H3+
                             tocHtml += '<li><details><summary class="toc-link toc-indent-2">' + escapeHtml(h.textContent) + '</summary><ul class="toc-sublist">';
                             currentH2 = { open: false };
@@ -487,7 +499,7 @@ $$
                             tocHtml += '<li><a href="#' + id + '" class="toc-link toc-indent-3">' + escapeHtml(h.textContent) + '</a></li>';
                         }
                     } else if (level === 4) {
-                        const indent = currentH2 ? 'toc-indent-4' : currentH1 ? 'toc-indent-4' : 'toc-indent-4';
+                        const indent = 'toc-indent-4';
                         tocHtml += '<li><a href="#' + id + '" class="toc-link ' + indent + '">' + escapeHtml(h.textContent) + '</a></li>';
                     } else if (level === 5) {
                         const indent = 'toc-indent-5';
