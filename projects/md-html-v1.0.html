@@ -27,8 +27,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
     <style id="theme-style">
-        :root {
-            --bg-color: #f3f2ee;
+        :root {--bg-color: #f3f2ee;
             --text-color: #1f0909;
             --link-color: #065588;
             --code-bg: #dadada;
@@ -36,7 +35,10 @@
             --blockquote-color: #656565;
             --blockquote-border: #bababa;
             --footnote-text: #555;
-        }
+  --scrollbar-thumb: #c0c0c0;
+  --scrollbar-thumb-hover: #a0a0a0;
+  --scrollbar-track: transparent;
+}
 
         @media (prefers-color-scheme: dark) {
             :root {
@@ -157,7 +159,26 @@
             .editor-pane, .preview-pane { width: 100%; height: 50%; }
             #write { padding: 10px 20px; }
         }
-    </style>
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+</style>
 </head>
 <body>
 

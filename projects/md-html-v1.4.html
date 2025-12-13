@@ -46,8 +46,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
     <style id="theme-style">
-        :root {
-            --bg-color: #f3f2ee;
+        :root {--bg-color: #f3f2ee;
             --text-color: #1f0909;
             --link-color: #77a0ab;
             --code-bg: #dadada; /* Fallback */
@@ -59,13 +58,16 @@
             --toc-text: #333;
             --toc-border: #ddd;
             --toc-link: #77a0ab;
-            --scrollbar-thumb: #c0c0c0;
-            --scrollbar-thumb-hover: #a0a0a0;
-            --scrollbar-track: transparent;
+            
+            
+            
             --nav-btn-color: #6ab0c2;
             --code-header-bg: #e1e1e1;
             --code-header-text: #555;
-        }
+  --scrollbar-thumb: #c0c0c0;
+  --scrollbar-thumb-hover: #a0a0a0;
+  --scrollbar-track: transparent;
+}
 
         @media (prefers-color-scheme: dark) {
             :root {
@@ -81,20 +83,20 @@
                 --toc-text: #ddd;
                 --toc-border: #4a4a4a;
                 --toc-link: #77a0ab;
-                --scrollbar-thumb: #5f6368;
-                --scrollbar-thumb-hover: #80868b;
+                
+                
                 --nav-btn-color: #5a9aaa;
                 --code-header-bg: #161b22;
                 --code-header-text: #8b949e;
             }
         }
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: var(--scrollbar-track); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
-        ::-webkit-scrollbar-corner { background: transparent; }
-        * { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); }
+        
+        
+        
+        
+        
+        
 
         body {
             margin: 0; padding: 0;
@@ -282,7 +284,26 @@
             #write { padding: 10px 20px; }
             .nav-buttons { right: 15px; bottom: 15px; }
         }
-    </style>
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+</style>
 </head>
 <body>
 
