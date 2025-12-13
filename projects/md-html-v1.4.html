@@ -49,7 +49,7 @@
         :root {
             --bg-color: #f3f2ee;
             --text-color: #1f0909;
-            --link-color: #97b6b1;
+            --link-color: #77a0ab;
             --code-bg: #dadada; /* Fallback */
             --border-color: #c5c5c5;
             --blockquote-color: #656565;
@@ -58,7 +58,7 @@
             --toc-bg: #ffffffcc;
             --toc-text: #333;
             --toc-border: #ddd;
-            --toc-link: #97b6b1;
+            --toc-link: #77a0ab;
             --scrollbar-thumb: #c0c0c0;
             --scrollbar-thumb-hover: #a0a0a0;
             --scrollbar-track: transparent;
@@ -71,7 +71,7 @@
             :root {
                 --bg-color: #202124;
                 --text-color: #e8eaed;
-                --link-color: #97b6b1;
+                --link-color: #77a0ab;
                 --code-bg: #0d1117;
                 --border-color: #5f6368;
                 --blockquote-color: #bdc1c6;
@@ -80,7 +80,7 @@
                 --toc-bg: #2b2b2bcc;
                 --toc-text: #ddd;
                 --toc-border: #4a4a4a;
-                --toc-link: #97b6b1;
+                --toc-link: #77a0ab;
                 --scrollbar-thumb: #5f6368;
                 --scrollbar-thumb-hover: #80868b;
                 --nav-btn-color: #5a9aaa;
@@ -730,8 +730,8 @@ function hello(name) {
 
         // Copy styles from main page but minified/cleaner
         htmlParts.push('<style>');
-        htmlParts.push(':root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #97b6b1; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #97b6b1; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; --scrollbar-track: transparent; --nav-btn-color: #6ab0c2; --code-header-bg: #e1e1e1; --code-header-text: #555; }');
-        htmlParts.push('@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #97b6b1; --code-bg: #0d1117; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #97b6b1; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; --nav-btn-color: #5a9aaa; --code-header-bg: #161b22; --code-header-text: #8b949e; } }');
+        htmlParts.push(':root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #77a0ab; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #77a0ab; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; --scrollbar-track: transparent; --nav-btn-color: #6ab0c2; --code-header-bg: #e1e1e1; --code-header-text: #555; }');
+        htmlParts.push('@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #77a0ab; --code-bg: #0d1117; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #77a0ab; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; --nav-btn-color: #5a9aaa; --code-header-bg: #161b22; --code-header-text: #8b949e; } }');
         
         htmlParts.push('body { margin: 0; padding: 0; font-family: "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }');
         htmlParts.push('.page-container { display: flex; flex-direction: row; max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }');
@@ -783,7 +783,7 @@ function hello(name) {
         htmlParts.push('.footnote-item { position: absolute; left: 0; width: 100%; font-size: 0.85em; color: var(--footnote-text); padding-bottom: 10px; box-sizing: border-box; transition: top 0.3s ease; display: none; }');
         htmlParts.push('.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 4px; }');
         htmlParts.push('.footnote-backref { color: var(--link-color); text-decoration: none; margin-left: 5px; }');
-        htmlParts.push('.footnote-item a:not(.footnote-backref) { color: #97b6b1; text-decoration: none; }');
+        htmlParts.push('.footnote-item a:not(.footnote-backref) { color: #77a0ab; text-decoration: none; }');
         htmlParts.push('.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }');
         
         // Nav Buttons
