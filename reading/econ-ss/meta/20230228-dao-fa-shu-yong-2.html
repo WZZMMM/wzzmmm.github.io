@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>再悟“道法术用”</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+    tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], tags: "ams" },
+    svg: { fontCache: "global" }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #8dd4e8; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #8dd4e8; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; --nav-btn-color: #6ab0c2; }
+@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #8dd4e8; --code-bg: #3c4043; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #8dd4e8; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; --nav-btn-color: #5a9aaa; } }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+body { margin: 0; padding: 0; font-family: "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+.page-container { display: flex; flex-direction: row; max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+.left-column { width: 20%; min-width: 200px; flex-shrink: 0; position: relative; margin-right: 30px; border-right: 1px solid var(--border-color); padding-right: 20px; }
+.toc-sidebar { max-height: 40vh; overflow-y: auto; padding: 10px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); font-size: 0.9em; margin-bottom: 30px; }
+.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-list li { margin: 4px 0; }
+.toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; display: block; }
+.toc-link:hover { text-decoration: underline; }
+.toc-indent-2 { margin-left: 12px; font-size: 13.5px; }
+.toc-indent-3 { margin-left: 24px; font-size: 13px; }
+.footnote-column { position: relative; width: 100%; }
+.footnote-item { position: absolute; left: 0; width: 100%; font-size: 0.85em; color: var(--footnote-text); padding-bottom: 10px; box-sizing: border-box; transition: top 0.3s ease; }
+.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 4px; }
+.footnote-backref { color: var(--link-color); text-decoration: none; margin-left: 5px; }
+.footnote-backref:hover { text-decoration: underline; }
+.footnote-item a:not(.footnote-backref) { color: #97b6b1; text-decoration: none; }
+.footnote-item a:not(.footnote-backref):hover { text-decoration: underline; }
+.main-content { flex: 1; min-width: 0; padding-right: 5%; }
+#write { max-width: 900px; padding-bottom: 80px; }
+#write h1, #write h2, #write h3 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); text-align: center; }
+#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
+#write h2 { font-size: 1.5em; }
+#write h3 { font-size: 1.3em; font-weight: normal; }
+#write a { color: var(--link-color); text-decoration: none; }
+#write a:hover { text-decoration: underline; }
+#write ul, #write ol { padding-left: 1.5em; margin-left: 0; margin-bottom: 1em; }
+#write li { margin-bottom: 0.3em; }
+#write blockquote { font-style: italic; border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }
+#write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
+#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
+#write thead { background-color: var(--code-bg); }
+#write code { font-family: "Consolas", monospace; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+#write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 4px; }
+#write pre code { padding: 0; background-color: transparent; }
+#write img { max-width: 100%; display: block; margin: 1em auto; }
+.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }
+.footnote-ref:hover { text-decoration: underline; }
+mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+.nav-buttons { position: fixed; right: 30px; bottom: 30px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s ease; z-index: 1000; }
+.nav-buttons.visible { opacity: 1; }
+.nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, background 0.2s; }
+.nav-btn:hover { transform: scale(1.1); background: var(--link-color); }
+@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; gap: 20px; margin-right: 0; border-right: none; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 20px; } .toc-sidebar { width: 100%; position: static; max-height: 200px; } .footnote-column { position: static; width: 100%; } .footnote-item { position: static; border-bottom: 1px solid var(--border-color); } .main-content { padding-right: 0; } }
+</style>
+</head>
+<body>
+<div class="page-container">
+<div class="left-column">
+
+<div class="footnote-column"><div class="footnote-item" id="fn- ※" style="display:none;"><span class="footnote-label">[ ※]</span> 这是2023年2月为林老师午餐会准备的一份学习心得，聊为初学记录。个人原创内容，如转载请注明出处。 <a href="#fnref- ※" class="footnote-backref">↩</a></div></div>
+</div>
+<div class="main-content">
+<div id="write">
+<h1>再悟“道法术用”<sup><a href="#fn- ※" id="fnref- ※" class="footnote-ref">[ ※]</a></sup></h1>
+<p>在上学期的一次讨论课上，我尝试将学习归纳为四层面，本文修正并沿用这一分析框架：“道”指认识与实践的根本、核心对象，也就是“本体”；“法”指对认知过程具有指导意义的方法论，比如新结构经济学强调的“常无”“一分析三归纳（/检验）”；“术”指具体方法或者说“工具箱”；“用”指学术写作、案例分析与实践检验等，直接以“成”为导向。“道”“法”侧重“知”，“术”“用”意在“成”，它们之间的联系当为“因行得知，用知践行，唯成证知，知成一体”。</p>
+<h2>“道”：“本体”</h2>
+<p>假期涉猎的科学史和科学哲学著作，为我更一般化地认识了科学（经济学作为一种社会科学当然也包含其中）之“道”提供了以下几点启示。第一，任何成熟的学科都有作为其一切探求基点的“本体”，也就是作为认识与实践的根本、核心对象的“道”。比如，数学根本上研究逻辑；物理学根本上研究时空；等等。第二，“本体”在不同的认知和实践场域下可能有不同的“表现形式”，从认识论的角度说，“本体”其实正是从不同的认知和实践中抽象出来的；“道”是从现实中抽象出来的，而学科的理论认知又是从“道”推演而来，那么通过恰当且基于现实不断修正的认知过程，学科的理论在一定程度上可以较好地模拟、解释与预测现实。比如，在数学的学科发展史上不断修正，终于从无穷尽的数与形中抽象出数理逻辑，数学作为一种抽象的理论工具在其他更面向现实世界的学科中得到了很好的应用；物理学对时空关系的本质考察从多样化的客观物质世界中抽象而来，在其学科发展史上有至今仍不断修正和演进的理论模型，物质和能量的表现形式、微观与宏观的尺度各不相同但（很有可能）统一于时空本质，在这一过程中物理学为人类认识和践履客观物质世界做出基础性贡献；等等。第三，以其根本、核心对象即“道”有某种“层级”，不同学科也可能存在“层级”，一些学科的研究对象更为根本，其他学科的研究对象是前者在一定约束条件下的“具体应用”，学科序列构成层层包含的知识集合。比如，有一种科学哲学观点认为，数学⊆物理学⊆化学⊆生物学⊆社会科学，被包含的学科在本质上必然能够得到将其包含学科的解释。</p>
+<p>再来看经济学的“本体”。林老师在《本体与常无》中指出，“理性”是经济学的本体；“理性是相同的，但理性在不同的约束条件下的表现方式是不一样的”，经济学对人类理性的假设存在渐进的修正。这些关乎本体的论述可以得到前述科学史与科学哲学的印证。《本体与常无》中对理性概念做出了明确界定，并讨论了从这一本体出发构建理论模型的基本原则：</p>
+<blockquote>
+<p>我个人所认为的经济学的理性是指“一个人在作决策的时候，在他所知的可能选择方案中，总是会作出他所认为是最佳的选择”。在了解这个定义时，有必要对“最佳选择”前的几个关键限定词给予特别的说明：第一，“一个人”说明理性与否是从作出选择的当事人的角度来衡量的，而非从他人或社会的角度来看的，而且，即使所作的选择是关系到群体的公共事务，是否理性也是就决策者自己而非群体的角度来作判断的。第二，“决策的时候”说明理性是就决策当时的情况而言的，情况变了，最佳的选择也可能改变，但并不能因此而否认当时的决策是理性的。当然，一个决策者考虑的不只是即期的利益，也会根据当时的各种条件、状况、过去的经验等，对未来有所预期，从而把对未来的可能影响也放在当时的考虑之中。第三，“所知的可能选择方案”说明理性与否是就决策者当时的认知而定的，而且，仅就当事人可以选择的各种可能方案的比较而言，选择范围以外的方案不是决策者可以有的选择，所以，并不在考虑或比较的范围之内。每个决策者的选择范围会受他自己的认知的影响，认知一方面取决于决策者所拥有的信息，一方面取决于决策者处理信息的能力；选择的范围还会因决策者的预算、时间、能力，以及外在的相关群体、制度的条件、政府的政策、社会的价值标准和意识形态的不同而有差异。第四，“所认为”说明理性是根据当事人自己对各个可选方案的长、短期相对成本和收益的比较而言的，这个比较可能会因为个人的知识、信息、经验的积累不同，或是内、外在条件的变化而改变。</p>
+<p>上述对理性的理解是比较接近西蒙所主张的有界理性的，因为，我所谓的最佳选择是就决策当事人所认知的可能选择方案中，他所认为的最佳方案而言的，而非客观存在的所有可能方案中的最佳方案。但是，在实际构建经济学的理论模型时，到底是假定有限理性好，还是假定无限理性好？一般说来无限理性的模型较简单，就像在物理学中，假定落体是在真空中运动一样，如果用无限理性就能很好地解释、预测现象，那么，就无需引进有限理性的假定了。如果用无限理性的假定无法解释、预测现象，那么，在构建理论模型时有两种策略：首先，可以假定信息是不完全的，信息的收集需要成本，而信息的处理能力是无限的；如果这个策略不成功，再放松信息处理能力是无限的假定。中国有句俗语叫“杀鸡焉用牛刀”，理论模型只是用来说明现象的一种工具，只要能达到目的，越简单的工具越好。</p>
+</blockquote>
+<p>在1982年题为“人类活动中的理性”的斯坦福大学哈里·坎普讲座中，赫伯特·西蒙综合多学科知识，在有界理性的框架内，介绍了“超凡模型”、“行为模型”和“直觉模型”三种既有理论模型，并提出“进化模型”——他认为简单易行的“超凡模型”已经在解释和预测经济活动中发挥了很大的作用，而更贴合实际的后三种模型“所实现的极大值都是局部极大值。我们最好不要把它们视为一种最优化过程，而是视为一种机制，一种搜索到能够‘改善’原有情形的新可能性的机制”。《本体与常无》中对理性的理解确实比较接近西蒙所主张的有界理性，西蒙也指各种理性模型都是“工具性”的，并且需要恰当地“把问题定量化到现有数学方法能够处理的程度”，除了传统的线性规划方法，人工智能算法也为求解提供了强大的工具。</p>
+<h2>“法”：方法论</h2>
+<p>科学之“法”。在《科学革命的结构》中，库恩指出“常规科学”和“范式革命”是科学进步的两个环节，一种新的范式建立在大量常规科学研究的基础之上，并且实验性、归纳性的科学探索对范式革命的推动作用至少与新理论的提出同等重要。在1983年于北京大学所做关于认知科学的讲座中，西蒙指出科学中存在两种“发现过程”——“理论驱动归纳”和“材料驱动归纳”，“一般而言，科学家对‘理论驱动归纳’比较感兴趣，但在科学史上，绝大多数的科学发现，都是‘材料驱动归纳’的过程。”</p>
+<p>新结构经济学之“法”。在《本体与常无》中，林老师多次引用《道德经》中“前识者，道之华，而愚之始”，强调在理解既有理论、观察和解释现象时要保持“常无”心态，最好直接了解现象并解释现象的本质，方能“以观其妙”，做出有价值的理论和实践创新。至于具体如何做到“常无”，林老师又多次引用《论语》中“我叩其两端而竭焉”，强调一分析三归纳（/检验）方法。其实对“常无”和“三归纳（/检验）”的方法论要求都与自然科学的发展历程相一致，究其根本或许正是因为（如《本体与常无》所指出）社会科学和自然科学一样，都意在探究现象背后的因果关系（“一分析”即“要了解谁是决策者，决策者的限制条件、选择范围是什么，选择范围里面每个可选方案的特性是什么，它的相对机会成本是多少”，我认为这一点是贴合经济学研究对象，可能正对应着《本体与常无》中林老师所认为的社会现象比自然现象更复杂）。</p>
+<h2>“术”：工具箱</h2>
+<p>在科学史上，一门成熟的科学为了归纳和演绎的严谨性，往往需要借助数学，建构公理化体系或（/且）便于计算；而公理化通常包含两部分，一部分是基于本学科研究对象所做出的初始概念、基本假设——即该科学之“道”或“本体”，另一部分则基于数理逻辑。20世纪伊始，希尔伯特从学科内在逻辑的整体性与联系性出发，提出了23个影响深远的数学问题，其中第2个和第10个问题关乎数学本身以及数学能证明什么，几乎影响了所有科学领域，它们可以归纳为：数学是否完备且一致，是否所有问题都是数学可判定（可计算）的。对此，哥德尔不完备性定理证明了任何一个形式系统，只要包括了简单的初等数论描述而且是自洽的，它必定是不完备的；图灵严格定义了“明确程序”的概念，并通过图灵机的“停机问题”，指出数学判定（计算）存在局限。经济学运用数学是为了理论体系的内部逻辑性，《本体与常无》就此指出，“数学的严谨性（rigorousness） 和有用性（relevance） 之间有一定的替代（trade-off），为了严谨性可能失去一些有用性”，经济问题的解决有可能受限于数学工具的不足，前述希尔伯特问题或可从一个侧面加以印证。</p>
+<p>当然，一个多世纪以来，希尔伯特问题并未动摇数学的严密与优美，并促使数学（广义上还要包括信息科学）本身不断完善；经济问题通常也不会触及那些极度抽象的、关乎数学根本（乃至“对认知的认知”）的元问题，经济学家习得数学之“术”十分必要，对数学的运用促进着经济学的趋于成熟。秉持科学的实证主义，经济学的工具箱或可分为两个基本组成：一部分涉及“还原”，建立用于解释现实的数理模型，并加以推导得出可作用于现实的结论；另一部分涉及“计算”，运用人工智能、数据科学方法，通过真实世界产生的复杂数据做出预测；二者都可用于因果推断这一社会科学实证研究的关键（毕竟因果律是“科学”之所在），当然前者基于古老的“还原论”观点，自经济学注重实证主义以来就同其他科学一般加以运用并逐渐纯熟，而后者本身产生突破性进展也不过二三十年，运用于经济学研究当然相当新锐。作为经济学大道上的后来者，对这些工具的掌握当然是多多益善、精益求精。</p>
+<h2>“用”：何以“成”</h2>
+<p>这里主要结合此前学习中的不足，做出自适应反馈与下一步规划。</p>
+<p>“常有”理性这一“本体”，同时以“常无”对待一切现象和理论，并尽可能拓展进行经济学学习和研究的工具箱，力求“道正”与“术高”。迫切感受到“术”的缺失对理解和阐释“道”、运用和发挥“法”是巨大障碍。这学期通过中微、计量、数理以及其他讲授社会学科实证方法的课程，我应该可以对前者有初步的掌握；计划下学期选修人工智能方面的基础课程。</p>
+<p>既要“常有”又要“常无”，也有助于避免“空疏”和“支离”。在与林老师对话时，盛柳刚老师提出“如果只看经济现象，往往会犯盲人摸象的毛病，只见一斑而不见全豹，从而陷入‘支离’的倾向，但如果先看理论的话，又往往把理论绝对化，从而陷入‘空疏’的困境。”林老师的回应是：</p>
+<blockquote>
+<p>我们在学习现有理论时，必须把任何现有的理论都作为一种“前识”来对待，它“都对都不对”。“都对”是因为它是理性在一定的条件下的表现；“都不对”是因为决策者所面临的条件是不断在变动的，它不是“理性”本身。如果能这样来理解理论，在观察一个现象、解释一个现象时，就会以“常无”的心态，直接去了解现象，从现象揭示它背后产生的原因，就能达到《道德经》里所讲的“以观其妙”和《金刚经》里所说的“若菩萨不住于法……如人有目，日光明照见种种色”的境界。[……]</p>
+<p>既然经济学的理论是决策者在一定的内外在条件的前提下作出的最佳选择，那么，这样的最优都是局部最优的，而不是全体最优的，这些局部最优的理论的共同点是都是“理性”在一定条件下的表现形式。了解到任何现有理论的局限性和共同性，那么，就不至于有盲人摸象，无法从局部去认识本体的“支离”的弊病了。</p>
+</blockquote>
+<p>（借用西蒙的概念，“空疏”是“理论驱动归纳”可能的后果，“支离”是“材料驱动归纳”可能的后果，而林老师所谈“常无”本质上与西蒙对“自适应人”的论述异曲同工。）反思自己截至目前的学习，既难免空疏（比如会用一些新结构经济学的话语但失其真义），又失于支离（有时是对现象的归纳归于冗杂），此外还有尝试“临摹”却画虎类猫的问题，根本上也是空疏与支离。在“本体与常无”上还须多下功夫。</p>
+<p>最后还想谈论一点关于专业地进行经济学习的体会。记得此前有学长学姐讨论过避免做经济学的“票友”问题。作为经济学尤其是新结构经济学专业的学生，必须。在阅读科学史、科学哲学的著作时，我发现自己（因为有基本的微积分、代数等数学知识）其实可以看懂不少数学、物理学、信息科学的话语，对那些重要和基本的理论也能有大致的了解，能够和相关专业的同学相谈甚欢——甚至也可以大谈时空观、宇宙观、人工智能、复杂科学，玄而又玄；但谈到这些科学的理论体系究竟为何，它们运用哪些方法，如何在现实中加以运用，我竟是门外汉了。想到自己术业所专攻，能不能道明、用好经济学及新结构经济学的理论与方法呢？能不能用理论很好地解释现实呢？恐怕还不很能够。学习徐高老师的《宏观经济学二十五讲》，我深深折服于对经济学理论和方法的纯熟运用，以及“经济理论与经济现实之间再无鸿沟”；再读《本体与常无》，以及《新结构经济学思与辩》《新结构经济学研习方法》这些集中体现新结构经济学方法论的著作，更深感我作为新结构经济学大道上的后来者路漫修远。时不我待。</p>
+<h2>参考文献</h2>
+<p>阿瑟 (ARTHUR W B), 2018. 复杂经济学: 经济思想的新框架[M]. 贾拥民, 译. 杭州: 浙江人民出版社.</p>
+<p>埃弗里特 (EVERETT A), 罗曼 (ROMAN T), 2017. 时间旅行与曲速引擎: 快速穿越时空的科学指南[M]. 李润, 译. 北京: 化学工业出版社.</p>
+<p>玻姆 (BOHM D), 2013. 整体性与隐缠序: 卷展中的宇宙与意识[M]. 洪定国, 张桂权, 查有梁, 译. 上海: 上海科技教育出版社.</p>
+<p>郭峰, 陶旭辉, 2023. 机器学习与社会科学中的因果关系：一个文献综述[Z]//经济学(季刊): 卷 23. 1-17.</p>
+<p>侯世达 (HOFSTADTER D R), 2021. 哥德尔、艾舍尔、巴赫: 集异璧之大成[M]. 本书翻译组, 译. 北京: 商务印书馆.</p>
+<p>霍金 (HAWKING S W), 彭罗斯 (PENROSE R), 2007. 时空本性[M]. 杜欣欣, 吴忠超, 译. 第2版. 长沙: 湖南科学技术出版社.</p>
+<p>克莱因 (KLINE M), 1979. 古今数学思想[M]. 张理京, 张锦炎, 译. 上海: 上海科学技术出版社.</p>
+<p>克劳瑟－海克 (CROWTHER-HEYCK H), 2020. 穿越小径分岔的花园: 赫伯特·西蒙和他的科学迷宫[M]. 何正云, 译. 贵阳: 贵州人民出版社.</p>
+<p>库恩 (KUHN T S), 2004. 必要的张力: 科学的传统和变革论文选[M]. 范岱年, 纪树立, 译. 北京: 北京大学出版社.</p>
+<p>库恩 (KUHN T S), 2022. 科学革命的结构[M]. 张卜天, 译. 新译精装版. 北京: 北京大学出版社.</p>
+<p>林毅夫, 2012. 本体与常无: 经济学方法论对话[M]. 第2版. 北京: 北京大学出版社.</p>
+<p>林毅夫, 王勇, 赵秋运, 2021. 新结构经济学研习方法[M]. 北京: 北京大学出版社.</p>
+<p>王勇, 2017. 新结构经济学思与辩[M]. 北京: 北京大学出版社.</p>
+<p>米切尔 (MITCHELL M), 2018. 复杂[M]. 唐璐, 译. 长沙: 湖南科学技术出版社.</p>
+<p>西蒙 (SIMON H A), 2016. 人类活动中的理性[M]. 胡怀国, 冯科, 译. 桂林: 广西师范大学出版社.</p>
+<p>西蒙 (SIMON H A), 2018. 科学迷宫里的顽童与大师: 赫伯特·西蒙自传[M]. 陈丽芳, 译. 北京: 中译出版社.</p>
+<p>西蒙 (SIMON H A), 2020. 认知: 人行为背后的思维与智能[M]. 荆其诚, 张厚粲, 译. 北京: 中国人民大学出版社.</p>
+<p>希顿 (HEATON J M), 格罗夫斯 (GROVES J), 2021. 维特根斯坦[M]. 徐向东, 译. 北京: 生活·读书·新知三联书店.</p>
+<p>徐高, 2019. 宏观经济学二十五讲: 中国视角[M]. 北京: 中国人民大学出版社.</p>
+
+</div>
+</div>
+</div>
+<div id="navButtons" class="nav-buttons">
+<button class="nav-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶端">↑</button>
+<button class="nav-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" title="回到底端">↓</button>
+</div>
+<script>
+var scrollTimeout;
+window.addEventListener("scroll", function() {
+    document.getElementById("navButtons").classList.add("visible");
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function() {
+        document.getElementById("navButtons").classList.remove("visible");
+    }, 2000);
+});
+function alignFootnotes() {
+    const refs = Array.from(document.querySelectorAll(".footnote-ref"));
+    const notes = Array.from(document.querySelectorAll(".footnote-item"));
+    const toc = document.querySelector(".toc-sidebar");
+    const leftCol = document.querySelector(".left-column");
+    const noteMap = {};
+    notes.forEach(note => { noteMap[note.id.replace("fn-", "")] = note; });
+    let currentY = toc ? (toc.offsetHeight + 20) : 0;
+    const leftColRect = leftCol.getBoundingClientRect();
+    refs.forEach(ref => {
+        const label = ref.getAttribute("href").replace("#fn-", "");
+        const note = noteMap[label];
+        if (note) {
+            const refRect = ref.getBoundingClientRect();
+            let desiredTop = refRect.top - leftColRect.top;
+            desiredTop += 5;
+            if (desiredTop < currentY) { desiredTop = currentY; }
+            note.style.top = desiredTop + "px";
+            note.style.display = "block";
+            currentY = desiredTop + note.offsetHeight + 15;
+        }
+    });
+    const fnCol = document.querySelector(".footnote-column");
+    if(fnCol) fnCol.style.height = currentY + "px";
+}
+window.addEventListener("load", alignFootnotes);
+window.addEventListener("resize", alignFootnotes);
+if(window.MathJax) {
+    MathJax.startup.promise.then(() => { setTimeout(alignFootnotes, 1000); });
+}
+</script>
+</body>
+</html>
