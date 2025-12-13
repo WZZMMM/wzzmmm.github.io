@@ -606,7 +606,7 @@ function hello(name) {
     });
 
     function downloadHtml() {
-        let fileName = prompt("请输入导出的文件名 (无需后缀):", "document-export");
+        let fileName = prompt("请输入导出的网页标题:", "document-export");
         if (fileName === null) return;
         if (fileName.trim() === "") fileName = "document-export";
         if (!fileName.toLowerCase().endsWith(".html")) {
