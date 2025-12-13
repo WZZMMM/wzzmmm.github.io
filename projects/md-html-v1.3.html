@@ -8,6 +8,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 
+    <!-- Code highlighting (highlight.js) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/highlight.min.js"></script>
+
     <script>
         window.MathJax = {
             tex: {
@@ -63,6 +67,14 @@
                 --scrollbar-thumb-hover: #80868b;
                 --nav-btn-color: #5a9aaa;
             }
+        }
+
+        /* Make highlight.js theme blend a bit with our background */
+        pre code.hljs {
+            display: block;
+            overflow-x: auto;
+            padding: 12px;
+            border-radius: 6px;
         }
 
         ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -161,7 +173,7 @@
         #write h3 { font-size: 1.3em; font-weight: normal; }
         #write h4 { font-size: 1.2em; font-weight: normal; }
         #write h5 { font-size: 1.1em; font-weight: normal; }
-        
+
         #write a { color: var(--link-color); text-decoration: none; }
         #write a:hover { text-decoration: underline; }
         #write ul, #write ol { padding-left: 1.5em; margin-left: 0; margin-bottom: 1em; }
@@ -170,9 +182,14 @@
         #write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
         #write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
         #write thead { background-color: var(--code-bg); }
+
+        /* inline code */
         #write code { font-family: "Consolas", monospace; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
-        #write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 4px; }
+
+        /* code block container */
+        #write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 6px; }
         #write pre code { padding: 0; background-color: transparent; }
+
         #write img { max-width: 100%; display: block; margin: 1em auto; }
 
         .footnote-ref {
@@ -269,27 +286,69 @@
 
     let footnotesData = {};
 
-    // 修复了列表缩进，避免被识别为代码块
+    // Marked config: enable GFM + code highlighting
+    // Note: marked@12 highlight hook works via marked.setOptions({ highlight })
+    // We also normalize language names for highlight.js.
+    function normalizeLang(lang) {
+        if (!lang) return '';
+        const l = String(lang).trim().toLowerCase();
+        const alias = {
+            'js': 'javascript',
+            'ts': 'typescript',
+            'py': 'python',
+            'sh': 'bash',
+            'shell': 'bash',
+            'zsh': 'bash',
+            'md': 'markdown',
+            'tex': 'latex'
+        };
+        return alias[l] || l;
+    }
+
+    if (window.marked && typeof window.marked.setOptions === 'function') {
+        window.marked.setOptions({
+            gfm: true,
+            breaks: false,
+            mangle: false,
+            headerIds: true,
+            highlight: function(code, lang) {
+                try {
+                    if (window.hljs) {
+                        const language = normalizeLang(lang);
+                        if (language && window.hljs.getLanguage(language)) {
+                            return window.hljs.highlight(code, { language }).value;
+                        }
+                        return window.hljs.highlightAuto(code).value;
+                    }
+                } catch (e) {
+                    console.warn('highlight.js error:', e);
+                }
+                return code;
+            }
+        });
+    }
+
+    // Test content (v1.3)
     const defaultText = `# 测试示例 v1.3
 
 [TOC]
 
 这是 **Markdown to HTML Tool v1.3** 的功能演示。
 
-- 本网页端工具为使用Github Copilot调用\`Gemini-3-Pro\`和\`GPT-5\`氛围编程 (vibe coding) 的产出，旨在实现 Markdown 转特定格式 HTML 的功能。
+- 本网页端工具为使用Github Copilot调用\`Gemini-3-Pro\`和\`GPT-5.2\`氛围编程 (vibe coding) 的产出，旨在实现 Markdown 转特定格式 HTML 的功能。
 - 本网页端工具仅通过您的浏览器在本地运行，**不会**保留或分析您输入的任何数据。
 
 ## 1. 基础排版
-
 ### 1.1 列表展示
-#### 无序列表
-- 经济学 (Economics)
-* 计量经济学 (Econometrics)
-
-#### 有序列表
-1. 第一步：数据收集
-2. 第二步：模型设定
-3. 第三步：假设检验
+- **无序列表**：
+  - 经济学 (Economics)
+    - 计量经济学 (Econometrics)
+* **有序列表**：
+  1.  第一步：数据收集
+  2.  第二步：模型设定
+  3.  第三步：假设检验
+    1. 算个$p$
+    2. 数星星
 
 ### 1.2 表格 (Table)
 | 变量名 | 描述 | 数据类型 |
@@ -298,38 +357,45 @@
 | $r_t$ | 实际利率 | 连续变量 |
 | $D_i$ | 虚拟变量 | 0/1 |
 
-## 2. 数学公式 (MathJax)
-**行内公式**：根据欧拉方程 $u'(c_t) = \\beta E_t [R_{t+1} u'(c_{t+1})]$，我们可以推导消费路径。
+## 2. 数学公式与代码块
 
-**公式块 (Block Math)**：
+### 行内公式
+
+根据欧拉方程 $u'(c_t) = \\\u03b2 E_t [R_{t+1} u'(c_{t+1})]$，我们可以推导消费路径。
+
+### 公式块 (Block Math)
+
 考虑如下的一般均衡模型的一阶条件：
 $$
 \\mathcal{L} = \\sum_{t=0}^{\\infty} \\beta^t \\left[ \\frac{c_t^{1-\\sigma}}{1-\\sigma} - \\lambda_t (c_t + k_{t+1} - f(k_t) - (1-\\delta)k_t) \\right]
 $$
 
-## 3. 代码块
+### 代码块
+\`\`\`latex
+$$
+\\mathcal{L} = \\sum_{t=0}^{\\infty} \\beta^t \\left[ \\frac{c_t^{1-\\sigma}}{1-\\sigma} - \\lambda_t (c_t + k_{t+1} - f(k_t) - (1-\\delta)k_t) \\right]
+$$
+\`\`\`
 
 
-
-
-## 4. 多媒体与链接
-### 4.1 外部链接
+## 3. 多媒体与链接
+### 3.1 外部链接
 关于作者更多信息，请访问 [WZM的个人主页](https://wzzmmm.github.io/)。
 
-### 4.2 图片引用
+### 3.2 图片引用
 ![Karl Marx](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Karl_Marx_by_John_Jabez_Edwin_Mayall_1875_-_Restored.png/250px-Karl_Marx_by_John_Jabez_Edwin_Mayall_1875_-_Restored.png)
 *(图注：这是Karl Marx 1875年的经典照片，引用自Wikimedia Commons)*
 
-## 5. 注释 (Footnotes)
-在许多宏观经济模型中，理性预期是一个核心假设[^*]。当然，行为经济学对此提出了挑战[^†]。另一个例子[^1]。
+## 4. 引用 (Footnotes)
+在许多宏观经济模型中，理性预期是一个核心假设[^*]。当然，行为经济学对此提出了挑战[^\\u2020]。另一个例子[^1]。
 
 [^*]: 参见 Muth (1961) 关于理性预期的开创性论文。
-[^†]: 参见 Thaler (2015) *Misbehaving: The Making of Behavioral Economics*.
-[^1]: 这是一个数字标注的脚注示例，包含一个[示例链接](https://example.com)来测试颜色。
+[^\\u2020]: 参见 Thaler (2015) *Misbehaving: The Making of Behavioral Economics*.
+[^1]: 这是一个数字标注的脚注示例，包含一个[链接](https://example.com)来测试颜色。
 
 ---
 > **内容声明**：
-> 大语言模型的幻觉可能加剧了学术研究中的"胡扯"(bullshit)，本示例中的所有内容均仅为示例。
+> 大语言模型的幻觉可能加剧了学术研究中的\"胡扯\"(bullshit)，本示例中的所有内容均仅为示例。
 `;
 
     inputArea.value = defaultText;
@@ -375,13 +441,79 @@ $$
         return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
+    // Normalize list indentation gently to improve nested list parsing,
+    // especially for ordered list items.
+    // - Convert 2 spaces indentation for nested list markers to 4 spaces.
+    // - Keep max nesting depth to 5 at rendering stage (DOM post-process).
+    function normalizeListIndentation(text) {
+        const lines = text.split(/\r?\n/);
+        const out = [];
+        for (const line of lines) {
+            // If a line starts with exactly two spaces then a list marker, bump to four.
+            // This helps marked interpret it as a nested list instead of a paragraph.
+            // Applies to '-' '*' '+' and ordered markers like '1.'
+            if (/^ {2}([\-\*\+]|\d+\.)\s+/.test(line)) {
+                out.push('  ' + line); // add 2 more spaces -> total 4
+            } else {
+                out.push(line);
+            }
+        }
+        return out.join('\n');
+    }
+
+    function limitListDepth(rootEl, maxDepth = 5) {
+        if (!rootEl) return;
+        const lists = rootEl.querySelectorAll('ul, ol');
+        lists.forEach(list => {
+            // compute depth by counting ancestor lists
+            let depth = 1;
+            let p = list.parentElement;
+            while (p) {
+                if (p.tagName === 'UL' || p.tagName === 'OL') depth++;
+                p = p.parentElement;
+            }
+            if (depth > maxDepth) {
+                // Flatten: replace this list with its list items as paragraphs.
+                const frag = document.createDocumentFragment();
+                Array.from(list.children).forEach(li => {
+                    if (li.tagName !== 'LI') return;
+                    const div = document.createElement('div');
+                    div.style.marginLeft = '1em';
+                    div.textContent = li.textContent;
+                    frag.appendChild(div);
+                });
+                list.replaceWith(frag);
+            }
+        });
+    }
+
+    function applyCodeHighlighting(rootEl) {
+        if (!rootEl || !window.hljs) return;
+        const codeBlocks = rootEl.querySelectorAll('pre > code');
+        codeBlocks.forEach(code => {
+            // Add hljs class so theme applies
+            code.classList.add('hljs');
+            // Ensure language-xxx exists if marked produced it as class
+            // marked usually produces <code class="language-js">...
+            try {
+                window.hljs.highlightElement(code);
+            } catch (e) {
+                console.warn('highlightElement failed:', e);
+            }
+        });
+    }
+
     function parseAcademicMarkdown(text) {
         let mathBlocks = [];
         footnotesData = {};
 
+        // Improve nested list parsing
+        text = normalizeListIndentation(text);
+
         const hasToc = /^\s*\[TOC\]\s*$/m.test(text);
         text = text.replace(/^\s*\[TOC\]\s*$/m, '');
 
+        // Protect MathJax blocks from marked parsing
         text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
             mathBlocks.push(match);
             return "MATH_BLOCK_PLACEHOLDER_" + (mathBlocks.length - 1);
@@ -391,6 +523,7 @@ $$
             return "MATH_INLINE_PLACEHOLDER_" + (mathBlocks.length - 1);
         });
 
+        // Footnotes
         const footnoteDefRegex = /^\[\^([^\]]+)\]:\s*(.*)$/gm;
         text = text.replace(footnoteDefRegex, (match, label, content) => {
             footnotesData[label] = { label: label, content: content };
@@ -407,6 +540,7 @@ $$
 
         let html = safeMarkedParse(text);
 
+        // Restore MathJax
         html = html.replace(/MATH_BLOCK_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
         html = html.replace(/MATH_INLINE_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
 
@@ -417,7 +551,14 @@ $$
         const mdText = inputArea.value;
         const result = parseAcademicMarkdown(mdText);
         previewArea.innerHTML = result.html;
-        
+
+        // Enforce max list nesting depth (ul/ol) to 5
+        limitListDepth(previewArea, 5);
+
+        // Highlight code blocks
+        applyCodeHighlighting(previewArea);
+
+        // Typeset MathJax
         if (window.MathJax && window.MathJax.typesetPromise) {
             window.MathJax.typesetPromise([previewArea]).catch((err) => console.log(err));
         }
@@ -452,26 +593,25 @@ $$
 
         const rawMarkdown = inputArea.value;
         const result = parseAcademicMarkdown(rawMarkdown);
-        
+
         // 生成嵌套 TOC HTML (支持 H1-H5)
         let tocHtml = '';
         if (result.hasToc) {
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = result.html;
-            // 更新：获取 H1 到 H5
             const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5');
-            
+
             if (headings.length > 0) {
                 const rootUl = document.createElement('ul');
                 rootUl.className = 'toc-list';
                 const ulStack = [rootUl];
-                
+
                 headings.forEach((h, idx) => {
                     const level = parseInt(h.tagName.substring(1), 10);
                     let id = normalizeId(h.textContent);
                     if (!id) id = 'heading-' + idx;
                     h.id = id;
-                    
+
                     while (ulStack.length < level) {
                         const parentUl = ulStack[ulStack.length - 1];
                         let parentLi = parentUl.lastElementChild;
@@ -487,7 +627,7 @@ $$
                     while (ulStack.length > level) {
                         ulStack.pop();
                     }
-                    
+
                     const li = document.createElement('li');
                     const a = document.createElement('a');
                     a.href = '#' + id;
@@ -496,8 +636,7 @@ $$
                     li.appendChild(a);
                     ulStack[ulStack.length - 1].appendChild(li);
                 });
-                
-                // 后处理：添加下拉图标和默认展开状态
+
                 function processLi(li, level) {
                     const childUl = li.querySelector('ul');
                     if (childUl) {
@@ -508,22 +647,13 @@ $$
                                 break;
                             }
                         }
-                        
+
                         if (hasDirectUl) {
                             const toggle = document.createElement('span');
                             toggle.className = 'toc-toggle';
                             toggle.textContent = '⌵';
                             li.insertBefore(toggle, li.firstChild);
-                            
-                            // 默认展开 H1 (Level 1)
-                            // Level 1: li 位于 rootUl 中。
-                            // Level 1 展开 -> H2 可见。
-                            // Level 2 (H2) 默认收起 -> H3 隐藏。
-                            
-                            // 根据用户需求：
-                            // H1 默认展开（可以看到H2）。
-                            // 二级(H2)及以下的默认收起。
-                            // 意味着 Level 1 的 LI 应该有 open class. Level 2+ 的 LI 没有 open class.
+
                             if (level < 2) {
                                 li.classList.add('open');
                             }
@@ -537,28 +667,27 @@ $$
                         spacer.className = 'toc-spacer';
                         li.insertBefore(spacer, li.firstChild);
                     }
-                    
-                    if(childUl) {
+
+                    if (childUl) {
                         const childrenLis = childUl.children;
-                        for(let i=0; i<childrenLis.length; i++) {
-                            if(childrenLis[i].tagName === 'LI') {
+                        for (let i = 0; i < childrenLis.length; i++) {
+                            if (childrenLis[i].tagName === 'LI') {
                                 processLi(childrenLis[i], level + 1);
                             }
                         }
                     }
                 }
 
-                // 启动递归
                 const rootLis = rootUl.children;
-                for(let i=0; i<rootLis.length; i++) {
+                for (let i = 0; i < rootLis.length; i++) {
                     processLi(rootLis[i], 1);
                 }
-                
+
                 const nav = document.createElement('nav');
                 nav.className = 'toc-sidebar';
                 nav.innerHTML = '<div class="toc-title">TOC</div>';
                 nav.appendChild(rootUl);
-                
+
                 tocHtml = nav.outerHTML;
                 result.html = tempDiv.innerHTML;
             }
@@ -581,7 +710,7 @@ $$
             footnotesHtml += '</div>';
         }
 
-        // 构建导出HTML
+        // Build export HTML
         let htmlParts = [];
         htmlParts.push('<!DOCTYPE html>');
         htmlParts.push('<html>');
@@ -590,6 +719,12 @@ $$
         htmlParts.push('<meta name="viewport" content="width=device-width, initial-scale=1">');
         htmlParts.push('<title>' + escapeHtml(fileName.replace('.html', '')) + '</title>');
         htmlParts.push('<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">');
+
+        // highlight.js in export
+        htmlParts.push('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css">');
+        htmlParts.push('<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/highlight.min.js"></' + 'script>');
+
+        // MathJax
         htmlParts.push('<script>');
         htmlParts.push('window.MathJax = {');
         htmlParts.push('    tex: { inlineMath: [["$", "$"], ["\\\\(", "\\\\)"]], displayMath: [["$$", "$$"], ["\\\\[", "\\\\]"]], tags: "ams" },');
@@ -597,41 +732,34 @@ $$
         htmlParts.push('};');
         htmlParts.push('</' + 'script>');
         htmlParts.push('<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></' + 'script>');
-        
-        // CSS 部分
+
+        // CSS (export)
         htmlParts.push('<style>');
-        htmlParts.push(':root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #8dd4e8; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #8dd4e8; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; --nav-btn-color: #6ab0c2; }');
+        htmlParts.push(':root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #8dd4e8; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #8dd4e8; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; --scrollbar-track: transparent; --nav-btn-color: #6ab0c2; }');
         htmlParts.push('@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #8dd4e8; --code-bg: #3c4043; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #8dd4e8; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; --nav-btn-color: #5a9aaa; } }');
         htmlParts.push('::-webkit-scrollbar { width: 8px; height: 8px; }');
-        htmlParts.push('::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }');
+        htmlParts.push('::-webkit-scrollbar-track { background: var(--scrollbar-track); border-radius: 4px; }');
         htmlParts.push('::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }');
         htmlParts.push('::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }');
-        htmlParts.push('* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }');
+        htmlParts.push('* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); }');
         htmlParts.push('body { margin: 0; padding: 0; font-family: "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }');
-        
-        // 布局
+
         htmlParts.push('.page-container { display: flex; flex-direction: row; max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }');
         htmlParts.push('.left-column { width: 20%; min-width: 200px; flex-shrink: 0; position: relative; margin-right: 30px; border-right: 1px solid var(--border-color); padding-right: 20px; }');
-        
-        // TOC 样式
-        htmlParts.push('.toc-sidebar { max-height: 40vh; overflow-y: auto; padding: 10px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); font-size: 0.9em; margin-bottom: 30px; }');
+
+        htmlParts.push('.toc-sidebar { max-height: 40vh; overflow-y: auto; padding: 10px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); font-size: 14px; }');
         htmlParts.push('.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }');
         htmlParts.push('.toc-list, .toc-list ul { list-style: none; margin: 0; padding: 0; }');
-        htmlParts.push('.toc-list ul { padding-left: 0.5em; display: none; }'); /* 默认隐藏子菜单 */
+        htmlParts.push('.toc-list ul { padding-left: 0.5em; display: none; }');
         htmlParts.push('.toc-list li { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; }');
-        
         htmlParts.push('.toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; display: inline-block; flex: 1; padding: 2px 0; }');
         htmlParts.push('.toc-link:hover { text-decoration: underline; }');
-        
-        htmlParts.push('.toc-toggle { cursor: pointer; display: inline-block; width: 1.5em; text-align: center; margin-right: 4px; user-select: none; transition: transform 0.2s; color: #888; transform: rotate(-90deg); flex-shrink: 0; }');
+        htmlParts.push('.toc-toggle { cursor: pointer; display: inline-block; width: 1.5em; text-align: center; margin-right: 4px; user-select: none; transition: transform 0.2s; color: #888; transform: rotate(-90deg); }');
         htmlParts.push('.toc-toggle:hover { color: var(--link-color); }');
-        
         htmlParts.push('.toc-spacer { display: inline-block; width: 1.5em; margin-right: 4px; flex-shrink: 0; }');
-
         htmlParts.push('.toc-list li.open > .toc-toggle { transform: rotate(0deg); }');
         htmlParts.push('.toc-list li.open > ul { display: block; width: 100%; }');
 
-        // 脚注样式
         htmlParts.push('.footnote-column { position: relative; width: 100%; }');
         htmlParts.push('.footnote-item { position: absolute; left: 0; width: 100%; font-size: 0.85em; color: var(--footnote-text); padding-bottom: 10px; box-sizing: border-box; transition: top 0.3s ease; }');
         htmlParts.push('.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 4px; }');
@@ -639,8 +767,7 @@ $$
         htmlParts.push('.footnote-backref:hover { text-decoration: underline; }');
         htmlParts.push('.footnote-item a:not(.footnote-backref) { color: #97b6b1; text-decoration: none; }');
         htmlParts.push('.footnote-item a:not(.footnote-backref):hover { text-decoration: underline; }');
-        
-        // 主内容样式
+
         htmlParts.push('.main-content { flex: 1; min-width: 0; padding-right: 5%; }');
         htmlParts.push('#write { max-width: 900px; padding-bottom: 80px; }');
         htmlParts.push('#write h1, #write h2, #write h3, #write h4, #write h5 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); text-align: center; }');
@@ -649,7 +776,6 @@ $$
         htmlParts.push('#write h3 { font-size: 1.3em; font-weight: normal; }');
         htmlParts.push('#write h4 { font-size: 1.2em; font-weight: normal; }');
         htmlParts.push('#write h5 { font-size: 1.1em; font-weight: normal; }');
-        
         htmlParts.push('#write a { color: var(--link-color); text-decoration: none; }');
         htmlParts.push('#write a:hover { text-decoration: underline; }');
         htmlParts.push('#write ul, #write ol { padding-left: 1.5em; margin-left: 0; margin-bottom: 1em; }');
@@ -659,8 +785,9 @@ $$
         htmlParts.push('#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }');
         htmlParts.push('#write thead { background-color: var(--code-bg); }');
         htmlParts.push('#write code { font-family: "Consolas", monospace; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }');
-        htmlParts.push('#write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 4px; }');
+        htmlParts.push('#write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 6px; }');
         htmlParts.push('#write pre code { padding: 0; background-color: transparent; }');
+        htmlParts.push('pre code.hljs { display:block; overflow-x:auto; padding:12px; border-radius:6px; }');
         htmlParts.push('#write img { max-width: 100%; display: block; margin: 1em auto; }');
         htmlParts.push('.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }');
         htmlParts.push('.footnote-ref:hover { text-decoration: underline; }');
@@ -669,7 +796,8 @@ $$
         htmlParts.push('.nav-buttons.visible { opacity: 1; }');
         htmlParts.push('.nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, background 0.2s; }');
         htmlParts.push('.nav-btn:hover { transform: scale(1.1); background: var(--link-color); }');
-        htmlParts.push('@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; gap: 20px; margin-right: 0; border-right: none; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 20px; } .toc-sidebar { width: 100%; position: static; max-height: 200px; } .footnote-column { position: static; width: 100%; } .footnote-item { position: static; border-bottom: 1px solid var(--border-color); } .main-content { padding-right: 0; } }');
+        htmlParts.push('@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; margin-right: 0; border-right: none; border-bottom: 1px solid var(--border-color); padding-right: 0; padding-bottom: 15px; margin-bottom: 15px; } }');
+
         htmlParts.push('</style>');
         htmlParts.push('</head>');
         htmlParts.push('<body>');
@@ -688,8 +816,8 @@ $$
         htmlParts.push('<button class="nav-btn" onclick="window.scrollTo({top:0,behavior:\'smooth\'})" title="回到顶端">↑</button>');
         htmlParts.push('<button class="nav-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:\'smooth\'})" title="回到底端">↓</button>');
         htmlParts.push('</div>');
-        
-        // TOC 点击事件
+
+        // Script (export)
         htmlParts.push('<script>');
         htmlParts.push('var scrollTimeout;');
         htmlParts.push('window.addEventListener("scroll", function() {');
@@ -699,15 +827,35 @@ $$
         htmlParts.push('        document.getElementById("navButtons").classList.remove("visible");');
         htmlParts.push('    }, 2000);');
         htmlParts.push('});');
-        
+
         htmlParts.push('document.addEventListener("click", function(e) {');
         htmlParts.push('    if (e.target.classList.contains("toc-toggle")) {');
         htmlParts.push('        e.preventDefault();');
         htmlParts.push('        e.target.parentElement.classList.toggle("open");');
         htmlParts.push('    }');
         htmlParts.push('});');
-        
-        // 脚注对齐逻辑
+
+        htmlParts.push('function limitListDepth(root, maxDepth) {');
+        htmlParts.push('  var lists = root.querySelectorAll("ul, ol");');
+        htmlParts.push('  lists.forEach(function(list) {');
+        htmlParts.push('    var depth = 1;');
+        htmlParts.push('    var p = list.parentElement;');
+        htmlParts.push('    while (p) { if (p.tagName === "UL" || p.tagName === "OL") depth++; p = p.parentElement; }');
+        htmlParts.push('    if (depth > maxDepth) {');
+        htmlParts.push('      var frag = document.createDocumentFragment();');
+        htmlParts.push('      Array.from(list.children).forEach(function(li) {');
+        htmlParts.push('        if (li.tagName !== "LI") return;');
+        htmlParts.push('        var div = document.createElement("div");');
+        htmlParts.push('        div.style.marginLeft = "1em";');
+        htmlParts.push('        div.textContent = li.textContent;');
+        htmlParts.push('        frag.appendChild(div);');
+        htmlParts.push('      });');
+        htmlParts.push('      list.replaceWith(frag);');
+        htmlParts.push('    }');
+        htmlParts.push('  });');
+        htmlParts.push('}');
+
+        htmlParts.push('// Footnote alignment');
         htmlParts.push('function alignFootnotes() {');
         htmlParts.push('    const refs = Array.from(document.querySelectorAll(".footnote-ref"));');
         htmlParts.push('    const notes = Array.from(document.querySelectorAll(".footnote-item"));');
@@ -715,10 +863,8 @@ $$
         htmlParts.push('    const leftCol = document.querySelector(".left-column");');
         htmlParts.push('    const noteMap = {};');
         htmlParts.push('    notes.forEach(note => { noteMap[note.id.replace("fn-", "")] = note; });');
-        
         htmlParts.push('    let currentY = toc ? (toc.offsetHeight + 20) : 0;');
         htmlParts.push('    const leftColRect = leftCol.getBoundingClientRect();');
-        
         htmlParts.push('    refs.forEach(ref => {');
         htmlParts.push('        const label = ref.getAttribute("href").replace("#fn-", "");');
         htmlParts.push('        const note = noteMap[label];');
@@ -735,14 +881,17 @@ $$
         htmlParts.push('    const fnCol = document.querySelector(".footnote-column");');
         htmlParts.push('    if(fnCol) fnCol.style.height = currentY + "px";');
         htmlParts.push('}');
-        
-        htmlParts.push('window.addEventListener("load", alignFootnotes);');
+
+        htmlParts.push('window.addEventListener("load", function() {');
+        htmlParts.push('  var write = document.getElementById("write");');
+        htmlParts.push('  if (write) limitListDepth(write, 5);');
+        htmlParts.push('  if (window.hljs) { document.querySelectorAll("pre > code").forEach(function(code){ code.classList.add("hljs"); try { hljs.highlightElement(code); } catch(e){} }); }');
+        htmlParts.push('  alignFootnotes();');
+        htmlParts.push('});');
         htmlParts.push('window.addEventListener("resize", alignFootnotes);');
-        htmlParts.push('if(window.MathJax) {');
-        htmlParts.push('    MathJax.startup.promise.then(() => { setTimeout(alignFootnotes, 1000); });');
-        htmlParts.push('}');
+        htmlParts.push('if(window.MathJax) { MathJax.startup.promise.then(() => { setTimeout(alignFootnotes, 1000); }); }');
         htmlParts.push('</' + 'script>');
-        
+
         htmlParts.push('</body>');
         htmlParts.push('</html>');
 
