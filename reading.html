@@ -55,7 +55,8 @@
         }
         
         h1 {
-            font-size: 1.8em;
+            font-size: 2.5em; /* Increased size */
+            font-weight: 800; /* Increased weight */
             text-align: center;
             margin-bottom: 1.5rem;
             color: #fff;
@@ -121,8 +122,7 @@
         
         @media (max-width: 600px) {
             h1 {
-                font-size: 1.6em;
-            }
+                font-size: 2.0em; /* Adjusted for mobile but still larger */
             }
             
             .welcome {
@@ -130,8 +130,8 @@
             }
             
             .nav-links {
-                flex-direction: column;
-                align-items: center;
+                /* flex-direction: column; REMOVED */
+                /* align-items: center; REMOVED */
             }
         }
     </style>
@@ -153,6 +153,7 @@
 
         
         <footer style="text-align: center; margin-top: 2rem; color: #aaa;">
+            <p><a>背景图为《葬送的芙莉莲》</a></p>
             <p><a href="/">← 返回主页</a></p>
         </footer>
         
