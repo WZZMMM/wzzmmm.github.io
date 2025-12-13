@@ -4,19 +4,15 @@
   --page-bg-dark: #0b0b0b;
   --overlay-light: rgba(0,0,0,0.6);
   --overlay-dark: rgba(0,0,0,0.6);
+  /* Default to light mode */
+  --page-bg: var(--page-bg-light);
+  --overlay: var(--overlay-light);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --page-bg: var(--page-bg-dark);
     --overlay: var(--overlay-dark);
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --page-bg: var(--page-bg-light);
-    --overlay: var(--overlay-light);
   }
 }
 
