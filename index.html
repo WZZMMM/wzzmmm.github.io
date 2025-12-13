@@ -54,7 +54,8 @@
         }
         
         h1 {
-            font-size: 1.8em;
+            font-size: 2.5em; /* Increased size */
+            font-weight: 800; /* Increased weight */
             text-align: center;
             margin-bottom: 1.5rem;
             color: #fff;
@@ -133,8 +134,7 @@
         
         @media (max-width: 600px) {
             h1 {
-                font-size: 1.6em;
-            }
+                font-size: 2.0em; /* Adjusted for mobile but still larger */
             }
             
             .welcome {
@@ -142,8 +142,8 @@
             }
             
             .nav-links {
-                flex-direction: column;
-                align-items: center;
+                /* flex-direction: column; REMOVED */
+                /* align-items: center; REMOVED */
             }
             
             .background-credit {
@@ -169,7 +169,7 @@
     
     <!-- 将背景图说明移到单独的div中 -->
     <div class="background-credit">
-        背景图截取自新海诚导演动画电影《秒速五厘米》，可从Wallhaven<a href="https://whvn.cc/4vgq3p">下载</a>
+        背景图源自新海诚导演动画电影《秒速五厘米》，可从wallhaven<a href="https://whvn.cc/4vgq3p">下载</a>，仅供个人学习、交流用
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
