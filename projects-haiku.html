@@ -1,0 +1,236 @@
+<! DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | WZM</title>
+    <link href="https://fonts.googleapis.com/css2? family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        /* 全局颜色变量 */
+        :root {
+            --bg-color: #f3f2ee;
+            --text-color:  #1f0909;
+            --link-color: #77a0ab;
+            --border-color:  #c5c5c5;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color:  #202124;
+                --text-color:  #e8eaed;
+                --link-color: #77a0ab;
+                --border-color: #5f6368;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "PT Serif", "Times New Roman", Times, serif;
+            background-image: url('aict-pku_bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color:  #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        /* 多层透明磨砂效果 - 因为有背景图片 */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        
+        . container {
+            max-width:  900px;
+            padding: 2rem;
+            margin: 2rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow:  0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: left;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        
+        . subtitle {
+            font-size:  1.2rem;
+            color: #ddd;
+            margin-bottom:  2rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        h2 {
+            font-size: 1.5em;
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        
+        .projects {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin:  1.5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        p, li {
+            line-height: 1.6;
+            color: #eee;
+        }
+
+        /* 让说明文字更浅一些，并与列表分隔 */
+        .projects . description {
+            color: #bbb;
+            margin:  0 0 1rem 0;
+        }
+        . projects .divider {
+            border-color: rgba(255, 255, 255, 0.2);
+            margin: 0. 75rem 0 1rem;
+        }
+        
+        a {
+            color: #77a0ab;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        a: hover {
+            color: #77a0ab;
+            text-decoration: underline;
+        }
+        
+        ul {
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        . more-info {
+            text-align: right;
+            margin-top: 1rem;
+        }
+        
+        .more-info a {
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .more-info a:: after {
+            content: "→";
+            margin-left:  0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .more-info a:hover:: after {
+            transform: translateX(3px);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #aaa;
+        }
+
+        footer a {
+            color: #77a0ab;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            . subtitle {
+                font-size:  1rem;
+            }
+
+            h2 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>一些小项目</h1>
+        </header>
+        
+        <section class="projects">
+            <h2>人工智能与计算思维</h2>
+            <ul>
+                <li>北京大学，2025年春季学期，6班</li>
+                <li>全新开设的通识核心课"人工智能与计算思维"，该课程讲授数据科学与人工智能的核心知识，设8个平行班，阐述人工智能在各学科领域应用的典型案例，使学生初步掌握人工智能在解决实际问题中的应用方法，培养学生的计算思维能力。
+                    <p class="more-info">
+                        <a href="https://mp.weixin.qq.com/s/4KukjOS6VReOg_gcblc5Cw" target="_blank" rel="noopener noreferrer">更多信息</a>
+                    </p>
+                </li>
+                <li><a href="aict-pku/SearchEngines.html">一个简单的集成搜索引擎</a></li>
+                <li><a href="aict-pku/HongLouMeng-Python.html">与 Python 和 LLM 共读《红楼梦》（持续更新中）</a></li>
+            </ul>
+        </section>
+
+        <section class="projects">
+            <h2>网页端工具（氛围编程产出）</h2>
+
+            <!-- 说明 -->
+            <p class="description">
+                <a href="https://en.wikipedia.org/wiki/Vibe_coding">Vibe coding</a> is an artificial intelligence-assisted 
+                software development technique popularized by Andrej Karpathy in February 2025.<br>
+                我并非专业软件开发者，以下仅为使用自然语言和AI助手（包括但不限于Github Copilot及其提供的各大模型服务），开发一些简易的网页端工具。
+            </p>
+
+            <hr class="divider">
+
+            <!-- 项目列表 -->
+            <ul>
+                <li><a href="projects/md-html-v1.4.html">在线 markdown 转 html 工具</a></li>
+            </ul>
+        </section>
+        
+        <footer>
+            <p><a href="/">← 返回主页</a></p>
+        </footer>
+    </div>
+</body>
+</html>
