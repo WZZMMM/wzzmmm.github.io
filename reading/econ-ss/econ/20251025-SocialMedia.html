@@ -1,0 +1,592 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SocialMedia</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link id="hljs-theme" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css">
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/highlight.min.js"></script>
+<script>
+window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], tags: "ams" }, svg: { fontCache: "global" } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #77a0ab; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #77a0ab; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; --scrollbar-track: transparent; --nav-btn-color: #6ab0c2; --code-header-bg: #e1e1e1; --code-header-text: #555; }
+@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #77a0ab; --code-bg: #0d1117; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #77a0ab; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; --nav-btn-color: #5a9aaa; --code-header-bg: #161b22; --code-header-text: #8b949e; } }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+body { margin: 0; padding: 0; font-family: "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+.page-container { display: flex; flex-direction: row; max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+.left-column { width: 20%; min-width: 200px; flex-shrink: 0; position: relative; margin-right: 30px; border-right: 1px solid var(--border-color); padding-right: 20px; }
+.toc-sidebar { max-height: 40vh; overflow-y: auto; padding: 10px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); font-size: 0.9em; position: sticky; top: 20px; }
+.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }
+.toc-list, .toc-list ul { list-style: none; margin: 0; padding: 0; }
+.toc-list ul { padding-left: 0.5em; display: none; }
+.toc-list li { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; }
+.toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; display: inline-block; flex: 1; padding: 2px 0; }
+.toc-link:hover { text-decoration: underline; }
+.toc-toggle { cursor: pointer; display: inline-block; width: 1.5em; text-align: center; margin-right: 4px; user-select: none; transition: transform 0.2s; color: #888; transform: rotate(-90deg); }
+.toc-toggle:hover { color: var(--link-color); }
+.toc-spacer { display: inline-block; width: 1.5em; margin-right: 4px; flex-shrink: 0; }
+.toc-list li.open > .toc-toggle { transform: rotate(0deg); }
+.toc-list li.open > ul { display: block; width: 100%; }
+.main-content { flex: 1; min-width: 0; padding-right: 5%; }
+#write { max-width: 900px; padding-bottom: 80px; }
+#write h1, #write h2, #write h3, #write h4, #write h5 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); text-align: center; }
+#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
+#write h2 { font-size: 1.5em; }
+#write h3 { font-size: 1.3em; font-weight: normal; }
+#write h4 { font-size: 1.2em; font-weight: normal; }
+#write h5 { font-size: 1.1em; font-weight: normal; }
+#write a { color: var(--link-color); text-decoration: none; }
+#write a:hover { text-decoration: underline; }
+#write ul, #write ol { padding-left: 2em; margin-left: 0; margin-bottom: 1em; }
+#write ol { list-style-type: decimal; } #write ol ol { list-style-type: lower-alpha; } #write ol ol ol { list-style-type: lower-roman; }
+#write li { margin-bottom: 0.3em; }
+#write blockquote { font-style: italic; border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }
+#write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
+#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
+#write thead { background-color: rgba(0,0,0,0.05); }
+#write code { font-family: "Consolas", monospace; background-color: rgba(128,128,128,0.2); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+#write img { max-width: 100%; display: block; margin: 1em auto; }
+.code-wrapper { margin-bottom: 1.5em; border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--code-bg); }
+.code-header { display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background-color: var(--code-header-bg); border-bottom: 1px solid var(--border-color); font-family: sans-serif; font-size: 0.8em; color: var(--code-header-text); text-transform: uppercase; font-weight: bold; }
+#write pre { margin: 0; padding: 0; overflow-x: auto; background: transparent; }
+#write pre code { display: block; padding: 15px; background: transparent; font-family: "Consolas", "Monaco", monospace; font-size: 0.9em; border: none; }
+.footnote-column { position: relative; width: 100%; }
+.footnote-item { position: absolute; left: 0; width: 100%; font-size: 0.85em; color: var(--footnote-text); padding-bottom: 10px; box-sizing: border-box; transition: top 0.3s ease; display: none; }
+.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 4px; }
+.footnote-backref { color: var(--link-color); text-decoration: none; margin-left: 5px; }
+.footnote-item a:not(.footnote-backref) { color: #77a0ab; text-decoration: none; }
+.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }
+.nav-buttons { position: fixed; right: 30px; bottom: 30px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s ease; z-index: 1000; }
+.nav-buttons.visible { opacity: 1; }
+.nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, background 0.2s; }
+.nav-btn:hover { transform: scale(1.1); background: var(--link-color); }
+@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; margin-right: 0; border-right: none; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; padding-bottom: 20px; } .toc-sidebar { max-height: 200px; position: static; width: 100%; margin-bottom: 20px; } .main-content { padding-right: 0; } .footnote-item { position: static; margin-bottom: 10px; display: block !important; } .footnote-column { height: auto !important; } }
+</style>
+</head><body>
+<div class="page-container">
+<div class="left-column">
+<nav class="toc-sidebar"><div class="toc-title">TOC</div><ul class="toc-list"><li class="open"><span class="toc-toggle">⌵</span><a href="#social-media-and-welfare" class="toc-link">Social Media and Welfare</a><ul><li><span class="toc-spacer"></span><a href="#declaration-of-generative-ai-in-the-writing-process" class="toc-link">Declaration of Generative AI in the writing process</a></li><li><span class="toc-toggle">⌵</span><a href="#allcott-et-al-2020-aer" class="toc-link">Allcott et al. (2020, AER)</a><ul><li><span class="toc-spacer"></span><a href="#authors" class="toc-link">Author(s)</a></li><li><span class="toc-spacer"></span><a href="#research-question" class="toc-link">Research Question</a></li><li><span class="toc-spacer"></span><a href="#data" class="toc-link">Data</a></li><li><span class="toc-spacer"></span><a href="#method" class="toc-link">Method</a></li><li><span class="toc-spacer"></span><a href="#contribution" class="toc-link">Contribution</a></li><li><span class="toc-spacer"></span><a href="#core-ref" class="toc-link">Core Ref</a></li><li><span class="toc-spacer"></span><a href="#results" class="toc-link">Results</a></li><li><span class="toc-spacer"></span><a href="#conclusion" class="toc-link">Conclusion</a></li><li><span class="toc-spacer"></span><a href="#comments" class="toc-link">Comments</a></li><li><span class="toc-spacer"></span><a href="#stars-5" class="toc-link">Stars: 5</a></li></ul></li><li><span class="toc-toggle">⌵</span><a href="#allcott-et-al-2022-aer" class="toc-link">(*) Allcott et al. (2022, AER)</a><ul><li><span class="toc-spacer"></span><a href="#authors" class="toc-link">Author(s)</a></li><li><span class="toc-spacer"></span><a href="#research-question" class="toc-link">Research Question</a></li><li><span class="toc-spacer"></span><a href="#data" class="toc-link">Data</a></li><li><span class="toc-toggle">⌵</span><a href="#method" class="toc-link">Method</a><ul><li><span class="toc-spacer"></span><a href="#model" class="toc-link">Model</a></li><li><span class="toc-spacer"></span><a href="#experiments" class="toc-link">Experiments</a></li><li><span class="toc-spacer"></span><a href="#estimating-the-model-and-counterfactuals" class="toc-link">Estimating the Model and Counterfactuals</a></li></ul></li><li><span class="toc-spacer"></span><a href="#contribution" class="toc-link">Contribution</a></li><li><span class="toc-spacer"></span><a href="#core-ref" class="toc-link">Core Ref</a></li><li><span class="toc-toggle">⌵</span><a href="#results" class="toc-link">Results</a><ul><li><span class="toc-spacer"></span><a href="#model-free-results" class="toc-link">Model-Free Results</a></li><li><span class="toc-spacer"></span><a href="#parameters" class="toc-link">Parameters</a></li><li><span class="toc-spacer"></span><a href="#counterfactuals" class="toc-link">Counterfactuals</a></li></ul></li><li><span class="toc-spacer"></span><a href="#conclusion" class="toc-link">Conclusion</a></li><li><span class="toc-spacer"></span><a href="#comments" class="toc-link">Comments</a></li><li><span class="toc-spacer"></span><a href="#stars-5" class="toc-link">Stars: 5</a></li></ul></li><li><span class="toc-toggle">⌵</span><a href="#levy-2021-aer" class="toc-link">Levy (2021, AER)</a><ul><li><span class="toc-spacer"></span><a href="#research-question" class="toc-link">Research Question</a></li><li><span class="toc-spacer"></span><a href="#data" class="toc-link">Data</a></li><li><span class="toc-spacer"></span><a href="#method" class="toc-link">Method</a></li><li><span class="toc-spacer"></span><a href="#contribution" class="toc-link">Contribution</a></li><li><span class="toc-spacer"></span><a href="#results" class="toc-link">Results</a></li><li><span class="toc-spacer"></span><a href="#conclusion" class="toc-link">Conclusion</a></li><li><span class="toc-spacer"></span><a href="#stars-3" class="toc-link">Stars: 3</a></li></ul></li><li><span class="toc-toggle">⌵</span><a href="#kalra-2025-wp" class="toc-link">Kalra (2025, WP)</a><ul><li><span class="toc-spacer"></span><a href="#research-question" class="toc-link">Research Question</a></li><li><span class="toc-spacer"></span><a href="#data" class="toc-link">Data</a></li><li><span class="toc-spacer"></span><a href="#method" class="toc-link">Method</a></li><li><span class="toc-spacer"></span><a href="#contribution" class="toc-link">Contribution</a></li><li><span class="toc-spacer"></span><a href="#results" class="toc-link">Results</a></li><li><span class="toc-spacer"></span><a href="#conclusion" class="toc-link">Conclusion</a></li><li><span class="toc-spacer"></span><a href="#stars-3" class="toc-link">Stars: 3</a></li></ul></li></ul></li></ul></nav>
+
+</div>
+<div class="main-content">
+<div id="write">
+<h1 id="social-media-and-welfare">Social Media and Welfare</h1>
+<h2 id="declaration-of-generative-ai-in-the-writing-process">Declaration of Generative AI in the writing process</h2>
+<p>During the preparation of this work, the author used DeepSeek-V3.1 to improve the readability of some sentences. After using this tool, the author reviewed and edited the content as needed and takes full responsibility for the content of the publication.</p>
+<hr>
+<h2 id="allcott-et-al-2020-aer">Allcott et al. (2020, AER)</h2>
+<p>Allcott, Hunt, Luca Braghieri, Sarah Eichmeyer, and Matthew Gentzkow. 2020. “The Welfare Effects of Social Media.” <em>American Economic Review</em> 110 (3): 629–76. <a href="https://doi.org/10.1257/aer.20190658">https://doi.org/10.1257/aer.20190658</a>.</p>
+<h3 id="authors">Author(s)</h3>
+<ul>
+<li>Allcott: <a href="https://allcott.people.stanford.edu/">Hunt Allcott - Professor in the Doerr School of Sustainability at Stanford University</a></li>
+<li>Braghieri: <a href="https://www.lucabraghieri.com/">Luca Braghieri's website</a>, an Associate Professor in the department of Decision Sciences at Bocconi University</li>
+<li>Eichmeyer: <a href="https://sites.google.com/view/saraheichmeyer">Luca Braghieri's website</a>, an Assistant Professor in the <a href="https://economics.unibocconi.eu/">Economics Department</a> at <a href="https://www.unibocconi.eu/">Bocconi University</a></li>
+<li>Gentzkow: <a href="https://economics.stanford.edu/people/matthew-gentzkow">Matthew Gentzkow | Landau Professor in Technology and the Economy at Stanford University</a>, <a href="https://matthewgentzkow.com/">personal website</a></li>
+</ul>
+<h3 id="research-question">Research Question</h3>
+<ul>
+<li>What's the social welfare effects (benefits / harms) of social media?<ol>
+<li><strong>substitution patterns</strong> , e.g. social media use <strong>crowds out</strong> face-to-face social interactions  / higher-quality news and information sources?</li>
+<li><strong>political externalities</strong>, proxied by news knowledge, political engagement, and political polarization?</li>
+<li><strong>subjective well-being</strong>?</li>
+<li>whether deactivation affected people’s demand for Facebook after the study was over, as well as their opinions about Facebook’s role in society?</li>
+</ol>
+</li>
+</ul>
+<h3 id="data">Data</h3>
+<ul>
+<li>2,743 U.S. Facebook users, September - December around the 2018 midterm elections</li>
+<li>measured a suite of outcomes using text messages, surveys, emails, direct measurement of Facebook and Twitter activity, and administrative voting records</li>
+</ul>
+<h3 id="method">Method</h3>
+<ul>
+<li><p><strong>RCT</strong>: 8 parts included: recruitment, pre-screen, baseline survey, midline survey, endline survey, post-endline survey, post-endline emails, and daily text messages </p>
+<blockquote>
+<p><em>See</em>: fig1. Experimental Design </p>
+</blockquote>
+<ol>
+<li>recruitment of participants via Facebook ads: To minimize sample selection bias, the ad did not hint at our research questions or suggest that the study was related to social media or Facebook deactivation. For (approximately) representative pf initial sample,  the ads were targeted by demographic cells.   </li>
+<li>a brief pre-screen survey: several background demographic questions and the consent form  </li>
+<li>baseline survey: basic individual information, a range of outcome variables, willingness to deactivate their accounts for two 24-hour periods  </li>
+<li>midline survey: asked participants to deactivate their Facebook accounts for 24 hours and guided them through the process  ; used a Becker-DeGroot-Marschak (BDM) mechanism to elicit willingness-to-accept (WTA) to stay deactivated for four weeks rather than 24 hours  </li>
+<li>endline survey: measured the same outcome variables as the baseline survey ; asked all participants to again deactivate their Facebook accounts for the next 24 hours, and again elicited WTA to stay deactivated for the next four weeks (i.e., weeks 5–8) instead of the next 24 hours  </li>
+<li>two post-endline emails : additional non-self-reported measures of interest in reducing social media use and political engagement  </li>
+<li>post-endline survey: asked how many minutes per day they had used the Facebook app on their smartphones in the past seven days ; several open-answer questions  </li>
+<li>daily text message surveys: to measure several aspects of subjective well-being in real time rather than retrospectively</li>
+</ol>
+</li>
+<li><p>Outcome Variables  </p>
+</li>
+<li><p><strong>IV</strong>: Used Treatment assignment (paid vs. not) as instrument for actual deactivation (to account for non-compliance).</p>
+</li>
+</ul>
+<h3 id="contribution">Contribution</h3>
+<ol>
+<li>First large-scale experimental evidence on FB’s welfare effects, covering <strong>multiple domains</strong> (time use, political externalities, post-experiment behavior, etc. ).</li>
+<li>Novel use of <strong>WTA for deactivation</strong>, a 4-week deactivation period (longer than prior studies), and measurement of post-experiment Facebook use.</li>
+<li>Showed <strong>habit formation evidence</strong>, i.e. reduced long-term use of social media and political participation.</li>
+</ol>
+<h3 id="core-ref">Core Ref</h3>
+<p>None</p>
+<h3 id="results">Results</h3>
+<ol>
+<li><strong>Time Allocation</strong>: Deactivation freed 60 mins/day; shifted to offline activities (TV alone, family time) <em>not</em> other online platforms. Reduced news consumption by 15% (8 mins/day).</li>
+<li><strong>Political Outcomes</strong>: Lower news knowledge (0.19 SD) and polarization (0.16 SD), but no effect on midterm turnout.</li>
+<li><strong>Subjective Well-Being (SWB)</strong>: Small but significant improvement (0.09 SD), driven by reduced anxiety/depression; text-message measures (real-time) showed weaker effects.</li>
+<li><strong>Long-Term Use</strong>: Treatment group used Facebook 22% less post-experiment (11 mins/day mobile app), with 5% still deactivated 9 weeks later. WTA for future deactivation fell by 14%, indicating learning.</li>
+</ol>
+<h3 id="conclusion">Conclusion</h3>
+<h3 id="comments">Comments</h3>
+<ul>
+<li>Reverse thinking: In a situation where social media is already widespread, intervention is not becoming a new user, but temporary deactivation, which is low-cost, ethical, technological feasible and monitorable.</li>
+<li>Novel idea (in econ literature, though not so in other subjects or daily public discussions / common sense), broad aspects of social effects considered (a copious range of outcome variables included), convincingly rigorous experiment design, and well-organized writing style.</li>
+<li>Eliciting WTA twice in midline and endline is wonderful, but maybe a third WTA should also be asked in the post-endline survey to show stronger evidence of long-term habit formation?</li>
+<li>In China, Anti-Indulged System For Adolescent（青少年防沉迷） , as well as the heavy academic workload "crowding out" social media use, might be a natural experiment with broader range (but much more difficult data gathering and model specification).<br>（让我们说中文！）实际上，影音娱乐类APP的青少年防沉迷模式形同虚设，可能只比某些品牌手机的“健康使用时间”约束稍强一点。至于高中生不让用手机，考虑另一种相似的情形，我自己读博以后比本科期间，（非）自愿极大减少了网上冲浪的时间，减少网上冲浪本身可能会导致身心健康的改善，但是导致这种减少的冲击（读博）又可能导致身心健康恶化，识别是很不干净的。</li>
+<li>What's more, unlike FB or X, almost all Chinese social media Apps don't support "deactivation", as far as I know. And most social media Apps have substitutions. Even though participants are recruited, researchers cannot monitor the reduction of social media use. Only some nudges, such as time reminder in deep night, might play a slightly similar role.</li>
+</ul>
+<h3 id="stars-5">Stars: 5</h3>
+<ul>
+<li>rigor: 5</li>
+<li>innovation: 5</li>
+<li>writing style: 5</li>
+</ul>
+<hr>
+<h2 id="allcott-et-al-2022-aer">(*) Allcott et al. (2022, AER)</h2>
+<p>Allcott, Hunt, Matthew Gentzkow, and Lena Song. 2022. “Digital Addiction.” <em>American Economic Review</em> 112 (7): 2424–63. <a href="https://doi.org/10.1257/aer.20210867">https://doi.org/10.1257/aer.20210867</a>.</p>
+<h3 id="authors">Author(s)</h3>
+<ul>
+<li>Allcott: <a href="https://allcott.people.stanford.edu/">Hunt Allcott - Professor in the Doerr School of Sustainability at Stanford University</a></li>
+<li>Gentzkow: <a href="https://economics.stanford.edu/people/matthew-gentzkow">Matthew Gentzkow | Landau Professor in Technology and the Economy at Stanford University</a>, <a href="https://matthewgentzkow.com/">personal website</a></li>
+<li>Song: <a href="https://www.songlena.com/">Lena Song</a>, an Assistant Professor of Economics at University of Illinois Urbana-Champaign</li>
+</ul>
+<h3 id="research-question">Research Question</h3>
+<ul>
+<li>What's the nature and magnitude of digital addition?</li>
+</ul>
+<h3 id="data">Data</h3>
+<ul>
+<li>1933 American adults with Android smartphones recruit via Facebook and Instagram ads, from March 22 to July 26, 2020 . </li>
+<li>Phone Dashboard is used to gather the screen time and other outcome variables.</li>
+<li>Participants completed four surveys at three-week intervals—a baseline (Survey 1) and three follow-ups (Surveys 2, 3, and 4)—that included survey measures of smartphone addiction and SWB as well as predictions of future FITSBY use.</li>
+</ul>
+<blockquote>
+<p>[Abbr. Notes] SWB = subjective well-being ; FITSBY = Facebook, Instagram, Twitter, Snapchat, web browsers, and YouTube ; MPL = multiple price list </p>
+</blockquote>
+<h3 id="method">Method</h3>
+<h4 id="model">Model</h4>
+<p>The goal of the model is to formalize the meaning of “digital addiction” and foreshadow how we identify the model parameters using our experiment. </p>
+<ul>
+<li><p>To model <em>habit formation</em>, consumers' rational preference is represented by a flow utility $u_{t}(x_{t}; s_{t}, p_{t})$</p>
+<ul>
+<li><p>choose consumption of a good  $x_{t}$ sold at price $p_{t}$;</p>
+</li>
+<li><p>stock of past consumption $s_{t}$ that evolves according to
+  $$
+    s_{t+1} = \rho (s_{t} + x_{t}), \tag{1}
+    $$
+  where $\rho \in [0,1)$ captures the strength of habit formation.</p>
+</li>
+</ul>
+</li>
+<li><p>To model <em>self-control problems,</em> set $x$ as a temptation good, and consumers may misperceive temptation  </p>
+<ul>
+<li><p>in period $t$, consumers act as if $u_{t}(x_{t}; s_{t}, p_{t}) + \gamma x_{t}$, where $\gamma \ge 0$ reflects the amount of temptation; </p>
+</li>
+<li><p>before period $t$, consumers predict that in period t, they will act as if  $u_{t}(x_{t}; s_{t}, p_{t}) + \widetilde{\gamma} x_{t}$ .</p>
+</li>
+<li><p>naïveté and sophistication in self-control problems: We say that consumers are <em>fully naïve</em> if $\widetilde{\gamma} = 0$, and <em>fully sophisticated</em> if $\widetilde{\gamma} = \gamma$. Partial naïveté captures why our experiment participants underestimate $x_{t}$ when asked to predict in advance. Partial sophistication captures why our participants want commitment devices to change their future behavior.</p>
+</li>
+</ul>
+</li>
+<li><p>To allow the possibility of <em>projection bias</em>, consumers choose as if to maximize a weighted average of </p>
+<ul>
+<li>utility given the current habit stock $s_{t}$, and </li>
+<li>utility given the <em>predicted</em> habit stock $s_{r}$ in future period $r &gt; t$.</li>
+<li>Let $\alpha$ denote the weight on the current habit stock, and thus the magnitude of projection bias.</li>
+</ul>
+</li>
+<li><p>To solve for <em>perception-perfect equilibrium</em> strategies, where consumers maximize current utility given predictions of future behavior  </p>
+<ul>
+<li><p>Let $x_{t}(s_{t},\gamma,\mathbf{p}_t)$ denote a strategy of the period-$t$ self ;</p>
+</li>
+<li><p>Let $\widetilde{x}_{t}(s_{t},\widetilde{\gamma},\mathbf{p}_t)$ be a consumer’s prediction, as of period $t &lt; r$, of her period-$r$ strategy.</p>
+</li>
+<li><p>A strategy profile $(x_{0}^{⁎},…,x_{T}^{⁎})$is perception perfect if $\forall t$,<br>  $$
+    \begin{aligned}
+    x_{t}^{*}(s_{t},\gamma,\mathbf{p}_t) = \arg \max_{x_{t}} \ 
+    &amp; \left[ u_{t}(x_{t}; s_{t}) + \gamma x_{t} \right] + \\
+    &amp;  \left[
+    \alpha \sum_{r=t+1}^{T} \delta^{r-t} 
+    u_ {r}\left( 
+    \widetilde { x } _ { r } ^ { * } ( s _ { t } , \widetilde { \gamma } , \mathbf { p } _ { r }  ) ; s _ { t } , p _ { r } 
+    \right)
+          + ( 1 - \alpha ) \sum _ { r = t + 1 } ^ { T } \delta ^ { r - t } 
+     u _ { r } \left( 
+     \widetilde { x } _ { r } ^ { * }  ( \tilde { s } _ { r } , \tilde { \gamma }, \mathbf{p}_{r}); \widetilde{s} _ { t } , p _ { r } 
+     \right)
+    \right]
+    \end{aligned}
+    \tag{2}
+    $$</p>
+</li>
+<li><p>Assume that the equilibrium prediction $\widetilde { x } _ { r } ^ { * } ( s _ { t } , \widetilde { \gamma } , \mathbf { p } _ { r }  )$ is the solution to equation (2) with $\alpha=0$ and $\gamma =\widetilde{\gamma} $.</p>
+</li>
+</ul>
+</li>
+<li><p>To estimate the model, specializing to the case of quadratic flow utility  </p>
+<p>$$
+  u _ { t } ( x _ { t } ; s _ { t } , p _ { t } ) = 
+  { \frac { \eta } { 2 } } x _ { t } ^ { 2 } + 
+  \zeta x _ { t } s _ { t } + 
+  \phi s _ { t } + 
+   \left (\xi_{t} - p_{t } \right ) x_{t},
+  \tag{3}
+  $$</p>
+<p>where $\eta &lt; 0$ measures the demand slope, $\zeta$ regulates the extent of habit formation, $\phi$ is the direct effect of habit stock on utility (which could be positive or negative), and $\xi _ { t }$ is adeterministic period-specific demand shifter. </p>
+<ul>
+<li>This can be microfounded by assuming that consumers have income $w$ that they must spend in each period, and income not spent on $x _ { t }$ is spent on a numeraire $c _ { t } = w - p _ { t } x _ { t }$ that is additively separable in $u _ { t }$ . </li>
+<li>In this specification, $u _ { t }$ is in units of dollars per period.</li>
+</ul>
+</li>
+</ul>
+<h4 id="experiments">Experiments</h4>
+<p>The experiment is designed to provide direct evidence on the magnitude of habit formation, perceived habit formation, temptation, and perceived temptation, as well as to identify the remaining key parameters of the quadratic model. Two treatments are independently randomized.</p>
+<ul>
+<li><p>Overview</p>
+<blockquote>
+<p>See: Figure 2 &amp; Table 1; <a href="https://www.openicpsr.org/openicpsr/project/175582/version/V1/view">Replication Package</a></p>
+</blockquote>
+</li>
+<li><p>Surveys 1–4: administered on Sundays at three-week intervals between April 12 and June 14 2020, each 20 days (the survey day excluded)</p>
+<ol>
+<li>Survey 1 (Baseline)<ul>
+<li>Intro: Promise to give best answer, Demographic information, Subjective well-being</li>
+<li>Feelings about Phone Use</li>
+<li>Addiction Scale: Recent addictive actions in phone use (over the past 3 weeks), Recent changes in phone use (in 2019)</li>
+<li>Baseline MPL: Intro MPL, MPL correction, MPL reveal, PD update  </li>
+<li>Final Comments: Recruitment source, Final feedback, Re-reminder of text messages and Phone Dashboard app</li>
+</ul>
+</li>
+<li>Survey 2 (Midline)<ul>
+<li>Belief Elicitation 1</li>
+<li>Bonus Intro</li>
+<li>MPL: Hypothetical, Correction, Consistency check, Confirmation, Equally Happy, Reasoning</li>
+<li>Treatment Reveal Confirmation</li>
+<li>Ideal Usage</li>
+<li>Limit Setting: Phone Dashboard Limit Setting Guide</li>
+<li>Belief Elicitation 2</li>
+<li>Final Comments</li>
+</ul>
+</li>
+<li>Survey 3 (Endline)<ul>
+<li>SWB</li>
+<li>Feelings about phone use, Life change, Addiction</li>
+<li>Bonus Treatment Reminder</li>
+<li>MPL for Blocker</li>
+<li>Ideal Usage</li>
+<li>Limit Setting: Phone Dashboard Limit Setting Guide</li>
+<li>Belief Elicitation 2</li>
+<li>Final Comments</li>
+</ul>
+</li>
+<li>Survey 4 (Endline)<ul>
+<li>SWB</li>
+<li>Feelings about Phone Use, Phone Use Change Long Responses</li>
+<li>Addiction Scale  </li>
+<li>Temptation  </li>
+<li>Bonus Treatment Reminder  </li>
+<li>Ideal Usage  </li>
+<li>Limit Setting Check: PD update, Phone Dashboard Limit Setting Guide</li>
+<li>Belief Elicitation 2</li>
+<li>Preferred Snooze</li>
+<li>Final Feedback</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>3 $\times$ 2 groups: We randomized participants into bonus and limit treatment conditions using a factorial design. We randomized participants to the bonus, bonus control, or the MPL group with 25, 75, and 0.2 percent probability, respectively. We independently randomized participants to the limit or limit control groups with 60 and 40 percent probability, respectively.  </p>
+</li>
+<li><p>Bonus Treatment</p>
+<ul>
+<li>designed to identify projection bias (the parameter $\alpha$), actual habit formation ($\rho$ and $\zeta$), and the curvature of utility ($\eta$).</li>
+</ul>
+<blockquote>
+<p>The bonus group’s anticipatory response to the bonus in period 2 (before the incentive was in effect) provides information about the magnitude of projection bias $\alpha$. The contemporaneous response in period 3 (while the incentive was in effect) provides information about the price response parameter $\eta$. The long-term effects in periods 4 and 5 (after the incentive had ended) provide information about the magnitude and decay of habit ($\zeta$ and $\rho$).  </p>
+</blockquote>
+<ul>
+<li>the bonus group was informed that they had been randomly selected to receive the bonus for screen time reductions during period 3—i.e., starting in three weeks</li>
+</ul>
+<blockquote>
+<p>“If you’re selected for the Screen Time Bonus, you would receive \undefined.”  </p>
+<p>“If you reduce your FITSBY screen time to \undefined.”</p>
+<p>“If your FITSBY screen time is above \undefined.”</p>
+<p>where the bonus benchmark [X] is the participant’s average FITSBY hours per day from period 1, rounded up to the nearest integer . </p>
+</blockquote>
+<ul>
+<li>The bonus control group was informed that they would not receive the bonus.</li>
+</ul>
+</li>
+<li><p>Limit Treatment</p>
+<ul>
+<li>designed to understand self-control problems and help identify the temptation parameter $\gamma$</li>
+</ul>
+<blockquote>
+<p>we interpret use of the limits as evidence of perceived self-control problems ($\widetilde{\gamma}&gt;0$).  </p>
+</blockquote>
+<ul>
+<li>the limit treatment group was given access to functionality in Phone Dashboard that allows users to set daily time limits for each app on their phone</li>
+</ul>
+<blockquote>
+<p>Phone Dashboard serves five-minute and one-minute push notifications as an app’s daily time limit approaches. When the limit arrives, users can “snooze” their limit and get an additional amount of time that they specify—but starting only after a delay. Within the limit group, we randomly assigned participants with equal probability to delays of 0, 2, 5, or 20 minutes or a condition where the ability to snooze was disabled. To keep the scope of this paper manageable, we focus only on the comparison between the limit and limit control groups; we plan to study the variation in snooze delays in a separate paper.   </p>
+</blockquote>
+<ul>
+<li>The limit control group was never told about limits and continued to have a version of Phone Dashboard that did not have the limit functionality.</li>
+</ul>
+</li>
+<li><p>MPL: Bonus and Limit Valuations  </p>
+<ul>
+<li><p>used incentive-compatible MPL mechanisms to elicit valuations of the Screen Time Bonus and the limit functionality, which help identify perceived temptation $\widetilde{\gamma}$</p>
+</li>
+<li><p>Survey 2 informed participants of their average daily FITSBY screen time over the past three weeks and asked them to <em>predict</em> their screen time over the next three weeks. The survey then introduced the Screen Time Bonus and asked participants to <em>predict</em> how much they would reduce their FITSBY screen time relative to their original prediction if they were selected for the bonus.  After these two predictions, we asked participants to make a hypothetical choice between the Screen Time Bonus and a payment equal to their expected earnings from the bonus.</p>
+</li>
+</ul>
+<blockquote>
+<p>“You might prefer $[expected earnings] instead of the Screen Time Bonus ifyou don’t want any pressure to reduce your screen time.”</p>
+<p>“You might prefer the Screen Time Bonus instead of $[expected earnings] if you want to give yourself extra incentive to use your phone less.”</p>
+</blockquote>
+<ul>
+<li>To make the MPL incentive compatible,  0.2 percent of participants were randomly assigned to the MPL group that received what they chose on a randomly selected row.</li>
+</ul>
+<blockquote>
+<p>“Last week, the computer randomly selected some participants to receive what they choose on the multiple price list below, and also randomly selected one of the rows to be ‘the question that counts.’ If you were randomly selected to participate, you will be paid based on what you choose in that row.”</p>
+</blockquote>
+</li>
+<li><p>Predicted Use  </p>
+<ul>
+<li>At the end of surveys 2, 3, and 4, we elicited predictions of future FITSBY use. These predictions help identify the degree of naïveté or sophistication about temptation—the difference between $\gamma$ and $\widetilde{\gamma}$.</li>
+</ul>
+</li>
+</ul>
+<h4 id="estimating-the-model-and-counterfactuals">Estimating the Model and Counterfactuals</h4>
+<p>==<em>TODO</em>==</p>
+<h3 id="contribution">Contribution</h3>
+<ul>
+<li>We develop an economic model of digital addiction and estimate it using a randomized experiment.</li>
+</ul>
+<h3 id="core-ref">Core Ref</h3>
+<p>In the [Introduction] section, the author's literature review is brilliant and exemplary. Here are some excerpts and summaries.</p>
+<ul>
+<li><p><em>Models</em> to rationalize of addictive behavior</p>
+<ul>
+<li>Becker and Murphy (1988 JPE): the first model to rationalize addiction; <em>habit formation</em> means that today’s consumption increases tomorrow’s demand  </li>
+<li>Gruber and Köszegi (2001 QJE): a model of addictive behavior that takes as its starting point the standard “rational addiction” model, but incorporates <em>time-inconsistent preferences</em>  </li>
+<li>Gul and Pesendorfer (2007 AER): three types of welfare analysis, in which <em>Welfare III</em> tries to identify, advocate, or show the impossibility of normative criteria for the aggregation of preferences  </li>
+<li>Bernheim and Rangel (2004 AER): a model of addiction based on three premises: (i) use among addicts is frequently a mistake; (ii) experience sensitizes an individual to <em>environmental cues that trigger mistaken usage</em>; (iii) addicts understand and manage their susceptibilities</li>
+<li>O'Donoghue and Rabin (1999 AER); Loewenstein, O'Donoghue and Rabin (2003 QJE): a model of <em>projection bias</em>; when people exhibit habit formation, projection bias leads people to consume too much early in life, and to decide, as time passes, to consume more—and save less—than originally planned</li>
+</ul>
+<blockquote>
+<p>Becker, Gary S., and Kevin M. Murphy. 1988. “A Theory of Rational Addiction.” <em>Journal of Political Economy</em> 96 (4): 675–700.</p>
+<p>Gruber, Jonathan, and Botond Köszegi. 2001. “Is Addiction ‘Rational’? Theory and Evidence*.” <em>The Quarterly Journal of Economics</em> 116 (4): 1261–303. <a href="https://doi.org/10.1162/003355301753265570">https://doi.org/10.1162/003355301753265570</a>.</p>
+<p>Gul, Faruk, and Wolfgang Pesendorfer. 2007. “Welfare without Happiness.” <em>American Economic Review</em> 97 (2): 471–76. <a href="https://doi.org/10.1257/aer.97.2.471">https://doi.org/10.1257/aer.97.2.471</a>.</p>
+<p>Bernheim, B. Douglas, and Antonio Rangel. 2004. “Addiction and Cue-Triggered Decision Processes.” <em>American Economic Review</em> 94 (5): 1558–90. <a href="https://doi.org/10.1257/0002828043052222">https://doi.org/10.1257/0002828043052222</a>.</p>
+<p>O’Donoghue, Ted, and Matthew Rabin. 1999. “Doing It Now or Later.” <em>American Economic Review</em> 89 (1): 103–24. <a href="https://doi.org/10.1257/aer.89.1.103">https://doi.org/10.1257/aer.89.1.103</a>.</p>
+<p>Loewenstein, George, Ted O’Donoghue, and Matthew Rabin. 2003. “Projection Bias in Predicting Future Utility.” <em>The Quarterly Journal of Economics</em> 118 (4): 1209–48. <a href="https://doi.org/10.1162/003355303322552784">https://doi.org/10.1162/003355303322552784</a>.</p>
+</blockquote>
+</li>
+<li><p>Similar <em>experiments</em> in related researches concerning habit formation and self-control problems</p>
+<ul>
+<li>While Carrera et al. (2021) show that take-up of commitment devices can be driven by experimenter demand effects or decision-making noise instead of perceived self-control problems, there are three reasons why their concerns are less likely to apply to our experiment  </li>
+<li>Hoong (2021) is particularly related, and is an important antecedent to our study. In a smaller-scale experiment, she pioneers the use of encouragement to adopt self-control tools[...]. Our paper helps to unify the previous empirical literature with a formal model of digital addiction, relatively large sample, multiple treatment arms that convincingly identify habit formation and self-control problems using several different strategies, and robust measurement of screen time and survey outcomes.</li>
+</ul>
+<blockquote>
+<p>Carrera, Mariana, Heather Royer, Mark Stehr, Justin Sydnor, and Dmitry Taubinsky. 2022. “Who Chooses Commitment? Evidence and Welfare Implications.” <em>Review of Economic Studies</em> 89 (3): 1205–44. <a href="https://doi.org/10.1093/restud/rdab056">https://doi.org/10.1093/restud/rdab056</a>.</p>
+<p>Hoong, Ruru. 2021. “Self Control and Smartphone Use: An Experimental Study of Soft Commitment Devices.” <em>European Economic Review</em> 140 (November): 103924. <a href="https://doi.org/10.1016/j.euroecorev.2021.103924">https://doi.org/10.1016/j.euroecorev.2021.103924</a>.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="results">Results</h3>
+<h4 id="model-free-results">Model-Free Results</h4>
+<h4 id="parameters">Parameters</h4>
+<h4 id="counterfactuals">Counterfactuals</h4>
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+<li>Basic Results $\to$ Conclusive Comments<ul>
+<li>The Screen Time Bonus intervention had persistent effects after the incentives ended,  $\to$ suggesting that smartphone social media use is habit forming.</li>
+<li>Participants predicted these persistent effects on surveys but did not reduce FITSBY use before the bonus was in effect,   $\to$ suggesting that they are aware of but inattentive to habit formation.   </li>
+<li>Participants used the screen time limit functionality when we offered it in the experiment, and this functionality reduced FITSBY use by over 20 minutes per day,   $\to$ suggesting that social media use involves self-control problems. </li>
+<li>The control group repeatedly underestimated future use, suggesting slight naïveté. Many participants reported indicators of smartphone addiction on surveys, and both the bonus and limit interventions reduced this self-reported addiction. [...]  $\to$ These results suggest that better aligning digital technologies with well-being should be an important goal of users, parents, technology workers, investors, and regulators.</li>
+</ul>
+</li>
+<li>Two additional questions<ul>
+<li>what are the underlying mechanisms and microfoundations that generate the persistent bonus treatment effects?   </li>
+<li>if so many of our participants perceive self-control problems and use (and are willing to pay for) the Phone Dashboard time limit functionality, why isn’t there higher demand for commercial digital self-control tools?</li>
+</ul>
+</li>
+</ul>
+<h3 id="comments">Comments</h3>
+<ul>
+<li><p>It's amazing to use observed action differences after randomized inventions (Bonus treatment $\times$ Limit treatment) to provide information about model parameters. MPLs play an important role, but perhaps only in future applications will I understand its mystery.</p>
+</li>
+<li><p>Detailed online appendix and replication package are open, but is seems hard to replicate (I can't imagine how to do it in China...). However, the correspondence between each intervention design and the model setting, as well as the steps and details of trial implementation, are worth learning.</p>
+</li>
+<li><p>In China's context, some "focus/efficiency apps"(e.g. 番茄Todo，Forest 专注森林，Flora, etc. ),  might be suitable for similar interventions. However, it is likely that only samples from universities can be obtained.</p>
+</li>
+<li><p>Although the following two concerns are mentioned, I'm still slightly unconvinced: </p>
+<ul>
+<li><p>COVID-19 pandemic might have increased screen time totally and largely.</p>
+</li>
+<li><p>Sample is restricted to Android users (Phone Dashboard monitor cannot be used on phones with iOS), might not be representative enough.</p>
+</li>
+</ul>
+<blockquote>
+<p>(?) Our sample is more educated, more heavily female, younger, and slightly lower income than the US population. We estimate an alternative specification of our structural model with sample weights to adjust for these observable differences.  </p>
+</blockquote>
+</li>
+<li><p>More about the authors</p>
+<ul>
+<li>Researches on social media by Hunt Allcott and his collaborators cover various fields of economics such as political economy, behavior, and industrial organization. The probably most highly-cited and well-known article is Allcott and Gentzkow (2017, JEP). A special section in <em>Science</em> (July 2023) about Social Media and Elections contains discussions from multidisciplinary backgrounds (González-Bailón et al. 2023; Guess et al. 2023a; 2023b). More deactivation experiment, similar to Allcott et al. (2020 AER) , are done by Allcott et al. (2024 PNAS) and Allcott, Gentzkow, et al. (2025 NBER). There are also two more recent working papers in an IO approach: One is set in the context of the competition between Google and Bing (Allcott, Castillo, et al. 2025 NBER), while the other is about the Facebook-Instagram merger (Katz and Allcott 2025 WP).</li>
+</ul>
+<blockquote>
+<p>Allcott, Hunt, and Matthew Gentzkow. 2017. “Social Media and Fake News in the 2016 Election.” <em>Journal of Economic Perspectives</em> 31 (2): 211–36. <a href="https://doi.org/10.1257/jep.31.2.211">https://doi.org/10.1257/jep.31.2.211</a>.</p>
+<p>González-Bailón, Sandra, David Lazer, Pablo Barberá, et al. 2023. “Asymmetric Ideological Segregation in Exposure to Political News on Facebook.” <em>Science</em> 381 (6656): 392–98. <a href="https://doi.org/10.1126/science.ade7138">https://doi.org/10.1126/science.ade7138</a>.</p>
+<p>Guess, Andrew M., Neil Malhotra, Jennifer Pan, et al. 2023a. “How Do Social Media Feed Algorithms Affect Attitudes and Behavior in an Election Campaign?” <em>Science</em> 381 (6656): 398–404. <a href="https://doi.org/10.1126/science.abp9364">https://doi.org/10.1126/science.abp9364</a>.</p>
+<p>Guess, Andrew M., Neil Malhotra, Jennifer Pan, et al. 2023b. “Reshares on Social Media Amplify Political News but Do Not Detectably Affect Beliefs or Opinions.” <em>Science</em> 381 (6656): 404–8. <a href="https://doi.org/10.1126/science.add8424">https://doi.org/10.1126/science.add8424</a>.</p>
+<p>Allcott, Hunt, Matthew Gentzkow, Winter Mason, et al. 2024. “The Effects of Facebook and Instagram on the 2020 Election: A Deactivation Experiment.” <em>Proceedings of the National Academy of Sciences</em> 121 (21): e2321584121. <a href="https://doi.org/10.1073/pnas.2321584121">https://doi.org/10.1073/pnas.2321584121</a>.</p>
+<p>Allcott, Hunt, Matthew Gentzkow, Benjamin Wittenbrink, et al. 2025. “The Effect of Deactivating Facebook and Instagram on Users’ Emotional State.” No. W33697. Preprint, National Bureau of Economic Research, April 21. <a href="https://doi.org/10.3386/w33697">https://doi.org/10.3386/w33697</a>.</p>
+<p>Allcott, Hunt, Juan Camilo Castillo, Matthew Gentzkow, Leon Musolff, and Tobias Salz. 2025. “Sources of Market Power in Web Search: Evidence from a Field Experiment.” Working Paper. May 13.</p>
+<p>Allcott, Hunt, Matthew Gentzkow, Benjamin Wittenbrink, et al. 2025. “The Effect of Deactivating Facebook and Instagram on Users’ Emotional State.” No. W33697. Preprint, National Bureau of Economic Research, April 21. <a href="https://doi.org/10.3386/w33697">https://doi.org/10.3386/w33697</a>.</p>
+<p>Katz, Justin, and Hunt Allcott. 2025. “Digital Media Mergers: Theory and Application to Facebook-Instagram.” No. W34028. Preprint, National Bureau of Economic Research, July 1. <a href="https://doi.org/10.3386/w34028">https://doi.org/10.3386/w34028</a>.</p>
+</blockquote>
+<ul>
+<li>(A course) <a href="https://www.guyaridor.net/ec25tutorial.html">Economics and Experiments on Social Media EC'25 Tutorial</a> by <a href="https://www.guyaridor.net/">Guy Aridor</a> and <a href="https://www.songlena.com/">Lena Song</a></li>
+</ul>
+<blockquote>
+<p>Aridor, Guy, Rafael Jiménez-Durán, Ro’ee Levy, and Lena Song. 2024. “The Economics of Social Media.” <em>Journal of Economic Literature</em> 62 (4): 1422–74. <a href="https://doi.org/10.1257/jel.20241743">https://doi.org/10.1257/jel.20241743</a>.</p>
+<p>Aridor, Guy, Rafael Jiménez Durán, Ro’ee Levy, and Lena Song. 2025. “Experiments on Social Media.” SSRN Scholarly Paper No. 4893781. Social Science Research Network, June 18. <a href="https://papers.ssrn.com/abstract=4893781">https://papers.ssrn.com/abstract=4893781</a>.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="stars-5">Stars: 5</h3>
+<ul>
+<li>rigor: 5 </li>
+<li>innovation: 5</li>
+<li>writing style: 5</li>
+</ul>
+<hr>
+<h2 id="levy-2021-aer">Levy (2021, AER)</h2>
+<p>Levy, Ro’ee. 2021. “Social Media, News Consumption, and Polarization: Evidence from a Field Experiment.” <em>American Economic Review</em> (Nashville) 111 (3): 831–70. <a href="https://doi.org/10.1257/aer.20191777">https://doi.org/10.1257/aer.20191777</a>.</p>
+<h3 id="research-question">Research Question</h3>
+<ul>
+<li>Does the consumption of ideologically congruent news on social media exacerbate polarization?</li>
+</ul>
+<h3 id="data">Data</h3>
+<blockquote>
+<p>See: Table 1</p>
+</blockquote>
+<ul>
+<li><strong>Survey Data</strong>: The endline survey measures self-reported political opinions, affective polarization, and changes in self-reported news consumption habits. A total of 17,635 participants took the endline survey and constitute the <em>endline survey subsample</em>.  </li>
+<li><strong>Facebook Data on Pages Liked and Posts Shared</strong>: Pages liked / posts shared (34,592 participants who provided permissions for ≥2 weeks). Approximately 92 percent of baseline participants provided access to the posts they shared for at least two full weeks following the intervention constituting the <em>access posts subsample</em>.  </li>
+<li><strong>Extension Data on Browser Behavior and the Facebook Feed</strong>: The participants are asked install an browser extension  reporting FB feed exposure and news site visits. 1,835 participants who installed the extension for ≥2 weeks constitute the <em>extension subsample</em>.</li>
+<li>External Data. <a href="https://www.science.org/doi/10.1126/science.aaa1160">Outlets</a>, <a href="https://wrds-www.wharton.upenn.edu/pages/about/data-vendors/comscore/">comScore</a> Browsing</li>
+</ul>
+<h3 id="method">Method</h3>
+<ul>
+<li><p>I collect data on the causal chain of media effects: subscriptions to outlets, exposure to news on Facebook, visits to online news sites, and sharing of posts, as well as changes in political opinions and attitudes.</p>
+</li>
+<li><p><strong>Field Experiment</strong>: Randomly assigned participants (blocked by self-reported ideology) to <strong>liberal treatment</strong> (offer 4 liberal outlets, e.g., MSNBC), <strong>conservative treatment</strong> (offer 4 conservative outlets, e.g., Fox News), or <strong>control</strong> (no offer).</p>
+<blockquote>
+<p>I designed the experiment to have high external validity. A nudge offering subscriptions to outlets is very common on social media and participants could have subscribed to any of these outlets, at no cost, without the intervention. Besides the offer, the experiment did not directly intervene in any behavior. The news supplied to participants was the actual news provided by leading media outlets during the study period. Facebook’s algorithm determined which of the posts shared by the outlets appeared in the participants’ Facebook feeds. Finally, participants decided whether to skip, read, click, or share posts. As a result, the effect of the intervention is almost identical to the experience of millions of Americans who subscribe to popular news outlets on Facebook.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="contribution">Contribution</h3>
+<ul>
+<li>First experimental proof that <strong>counter-attitudinal social media news reduces affective polarization</strong> (vs. pro-attitudinal news).</li>
+<li>Demonstrates Facebook’s algorithm limits counter-attitudinal exposure <em>conditional on subscription</em> (a “filter bubble” mechanism).</li>
+</ul>
+<h3 id="results">Results</h3>
+<ol>
+<li>random variation in exposure to news on social media substantially affects the slant of news sites that individuals visit.</li>
+<li>exposure to counter-attitudinal news decreases negative attitudes toward the opposing political party. </li>
+<li>in contrast to the effect on attitudes, I find no evidence that the political leanings of news outlets affect political opinions. </li>
+<li>Facebook’s algorithm is less likely to supply individuals with posts from counter-attitudinal outlets, conditional on individuals subscribing to them.</li>
+</ol>
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+<li>Result 1, 4 $\to$ I show that news consumption on social media is an important phenomenon because consumers are exposed to different news on social media, individuals incidentally consume news when it becomes accessible in their feed, and exposure to news on social media affects attitudes.</li>
+<li>Result 2 $\to$ provides a mechanism complementing other important studies finding that social media can increase polarization and raises concern since affective polarization may decrease trust in government and the accountability of elected officials. </li>
+<li>Result 3 $\to$ suggests that a more segregated news environment may partially explain the increase in affective polarization over the past decades.</li>
+</ul>
+<h3 id="stars-3">Stars: 3</h3>
+<ul>
+<li>rigor: 3</li>
+<li>innovation: 4</li>
+<li>writing style: 4</li>
+</ul>
+<hr>
+<h2 id="kalra-2025-wp">Kalra (2025, WP)</h2>
+<p>Kalra, Aarushi. 2025. <em>Hate in the Time of Algorithms: Evidence on Online Behavior from a Large-Scale Experiment</em>. March 8. <a href="https://doi.org/10.48550/arXiv.2503.06244">https://doi.org/10.48550/arXiv.2503.06244</a>.</p>
+<h3 id="research-question">Research Question</h3>
+<ul>
+<li>how algorithms and user preferences jointly shape harmful online engagement ? </li>
+<li>what are the causal effects of replacing a feed-ranking algorithm with random content delivery on: (1) exposure to toxic content, (2) overall platform usage, (3) sharing of toxic content, and (4) user behavior beyond the platform? </li>
+<li>a dynamic model rationalize these findings and evaluate counterfactual content moderation policies?</li>
+</ul>
+<h3 id="data">Data</h3>
+<ul>
+<li>User-Post-Level, User-Level and Post-Level <strong>Platform Administrative Data</strong>: I develop a partnership with TipTop, a prominent TikTok-like platform in India that has a user base of about 200 million users,  to identify the impact of randomized content delivery that replaces algorithm-generated personalized feeds.  </li>
+<li>Survey Data: 8,387 users (4,236 treatment, 4,151 control) surveyed post-intervention on off-platform time use and political attitudes.</li>
+</ul>
+<h3 id="method">Method</h3>
+<ul>
+<li><strong>Toxicity Classification</strong>: I further process the text from posts in the form of images (using OCR). [...] Specifically, I use <a href="https://www.perspectiveapi.com/research/">Perspective</a>’s machine learning algorithms, developed by <a href="https://jigsaw.google.com/">Jigsaw</a> at Google, to identify toxicity in the Hindi text extracted from about 20 million posts. Users ranked by baseline toxic exposure (Q1–Q5) to test differential effects.</li>
+<li><strong>Individually Randomized Experiment</strong>: Control users retain standard feed-ranking algorithm (optimizes time spent via past engagement); treatment users receive randomly drawn content from Hindi corpus.</li>
+<li><strong>Model Based Counterfactuals</strong></li>
+</ul>
+<h3 id="contribution">Contribution</h3>
+<ul>
+<li>First large-scale (8M users) randomized experiment on a TikTok-like platform showing random feeds reduce toxic exposure but harm platform usage, with users offsetting gains via higher conditional toxic sharing.</li>
+</ul>
+<h3 id="results">Results</h3>
+<ul>
+<li>Four key findings  <ol>
+<li>Disabling the algorithm has heterogeneous effects  </li>
+<li>Extreme users disengage more  </li>
+<li>Sharing of toxic content is nearly unresponsive but more responsive for users initially exposed to more toxicity  </li>
+<li>Behavioral responses dampen benefits of regulations</li>
+</ol>
+</li>
+</ul>
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+<li>Disabling personalization algorithms reduces toxic content exposure but imposes large platform costs. </li>
+<li>User preferences (not algorithms) dominate sharing behavior, as high-toxicity users disengage or seek toxic content elsewhere. </li>
+<li>Piecemeal algorithmic regulation is limited unless paired with cross-platform policies, esp. when user behavior is largely immalleable.</li>
+</ul>
+<h3 id="stars-3">Stars: 3</h3>
+<ul>
+<li>rigor: 4</li>
+<li>innovation: 5</li>
+<li>writing style: 3</li>
+</ul>
+
+</div></div></div>
+<div id="navButtons" class="nav-buttons">
+<button class="nav-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶端">↑</button>
+<button class="nav-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" title="回到底端">↓</button>
+</div>
+<script>
+var scrollTimeout;
+window.addEventListener("scroll", function() { document.getElementById("navButtons").classList.add("visible"); clearTimeout(scrollTimeout); scrollTimeout = setTimeout(function() { document.getElementById("navButtons").classList.remove("visible"); }, 2000); });
+function updateHighlightTheme() { const themeLink = document.getElementById("hljs-theme"); const isDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches; if (themeLink) { themeLink.href = isDark ? "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github-dark.min.css" : "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"; } }
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateHighlightTheme); updateHighlightTheme();
+document.addEventListener("click", function(e) { if (e.target.classList.contains("toc-toggle")) { e.preventDefault(); e.target.parentElement.classList.toggle("open"); } });
+function alignFootnotes() { const refs = Array.from(document.querySelectorAll(".footnote-ref")); const notes = Array.from(document.querySelectorAll(".footnote-item")); const toc = document.querySelector(".toc-sidebar"); const leftCol = document.querySelector(".left-column"); const noteMap = {}; notes.forEach(note => { noteMap[note.id.replace("fn-", "")] = note; }); let currentY = toc ? (toc.offsetHeight + 20) : 0; const leftColRect = leftCol.getBoundingClientRect(); refs.forEach(ref => { const label = ref.getAttribute("href").replace("#fn-", ""); const note = noteMap[label]; if (note) { const refRect = ref.getBoundingClientRect(); let desiredTop = refRect.top - leftColRect.top; desiredTop += 5; if (desiredTop < currentY) { desiredTop = currentY; } note.style.top = desiredTop + "px"; note.style.display = "block"; currentY = desiredTop + note.offsetHeight + 15; } }); const fnCol = document.querySelector(".footnote-column"); if(fnCol) fnCol.style.height = currentY + "px"; }
+window.addEventListener("load", function() { alignFootnotes(); });
+window.addEventListener("resize", alignFootnotes);
+if(window.MathJax) { MathJax.startup.promise.then(() => { setTimeout(alignFootnotes, 1000); }); }
+</script>
+</body></html>

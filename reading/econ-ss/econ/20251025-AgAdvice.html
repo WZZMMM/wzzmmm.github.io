@@ -1,0 +1,280 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgAdvice</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link id="hljs-theme" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css">
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/highlight.min.js"></script>
+<script>
+window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], tags: "ams" }, svg: { fontCache: "global" } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #77a0ab; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #77a0ab; --scrollbar-thumb: #c0c0c0; --scrollbar-thumb-hover: #a0a0a0; --scrollbar-track: transparent; --nav-btn-color: #6ab0c2; --code-header-bg: #e1e1e1; --code-header-text: #555; }
+@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #77a0ab; --code-bg: #0d1117; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #77a0ab; --scrollbar-thumb: #5f6368; --scrollbar-thumb-hover: #80868b; --nav-btn-color: #5a9aaa; --code-header-bg: #161b22; --code-header-text: #8b949e; } }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+body { margin: 0; padding: 0; font-family: "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+.page-container { display: flex; flex-direction: row; max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+.left-column { width: 20%; min-width: 200px; flex-shrink: 0; position: relative; margin-right: 30px; border-right: 1px solid var(--border-color); padding-right: 20px; }
+.toc-sidebar { max-height: 40vh; overflow-y: auto; padding: 10px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); font-size: 0.9em; position: sticky; top: 20px; }
+.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }
+.toc-list, .toc-list ul { list-style: none; margin: 0; padding: 0; }
+.toc-list ul { padding-left: 0.5em; display: none; }
+.toc-list li { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; }
+.toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; display: inline-block; flex: 1; padding: 2px 0; }
+.toc-link:hover { text-decoration: underline; }
+.toc-toggle { cursor: pointer; display: inline-block; width: 1.5em; text-align: center; margin-right: 4px; user-select: none; transition: transform 0.2s; color: #888; transform: rotate(-90deg); }
+.toc-toggle:hover { color: var(--link-color); }
+.toc-spacer { display: inline-block; width: 1.5em; margin-right: 4px; flex-shrink: 0; }
+.toc-list li.open > .toc-toggle { transform: rotate(0deg); }
+.toc-list li.open > ul { display: block; width: 100%; }
+.main-content { flex: 1; min-width: 0; padding-right: 5%; }
+#write { max-width: 900px; padding-bottom: 80px; }
+#write h1, #write h2, #write h3, #write h4, #write h5 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); text-align: center; }
+#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
+#write h2 { font-size: 1.5em; }
+#write h3 { font-size: 1.3em; font-weight: normal; }
+#write h4 { font-size: 1.2em; font-weight: normal; }
+#write h5 { font-size: 1.1em; font-weight: normal; }
+#write a { color: var(--link-color); text-decoration: none; }
+#write a:hover { text-decoration: underline; }
+#write ul, #write ol { padding-left: 2em; margin-left: 0; margin-bottom: 1em; }
+#write ol { list-style-type: decimal; } #write ol ol { list-style-type: lower-alpha; } #write ol ol ol { list-style-type: lower-roman; }
+#write li { margin-bottom: 0.3em; }
+#write blockquote { font-style: italic; border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }
+#write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
+#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
+#write thead { background-color: rgba(0,0,0,0.05); }
+#write code { font-family: "Consolas", monospace; background-color: rgba(128,128,128,0.2); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+#write img { max-width: 100%; display: block; margin: 1em auto; }
+.code-wrapper { margin-bottom: 1.5em; border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--code-bg); }
+.code-header { display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background-color: var(--code-header-bg); border-bottom: 1px solid var(--border-color); font-family: sans-serif; font-size: 0.8em; color: var(--code-header-text); text-transform: uppercase; font-weight: bold; }
+#write pre { margin: 0; padding: 0; overflow-x: auto; background: transparent; }
+#write pre code { display: block; padding: 15px; background: transparent; font-family: "Consolas", "Monaco", monospace; font-size: 0.9em; border: none; }
+.footnote-column { position: relative; width: 100%; }
+.footnote-item { position: absolute; left: 0; width: 100%; font-size: 0.85em; color: var(--footnote-text); padding-bottom: 10px; box-sizing: border-box; transition: top 0.3s ease; display: none; }
+.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 4px; }
+.footnote-backref { color: var(--link-color); text-decoration: none; margin-left: 5px; }
+.footnote-item a:not(.footnote-backref) { color: #77a0ab; text-decoration: none; }
+.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }
+.nav-buttons { position: fixed; right: 30px; bottom: 30px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s ease; z-index: 1000; }
+.nav-buttons.visible { opacity: 1; }
+.nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, background 0.2s; }
+.nav-btn:hover { transform: scale(1.1); background: var(--link-color); }
+@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; margin-right: 0; border-right: none; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; padding-bottom: 20px; } .toc-sidebar { max-height: 200px; position: static; width: 100%; margin-bottom: 20px; } .main-content { padding-right: 0; } .footnote-item { position: static; margin-bottom: 10px; display: block !important; } .footnote-column { height: auto !important; } }
+</style>
+</head><body>
+<div class="page-container">
+<div class="left-column">
+<nav class="toc-sidebar"><div class="toc-title">TOC</div><ul class="toc-list"><li class="open"><span class="toc-toggle">⌵</span><a href="#digital-information-agriculture-advice" class="toc-link">Digital Information: Agriculture Advice</a><ul><li><span class="toc-spacer"></span><a href="#declaration-of-generative-ai-in-the-writing-process" class="toc-link">Declaration of Generative AI in the writing process</a></li><li><span class="toc-toggle">⌵</span><a href="#cole-and-fernando-2021-ej" class="toc-link">Cole and Fernando (2021, EJ)</a><ul><li><span class="toc-spacer"></span><a href="#authors" class="toc-link">Author(s)</a></li><li><span class="toc-spacer"></span><a href="#research-question" class="toc-link">Research Question</a></li><li><span class="toc-spacer"></span><a href="#data" class="toc-link">Data</a></li><li><span class="toc-spacer"></span><a href="#method" class="toc-link">Method</a></li><li><span class="toc-spacer"></span><a href="#contribution" class="toc-link">Contribution</a></li><li><span class="toc-spacer"></span><a href="#core-ref" class="toc-link">Core Ref</a></li><li><span class="toc-spacer"></span><a href="#results" class="toc-link">Results</a></li><li><span class="toc-spacer"></span><a href="#conclusion" class="toc-link">Conclusion</a></li><li><span class="toc-spacer"></span><a href="#comments" class="toc-link">Comments</a></li><li><span class="toc-spacer"></span><a href="#stars-5" class="toc-link">Stars:  5</a></li></ul></li><li><span class="toc-toggle">⌵</span><a href="#fabregas-et-al-2025-aejapp" class="toc-link">Fabregas et al. (2025, AEJApp)</a><ul><li><span class="toc-spacer"></span><a href="#authors" class="toc-link">Author(s)</a></li><li><span class="toc-spacer"></span><a href="#research-question" class="toc-link">Research Question</a></li><li><span class="toc-spacer"></span><a href="#data" class="toc-link">Data</a></li><li><span class="toc-spacer"></span><a href="#method" class="toc-link">Method</a></li><li><span class="toc-spacer"></span><a href="#contribution" class="toc-link">Contribution</a></li><li><span class="toc-spacer"></span><a href="#core-ref" class="toc-link">Core Ref</a></li><li><span class="toc-spacer"></span><a href="#results" class="toc-link">Results</a></li><li><span class="toc-spacer"></span><a href="#conclusion" class="toc-link">Conclusion</a></li><li><span class="toc-spacer"></span><a href="#comments" class="toc-link">Comments</a></li><li><span class="toc-spacer"></span><a href="#stars-4" class="toc-link">Stars: 4</a></li></ul></li></ul></li></ul></nav>
+
+</div>
+<div class="main-content">
+<div id="write">
+<h1 id="digital-information-agriculture-advice">Digital Information: Agriculture Advice</h1>
+<h2 id="declaration-of-generative-ai-in-the-writing-process">Declaration of Generative AI in the writing process</h2>
+<p>During the preparation of this work, the author used DeepSeek-V3.1 to improve the readability of some sentences. After using this tool, the author reviewed and edited the content as needed and takes full responsibility for the content of the publication.</p>
+<hr>
+<h2 id="cole-and-fernando-2021-ej">Cole and Fernando (2021, EJ)</h2>
+<p>Cole, Shawn A, and A Nilesh Fernando. 2021. “‘Mobile’Izing Agricultural Advice Technology Adoption Diffusion and Sustainability.” <em>The Economic Journal</em> 131 (633): 192–219. <a href="https://doi.org/10.1093/ej/ueaa084">https://doi.org/10.1093/ej/ueaa084</a>.</p>
+<h3 id="authors">Author(s)</h3>
+<ul>
+<li>Cole: <a href="https://www.hbs.edu/faculty/Pages/profile.aspx?facId=340064">Shawn A. Cole - John G. McLean Professor in the Finance Unit at Harvard Business School</a></li>
+<li>Fernando: <a href="https://nileshfernando.com/">A. Nilesh Fernando</a></li>
+</ul>
+<h3 id="research-question">Research Question</h3>
+<ul>
+<li>Does a voice-based advisory service via mobile phone facilitate changes in technology adoption by farmers?</li>
+<li>Considering this innovative extension, what's different from in-person extension, and what's similar to? (e.g. the peer effect)</li>
+</ul>
+<h3 id="data">Data</h3>
+<ul>
+<li><strong>RCT</strong> data from 1,200 cotton-farming households in Gujarat, India.</li>
+<li><strong>Server logs</strong> from the Avaaj Otalo (AO) platform</li>
+<li>A <strong>‘peer survey’</strong> to collect more information from 1,114 non-study respondents</li>
+</ul>
+<h3 id="method">Method</h3>
+<ul>
+<li><strong>RCT</strong>: the research team randomly assigned toll-free access to AO to 400 households (hereafter, ‘AO group’) and to test the hypothesis that ICT would not be effective without at least some in-person element, an additional 400 households received both AO and an annual in-person extension session (hereafter, ‘AOE group’). A further 400 households served as a pure control group.  </li>
+<li><strong>ANCOVA</strong> specification as suggested by  <a href="https://doi.org/10.1016/j.jdeveco.2012.01.002">McKenzie (2012, JDE)</a> to increase our power to detect effects, given the low autocorrelation of most outcomes in our data.</li>
+<li><strong>‘peer survey’ and ‘spillover’ speciation</strong>: we asked all respondents to list the three contacts with whom they most frequently discussed agricultural information. As such, we are able to identify whether any of these peers also received the treatment  </li>
+<li>we adopt the double LASSO machine learning approach (DML) to pick an optimal set of control variables  </li>
+<li>Measuring <strong>WTP</strong>: We visited the 1,200 study respondents, as well as an additional 457 non-study respondents. One-quarter of this sample (chosen at random, via scratch cards) was offered a fixed price for a nine-month subscription at a single price (‘take it or leave it’ offer, or <strong>TIOLI</strong>); we randomly varied that price across farmers to estimate demand.33 For the remaining three-quarters of the sample, we used a modified version of the <strong>BDM</strong> method <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/bs.3830090304">(Becker-Degroot-Marschak, 1964 Behav. Sci.)</a> to elicit WTP.</li>
+</ul>
+<h3 id="contribution">Contribution</h3>
+<ul>
+<li>Evaluation of <strong>voice-based</strong>  extension.</li>
+<li>Rare evidence on <strong>WTP</strong> for digital advisory services and links usage to behavioral changes despite null effects on yields.</li>
+<li>Method to specificize <strong>spillovers</strong> in household-level RCTs and tests <strong>complementarity</strong> between two services (mobile-phone-based and in-person extension).</li>
+</ul>
+<h3 id="core-ref">Core Ref</h3>
+<ul>
+<li>A large literature focuses on the microeconomics of technology adoption (for a survey, see <a href="https://www.annualreviews.org/content/journals/10.1146/annurev.economics.102308.124433">Foster and Rosenzweig, 2010</a>). </li>
+<li>This work complements a developing literature on the potential for digital agricultural extension (see <a href="https://www.science.org/doi/10.1126/science.aay3038">Fabregas et al., 2019</a> for a recent review).</li>
+</ul>
+<h3 id="results">Results</h3>
+<ul>
+<li><strong>High demand &amp; trust</strong>: 90% of treated farmers used AO (avg. 7 hours), 40% asked questions. Trust in mobile advice rose by 5.8 points (10-point scale).</li>
+<li><strong>Behavioral change</strong>: 5.8 SD increase in mobile-based info usage index; reduced reliance on input dealers for pesticide advice. Cotton management index rose by 0.13–0.15 SD, driven by seed choices (e.g., +6 pp for recommended Bt variety).</li>
+<li><strong>No yield/profit gains</strong>: Null effects on cotton, wheat, and cumin yields (point estimates noisy and insignificant). Input expenditure rose by 8% (15% for irrigation, 20% for seeds).</li>
+<li><strong>WTP &amp; Spillovers</strong>: By BDM method, average WTP = $1.79 (Rs. 109). Treated farmers with more treated peers used AO more intensively. Non-study peers of treated farmers reported 4% lower pest-related crop losses.</li>
+</ul>
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+<li>The RCT intervention was successful in generating a substantial usage of AO, a mobile phone-based technology that allows farmers to receive timely agricultural information from expert agronomists and their peers. </li>
+<li>Advice provided through AO resulted in farmers consistently changing their input decisions.</li>
+<li>"<em>We do not find evidence to suggest the service improved yields or profits. Unfortunately, the imprecision of our estimates suggests the study was underpowered to detect effects for these outcomes, suggesting a need for future research. "</em></li>
+</ul>
+<h3 id="comments">Comments</h3>
+<ul>
+<li><p>An engaging introduction. A sophisticated, comprehensive, and rigorous experimental design, with clear illustrations (as in fig1&amp;2).</p>
+</li>
+<li><p>It's the research question and experimental design, not the fancy data and methods, that matters.</p>
+</li>
+<li><p>It's meaningful to seek support from partner agricultural servers, and good use of server logs will generate new data.↓</p>
+</li>
+<li><p>Other publications also by the authors looks interesting:</p>
+<blockquote>
+<p>Banerjee, Abhijit V., Shawn Cole, Esther Duflo, and Leigh Linden. 2007. “Remedying Education: Evidence from Two Randomized Experiments in India*.” <em>The Quarterly Journal of Economics</em> 122 (3): 1235–64. <a href="https://doi.org/10.1162/qjec.122.3.1235">https://doi.org/10.1162/qjec.122.3.1235</a>.</p>
+<p>Cole, Shawn, Iqbal Dhaliwal, Anja Sautmann, and Lars Vilhuber, eds. 2020. <em>Handbook on Using Administrative Data for Research and Evidence-Based Policy</em>. Abdul Latif Jameel Poverty Action Lab. <a href="https://admindatahandbook.mit.edu">https://admindatahandbook.mit.edu</a>.</p>
+<p>Cole, Shawn, A. Nilesh Fernando, Daniel Stein, and Jeremy Tobacman. 2020. “Field Comparisons of Incentive-Compatible Preference Elicitation Techniques.” <em>Journal of Economic Behavior &amp; Organization</em> 172 (April): 33–56. <a href="https://doi.org/10.1016/j.jebo.2020.01.021">https://doi.org/10.1016/j.jebo.2020.01.021</a>.</p>
+<p>Cole, Shawn, Tomoko Harigaya, Grady Killeen, and Aparna Krishna. 2025. “Using Satellites and Phones to Evaluate and Promote Agricultural Technology Adoption: Evidence from Smallholder Farms in India.” <em>Journal of Development Economics</em> 176 (September): 103463. <a href="https://doi.org/10.1016/j.jdeveco.2025.103463">https://doi.org/10.1016/j.jdeveco.2025.103463</a>.</p>
+<p>Fernando, A. Nilesh. 2021. “Seeking the Treated: The Impact of Mobile Extension on Farmer Information Exchange in India.” <em>Journal of Development Economics</em> 153 (November): 102713. <a href="https://doi.org/10.1016/j.jdeveco.2021.102713">https://doi.org/10.1016/j.jdeveco.2021.102713</a>.</p>
+</blockquote>
+</li>
+<li><p>Although the problem of "<em>misaligned incentives of agricultural extension workers</em>" also exists, in China, the public sector plays an extremely important (and maybe much more efficient than that in other developing countries?) role in agricultural extension, including various subsidies and awards for farmers and enterprises, the construction of information and digital infrastructure, and APP services for farming and government affairs, and so on. Taking cotton as an example, the performance clearly differs from that of India -- according to the article, China is the largest producer of cotton, and its productivity is three times that of India -- how was this achieved? Since over 80% of China's cotton is grown in Xinjiang, where technology adoption under the dominance of public ownership seems to play a very significant role, I guess the smallholders' behavior is also influenced by the larger, public farming agents. Policy- and institution-driven factors are likely more challenging to study (difficult to design RCTs) but are even more critical. That will be another story: Who offers the agricultural advice? If it's the public sector, how can this be efficient? How to measure the efficacy by public servicers? And what's the heterogeneous effects, considering various types of farming agents (farmers, private enterprises in this industry, and SOE or government)?</p>
+</li>
+</ul>
+<h3 id="stars-5">Stars:  5</h3>
+<ul>
+<li>rigor: 5</li>
+<li>innovation: 5</li>
+<li>writing style: 5</li>
+</ul>
+<hr>
+<h2 id="fabregas-et-al-2025-aejapp">Fabregas et al. (2025, AEJApp)</h2>
+<p>Fabregas, Raissa, Michael Kremer, Matthew Lowes, Robert On, and Giulia Zane. 2025. “Digital Information Provision and Behavior Change: Lessons from Six Experiments in East Africa.” <em>American Economic Journal: Applied Economics</em> 17 (1): 527–66. <a href="https://doi.org/10.1257/app.20220072">https://doi.org/10.1257/app.20220072</a>.</p>
+<h3 id="authors">Author(s)</h3>
+<ul>
+<li>Fabregas: <a href="https://sites.google.com/view/raissafabregas">Raissa Fabregas's personal website</a>,<a href="https://lbj.utexas.edu/fabregas-raissa">Raissa Fabregas | LBJ School of Public Affairs</a></li>
+<li>Kremer: <a href="https://michaelkremer.economics.uchicago.edu/">Michael Kremer -  University Professor Kenneth C. Griffin Department of Economics</a>, <a href="https://www.nobelprize.org/prizes/economic-sciences/2019/kremer/facts/">Nobel Laureate '19</a></li>
+<li>Lowe: <a href="https://mattjlowe.github.io/">Matt Lowe's personal website</a></li>
+<li>On: <a href="https://www.agency.fund/team">The Agency Fund | Team</a>, <a href="https://www.linkedin.com/in/robert-on/">linkedin.com/in/robert-on/</a></li>
+<li>Zane: <a href="https://sites.google.com/site/giuliazane/home">Giulia Zane</a></li>
+</ul>
+<h3 id="research-question">Research Question</h3>
+<ul>
+<li>What's the impacts of text message–based agricultural extension programs on individuals’ decisions to acquire recommended inputs?</li>
+<li>What's the different impacts by different contexts / data sources?</li>
+</ul>
+<h3 id="data">Data</h3>
+<ul>
+<li>6 text message–based agricultural extension (in Kenya and Rwanda by 3 different organizations). In total, over 128,000 individuals participated across all six experiments.</li>
+</ul>
+<h3 id="method">Method</h3>
+<ul>
+<li><p>RCT</p>
+</li>
+<li><p>Meta-analysis: odds ratios (see II.B and )</p>
+<p>We use a random-effects model, which assumes that true effects can vary across studies and are normally distributed. The weighted average effect, therefore, represents the mean of the distribution of true effects. Formally, the model can be written as 
+$$
+  T _ { j } = \mu + e _ { j } + \zeta _ { j } ,
+  \tag{2}
+  $$
+where $T _ { j }$ is the observed effect for study $j , \mu$ is the underlying true average effect, $e _ { j }$ represents the measurement error due to sampling variation, and $\zeta _ { j }$ is the difference between the average effect, and the effect of program $j$ . Moreover, $e _ { j } \sim$ $N \big ( 0 , \sigma _ { j } ^ { 2 } \big )$ and $\zeta _ { j } \sim N \left( 0 , \tau ^ { 2 } \right)$ . $\sigma _ { j } ^ { 2 }$ is the within-study variance for study $j$ , while $\tau  ^ { 2 }$ is the between-study variance. The estimate of $\mu$ is 
+$$
+  \hat { \mu } = \frac { \sum _ { j = 1 } ^ { s } w _ { j } T _ { j } } { \sum _ { j = 1 } ^ { s } w _ { j } } ,
+  \tag{3}
+  $$
+where $w _ { j }$ are study-specific weights given by the inverse of the variance and $s$ is the number of studies. In this case, 
+$$
+  w _ { j } = \frac { 1 } { \left( \hat { \tau } ^ { 2 } + \hat { \sigma } _ { j } ^ { 2 } \right) }
+  \tag{4}
+  $$
+and in practice, we estimate $\tau ^ { 2 }$ using the DerSimonian and Laird method (DerSimonian and Laird 1986). We conduct robustness checks using a number of alternative estimation methods (Sidik-Jonkman, restricted maximum likelihood, and empirical Bayes). In addition to $\tau ^ { 2 }$ , we report two other measures of heterogeneity across programs: Cochran’s $Q$ -statistic to test the null hypothesis of homogeneous effects across studies and Higgin’s and Thompson’s $I ^ { 2 }$ , which is the percentage of variability not explained by sampling error (Higgins et al. 2003; Higgins and Thompson 2002). </p>
+<blockquote>
+<p>DerSimonian, R., and N. Laird. 1986. “Meta-Analysis in Clinical Trials.” <em>Controlled Clinical Trials</em> 7 (3): 177–88. <a href="https://doi.org/10.1016/0197-2456(86)90046-2">https://doi.org/10.1016/0197-2456(86)90046-2</a>.</p>
+<p>Anderson, Richard G., and Areerat Kichkha. 2017. “Replication, Meta-Analysis, and Research Synthesis in Economics.” <em>American Economic Review</em> 107 (5): 56–59. <a href="https://doi.org/10.1257/aer.p20171033">https://doi.org/10.1257/aer.p20171033</a>.</p>
+<p>Schmid, Christopher H., Theo Stijnen, and Ian White, eds. 2020. <em>Handbook of Meta-Analysis</em>. Chapman and Hall/CRC. <a href="https://doi.org/10.1201/9781315119403">https://doi.org/10.1201/9781315119403</a>.</p>
+<p>Institute of Economic Studies, Charles University. n.d. “Meta-Analysis in Economics.” Accessed October 11, 2025. <a href="https://meta-analysis.cz/">https://meta-analysis.cz/</a>.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="contribution">Contribution</h3>
+<ul>
+<li>We present evidence of programs with substantial sample sizes.</li>
+<li>Across all experiments, we use actual input acquisitions as our primary measure of behavior change .</li>
+<li>A meta-analysis over the experiments.</li>
+</ul>
+<h3 id="core-ref">Core Ref</h3>
+<ul>
+<li><p>Why the empirical evidence on the impacts of digital agricultural extension programs on recipient behavior has been characterized as mixed: </p>
+<ol>
+<li>program effectiveness is very sensitive to the specific features of its design (Pritchett and Sandefur 2015)  </li>
+<li>sampling variation (Meager 2019)  </li>
+<li>selection biases (Glewwe et al. 2004)</li>
+<li>varying levels of statistical power (Ioannidis, Stanley, and Doucouliagos 2017)  </li>
+<li>differences in measurement, or publication biases (DellaVigna and Linos 2022)</li>
+</ol>
+<blockquote>
+<p>Pritchett, Lant, and Justin Sandefur. 2015. “Learning from Experiments When Context Matters.” <em>American Economic Review</em> 105 (5): 471–75. <a href="https://doi.org/10.1257/aer.p20151016">https://doi.org/10.1257/aer.p20151016</a>.</p>
+<p>Meager, Rachael. 2019. “Understanding the Average Impact of Microcredit Expansions: A Bayesian Hierarchical Analysis of Seven Randomized Experiments.” <em>American Economic Journal: Applied Economics</em> 11 (1): 57–91. <a href="https://doi.org/10.1257/app.20170299">https://doi.org/10.1257/app.20170299</a>.</p>
+<p>Glewwe, Paul, Michael Kremer, Sylvie Moulin, and Eric Zitzewitz. 2004. “Retrospective vs. Prospective Analyses of School Inputs: The Case of Flip Charts in Kenya.” <em>Journal of Development Economics</em>, New Research on Education in Developing Economies, vol. 74 (1): 251–68. <a href="https://doi.org/10.1016/j.jdeveco.2003.12.010">https://doi.org/10.1016/j.jdeveco.2003.12.010</a>.</p>
+<p>Ioannidis, John P. A., T. D. Stanley, and Hristos Doucouliagos. 2017. “The Power of Bias in Economics Research.” <em>The Economic Journal</em> 127 (605): F236–65. <a href="https://doi.org/10.1111/ecoj.12461">https://doi.org/10.1111/ecoj.12461</a>.</p>
+<p>Allcott, Hunt. 2015. “Site Selection Bias in Program Evaluation.” <em>The Quarterly Journal of Economics</em> 130 (3): 1117–65. <a href="https://doi.org/10.1093/qje/qjv015">https://doi.org/10.1093/qje/qjv015</a>.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="results">Results</h3>
+<ul>
+<li>Meta-analysis results<ul>
+<li>Overall effect on following recommended inputs (lime + recommended fertilizers): odds ratio (OR) = 1.22 (95% CI 1.16–1.29; N = 6). Linear-probability (absolute) meta-effect ≈ +2 percentage points (95% CI 0.01–0.03).</li>
+<li>Lime-specific: OR = 1.19 (95% CI 1.11–1.27). Quantity meta-effect ≈ +1.18 kg lime (wide heterogeneity).</li>
+<li>Fertilizer-specific (four programs that recommended fertilizers): OR = 1.27 (95% CI 1.15–1.40). Absolute change ≈ +1 percentage point (LPM).</li>
+<li>Purchased any fertilizer (overall purchases): OR ≈ 1.16 (95% CI 0.94–1.42) — smaller and not statistically significant, suggesting substitution across fertilizer types.</li>
+</ul>
+</li>
+<li>Lessons from individual experiments<ul>
+<li>Differential Effects of Self-Reported versus Administrative Data: Effects estimated from endline surveys tend to be larger than effects measured using administrative purchase records.</li>
+<li>Effects of Message Framing, Content, and Repetition: Different message framings and added specificity generally did not change purchase behavior relative to simple messages, while message repetition produced modest positive increases in purchases.</li>
+<li>Are Text Messages Strengthened by Phone Calls? Adding phone calls increased awareness but did not yield significant additional increases in following recommendations or purchases relative to SMS-only, and take-up of offered calls was low.</li>
+<li>Are There Spillovers? In the cleaner two-stage 1AF design there is suggestive evidence that untreated peers in partially treated groups experienced small positive spillovers to lime adoption, but spillover evidence is not uniformly strong across all specifications and projects.</li>
+</ul>
+</li>
+</ul>
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+<li>The results highlight the importance of well-powered experiments, especially for very cheap interventions, and caution against making conclusions about the external validity of programs by simply taking nonsignificant results as evidence of no impact.</li>
+</ul>
+<h3 id="comments">Comments</h3>
+<ul>
+<li>Context matters in RCT-based researches.</li>
+<li>The research looks more abundant, rigorous and credible due to substantial sample sizes (actually, sufficient funding).</li>
+</ul>
+<h3 id="stars-4">Stars: 4</h3>
+<ul>
+<li>rigor: 5</li>
+<li>innovation: 4</li>
+<li>writing style: 4</li>
+</ul>
+<hr>
+
+</div></div></div>
+<div id="navButtons" class="nav-buttons">
+<button class="nav-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶端">↑</button>
+<button class="nav-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" title="回到底端">↓</button>
+</div>
+<script>
+var scrollTimeout;
+window.addEventListener("scroll", function() { document.getElementById("navButtons").classList.add("visible"); clearTimeout(scrollTimeout); scrollTimeout = setTimeout(function() { document.getElementById("navButtons").classList.remove("visible"); }, 2000); });
+function updateHighlightTheme() { const themeLink = document.getElementById("hljs-theme"); const isDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches; if (themeLink) { themeLink.href = isDark ? "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github-dark.min.css" : "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"; } }
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateHighlightTheme); updateHighlightTheme();
+document.addEventListener("click", function(e) { if (e.target.classList.contains("toc-toggle")) { e.preventDefault(); e.target.parentElement.classList.toggle("open"); } });
+function alignFootnotes() { const refs = Array.from(document.querySelectorAll(".footnote-ref")); const notes = Array.from(document.querySelectorAll(".footnote-item")); const toc = document.querySelector(".toc-sidebar"); const leftCol = document.querySelector(".left-column"); const noteMap = {}; notes.forEach(note => { noteMap[note.id.replace("fn-", "")] = note; }); let currentY = toc ? (toc.offsetHeight + 20) : 0; const leftColRect = leftCol.getBoundingClientRect(); refs.forEach(ref => { const label = ref.getAttribute("href").replace("#fn-", ""); const note = noteMap[label]; if (note) { const refRect = ref.getBoundingClientRect(); let desiredTop = refRect.top - leftColRect.top; desiredTop += 5; if (desiredTop < currentY) { desiredTop = currentY; } note.style.top = desiredTop + "px"; note.style.display = "block"; currentY = desiredTop + note.offsetHeight + 15; } }); const fnCol = document.querySelector(".footnote-column"); if(fnCol) fnCol.style.height = currentY + "px"; }
+window.addEventListener("load", function() { alignFootnotes(); });
+window.addEventListener("resize", alignFootnotes);
+if(window.MathJax) { MathJax.startup.promise.then(() => { setTimeout(alignFootnotes, 1000); }); }
+</script>
+</body></html>
