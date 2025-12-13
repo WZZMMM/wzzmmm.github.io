@@ -43,6 +43,7 @@
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10vh; /* 为底部文字留出空间 */
         }
         
         a {
@@ -120,6 +121,19 @@
             text-decoration: none;
         }
         
+        /* 底部文字样式 */
+        .background-credit {
+            position: absolute;
+            bottom: 8vh; /* 距离底端10% */
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.85rem; /* 比导航链接小一号 */
+            color: #888; /* 灰色 */
+            padding: 0 1rem;
+            z-index: 10;
+        }
+        
         @media (max-width: 600px) {
             h1 {
                 font-size: 2.0em; /* Adjusted for mobile but still larger */
@@ -132,6 +146,11 @@
             .nav-links {
                 /* flex-direction: column; REMOVED */
                 /* align-items: center; REMOVED */
+            }
+            
+            .background-credit {
+                font-size: 0.75rem; /* 移动端更小一点 */
+                bottom: 5vh; /* 移动端调整位置 */
             }
         }
     </style>
@@ -150,13 +169,13 @@
             <a href="reading/you-yu-yi.html" class="nav-link">游于艺</a>
             <a href="reading/acgn-sf.html" class="nav-link">ACGN & SF</a>
         </div>
+        
+    </div>
 
-        
-        <footer style="text-align: center; margin-top: 2rem; color: #aaa;">
-            <p><a>背景图为《葬送的芙莉莲》</a></p>
-            <p><a href="/">← 返回主页</a></p>
-        </footer>
-        
+    <!-- 将背景图说明和返回链接移到单独的div中 -->
+    <div class="background-credit">
+        <p><a>背景图为《葬送的芙莉莲》</a></p>
+        <p><a href="/">← 返回主页</a></p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
