@@ -86,7 +86,7 @@
 
         body {
             margin: 0; padding: 0;
-            font-family: "PT Serif", "Times New Roman", Times, serif;
+            font-family: "Georgia", "PT Serif", "Times New Roman", Times, serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
@@ -114,7 +114,7 @@
             border: 1px solid var(--border-color);
             color: var(--text-color);
             border-radius: 4px;
-            font-family: sans-serif;
+            font-family: "Georgia", "PT Serif", "Times New Roman", Times, serif;
             font-size: 14px;
         }
 
@@ -149,7 +149,7 @@
         textarea {
             width: 100%; height: 100%;
             border: none; resize: none; padding: 20px;
-            font-family: "Consolas", "Monaco", monospace;
+            font-family: "Georgia", "PT Serif", "Times New Roman", Times, serif;
             font-size: 14px;
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -184,7 +184,7 @@
         #write thead { background-color: var(--code-bg); }
 
         /* inline code */
-        #write code { font-family: "Consolas", monospace; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+        #write code { font-family: "Georgia", "PT Serif", "Times New Roman", Times, serif; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
 
         /* code block container */
         #write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 6px; }
@@ -742,7 +742,7 @@ $$
         htmlParts.push('::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }');
         htmlParts.push('::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }');
         htmlParts.push('* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); }');
-        htmlParts.push('body { margin: 0; padding: 0; font-family: "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }');
+        htmlParts.push('body { margin: 0; padding: 0; font-family: "Georgia", "PT Serif", "Times New Roman", Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }');
 
         htmlParts.push('.page-container { display: flex; flex-direction: row; max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }');
         htmlParts.push('.left-column { width: 20%; min-width: 200px; flex-shrink: 0; position: relative; margin-right: 30px; border-right: 1px solid var(--border-color); padding-right: 20px; }');
@@ -784,7 +784,7 @@ $$
         htmlParts.push('#write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }');
         htmlParts.push('#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }');
         htmlParts.push('#write thead { background-color: var(--code-bg); }');
-        htmlParts.push('#write code { font-family: "Consolas", monospace; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }');
+        htmlParts.push('#write code { font-family: "Georgia", "PT Serif", "Times New Roman", Times, serif; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }');
         htmlParts.push('#write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 6px; }');
         htmlParts.push('#write pre code { padding: 0; background-color: transparent; }');
         htmlParts.push('pre code.hljs { display:block; overflow-x:auto; padding:12px; border-radius:6px; }');
