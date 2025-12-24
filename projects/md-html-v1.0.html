@@ -136,7 +136,7 @@
         #write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
         #write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
         #write thead { background-color: var(--code-bg); }
-        #write code { font-family: 'Georgia', 'PT Serif', 'Times New Roman', Times, serif; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+        #write code { font-family: 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif; background-color: var(--code-bg); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
         #write pre { background-color: var(--code-bg); padding: 10px; overflow-x: auto; border-radius: 4px; }
         #write pre code { padding: 0; background-color: transparent; }
         #write img { max-width: 100%; display: block; margin: 1em auto; }
@@ -297,7 +297,7 @@ $$
         text = text.replace(/\[\^([^\]]+)\]/g, (match, label) => {
             if (footnotes[label]) {
                 const id = footnotes[label].id;
-                return `<sup><a href="#fn-${id}" id="fnref-${id}" class="footnote-ref">${id}</a></sup>`;
+                return `<sup><a href="#fn-${id}" target="_blank" id="fnref-${id}" class="footnote-ref">${id}</a></sup>`;
             }
             return match;
         });
@@ -317,7 +317,7 @@ $$
                 const item = footnotes[key];
                 footnoteHtml += `<li id="fn-${item.id}">
                     ${window.marked.parseInline(item.content)} 
-                    <a href="#fnref-${item.id}" class="footnote-backref">↩</a>
+                    <a href="#fnref-${item.id}" target="_blank" class="footnote-backref">↩</a>
                 </li>`;
             });
             footnoteHtml += '</ol></div>';
