@@ -13,11 +13,11 @@
 }
 
         .monospace {
-            font-family: 'Georgia', 'PT Serif', 'Times New Roman', Times, serif;
+            font-family: 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif;
         }
         
         body {
-            font-family: 'Georgia', 'PT Serif', 'Times New Roman', Times, serif;
+            font-family: 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif;
             margin: 0;
             padding: 0;
             background-image: url('HongLouMeng-SunWen-023.jpg');
@@ -294,9 +294,9 @@
                 <li>本页面背景图为[清]孙温《全本红楼梦图》第二十三回《西厢记妙词通戏语 牡丹亭艳曲警芳心》，取其"共读"之美意。感谢知友开源：
                   <a href="https://zhuanlan.zhihu.com/p/339261803" target="_blank" rel="noopener noreferrer">雲绯的文章 - 知乎</a></li>
                 <li>感兴趣的读者可以查看本项目用到的外部原始数据：
-                    <a href="HongLouMeng-Python/data/紅樓夢-通行版一百二十回.txt" class="file-link" target="_blank" rel="noopener noreferrer">原始文本</a>
+                    <a href="HongLouMeng-Python/data/紅樓夢-通行版一百二十回.txt" target="_blank" class="file-link" target="_blank" rel="noopener noreferrer">原始文本</a>
                     和
-                    <a href="HongLouMeng-Python/data/红楼梦_character.txt" class="file-link" target="_blank" rel="noopener noreferrer">人物词表</a>，若有侵权请联系删除</li>
+                    <a href="HongLouMeng-Python/data/红楼梦_character.txt" target="_blank" class="file-link" target="_blank" rel="noopener noreferrer">人物词表</a>，若有侵权请联系删除</li>
             </ul>
         </section>
 
@@ -307,18 +307,18 @@
             <ul>
                 <li>原始文本需要的预处理包括：繁体化为简体，删去批语、按语和注释，分割章回</li>
                 <li>感兴趣的读者可以查看经过预处理的文本：
-                    <a href="HongLouMeng-Python/data/红楼梦_full.txt" class="file-link" target="_blank" rel="noopener noreferrer">红楼梦通行本简体中文分章回全文</a></li>
+                    <a href="HongLouMeng-Python/data/红楼梦_full.txt" target="_blank" class="file-link" target="_blank" rel="noopener noreferrer">红楼梦通行本简体中文分章回全文</a></li>
             </ul>
             <hr>
             <h3>人物词频分析</h3>
             <ul>
                 <li>利用词频分析，辅助验证<sup class='md-footnote'><a href='#dfref-footnote-1' name='ref-footnote-1'>1</a></sup>人物重要性</li>
                 <li>Python实现
-                    <a href="HongLouMeng-Python/20250416_HongLouMeng_freq.py" class="file-link" target="_blank" rel="noopener noreferrer">代码</a>
+                    <a href="HongLouMeng-Python/20250416_HongLouMeng_freq.py" target="_blank" class="file-link" target="_blank" rel="noopener noreferrer">代码</a>
                     ，主要使用jieba, pyecharts等库，生成
-                    <a href="HongLouMeng-Python/output/character_wordcloud.csv" class="file-link" target="_blank" rel="noopener noreferrer">全文中所有人物出场频次</a>、
-                    <a href="HongLouMeng-Python/output/top3_characters_per_chapter.csv" class="file-link" target="_blank" rel="noopener noreferrer">每个章回出场频次top3的人物</a>、
-                    <a href="HongLouMeng-Python/output/main_characters_appear.csv" class="file-link" target="_blank" rel="noopener noreferrer">宝黛钗三人在每个章回的出场频次</a></li>
+                    <a href="HongLouMeng-Python/output/character_wordcloud.csv" target="_blank" class="file-link" target="_blank" rel="noopener noreferrer">全文中所有人物出场频次</a>、
+                    <a href="HongLouMeng-Python/output/top3_characters_per_chapter.csv" target="_blank" class="file-link" target="_blank" rel="noopener noreferrer">每个章回出场频次top3的人物</a>、
+                    <a href="HongLouMeng-Python/output/main_characters_appear.csv" target="_blank" class="file-link" target="_blank" rel="noopener noreferrer">宝黛钗三人在每个章回的出场频次</a></li>
                 <li>以下词云图可视化了全文中所有人物的出场频次，注意到黛玉出场频次排第2位，由此可见黛玉是仅次于宝玉的主角：</li>
                     <div class="chart-container wordcloud-chart">
                         <!--<div class="chart-loading">加载词云图中...</div>-->
@@ -346,7 +346,7 @@
             <ul>
                 <li>利用词频分析，辅助验证人物关系的紧密程度</li>
                 <li>通过与DeepSeek多轮交互，得到Python实现
-                    <a href="HongLouMeng-Python/20250416_HongLouMeng_cooc.py" class="file-link" target="_blank" rel="noopener noreferrer">代码</a>
+                    <a href="HongLouMeng-Python/20250416_HongLouMeng_cooc.py" target="_blank" class="file-link" target="_blank" rel="noopener noreferrer">代码</a>
                     ，主要使用jieba, pyecharts等库，实现中文分句，以3句为窗口大小，分析人物共现关系</li>
                 <li>以下网络图可视化了全文出场频次前120位人物的共现关系，节点大小表示出场频次，边线粗细表示共现次数，
                     鼠标悬停在节点上可显示每个人物的出场频次和主要共现前5位人物及次数，在边线上可显示出两个人物之间的共现次数：</li>
@@ -627,7 +627,7 @@
                     </div>
 
 
-<li>下面<a href="HongLouMeng-Python/output/model3-character3.html" class="file-link" target="_blank" rel="noopener noreferrer">这个折线图</a>提供了多重对比
+<li>下面<a href="HongLouMeng-Python/output/model3-character3.html" target="_blank" class="file-link" target="_blank" rel="noopener noreferrer">这个折线图</a>提供了多重对比
  ：</li>
                     <div class="chart-container bar-chart">
                         <div class="aspect-ratio-box">
@@ -683,7 +683,7 @@
 
 
         <footer style="text-align: center; margin-top: 2rem; color: #aaa;">
-            <p><a href="/">← 返回主页</a></p>
+            <p><a href="/" target="_blank">← 返回主页</a></p>
         </footer>
     </div>
 
