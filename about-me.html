@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me | WZM</title>
+    <style>
+        /* * 核心变量定义
+         */
+        :root {
+            /* * 明亮模式 (Light Mode) - 冰川与晴空 (Blue-Cyan)
+             * 去掉了明显的绿色，改为清透的蓝青色
+             */
+            --bg-base: #e1f5fe;        /* 极淡的淡蓝底 (Light Blue 50) */
+            --bg-c1: #81d4fa;          /* 天蓝 (Light Blue 200) */
+            --bg-c2: #80deea;          /* 青色 (Cyan 200) */
+            --bg-c3: #b3e5fc;          /* 淡蓝 (Light Blue 100) */
+            --bg-glow: rgba(255, 255, 255, 0.9); /* 强烈的纯白光晕 */
+            
+            --text-color: #37474f;     /* 蓝灰色文字 */
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.75);
+            --glass-shadow: rgba(1, 87, 155, 0.08); /* 阴影偏深蓝 */
+            --accent-color: #0277bd;   /* 强调色：海洋蓝 */
+            --btn-bg: rgba(255, 255, 255, 0.65);
+            --btn-hover: #ffffff;
+            --footer-color: #78909c;
+        }
+
+        /* * Dark Mode 变量覆盖 - 核心修改区域
+         */
+        [data-theme="dark"] {
+            /* * 暗色模式 (Dark Mode) - 深海 (Deep Sea / Abyss)
+             * 目标：偏“蓝”的青色，杜绝原本的“绿”感
+             */
+            --bg-base: #01111a;        /* 基底：接近黑的深蓝青 */
+            
+            --bg-c1: #01579b;          /* 晕染1：深宝石蓝 (不再是 teal green) */
+            --bg-c2: #006064;          /* 晕染2：深青 (Cyan 900) - 链接蓝与黑 */
+            --bg-c3: #0277bd;          /* 晕染3：孔雀蓝 (增加蓝色的透亮感) */
+            
+            --bg-glow: rgba(179, 229, 252, 0.08); /* 极淡的冰蓝光晕，提亮暗部 */
+
+            --text-color: #e1f5fe;     /* 极淡蓝白文字 */
+            --glass-bg: rgba(3, 26, 38, 0.6); /* 玻璃底色改为深蓝系 */
+            --glass-border: rgba(129, 212, 250, 0.15); /* 边框泛微蓝光 */
+            --glass-shadow: rgba(0, 0, 0, 0.6);
+            --accent-color: #4fc3f7;   /* 强调色：亮天蓝 */
+            --btn-bg: rgba(255, 255, 255, 0.08);
+            --btn-hover: rgba(255, 255, 255, 0.15);
+            --footer-color: #607d8b;
+        }
+
+        body {
+            font-family: 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            line-height: 1.8;
+            transition: color 0.5s ease;
+            
+            /* * 背景魔法区：蓝青色交错晕染
+             */
+            background-color: var(--bg-base);
+            background-image: 
+                /* 1. 核心层：巨大的柔光 (White Bloom) */
+                radial-gradient(circle at 50% 30%, var(--bg-glow) 0%, transparent 70%),
+                
+                /* 2. 色块晕染层 (Mesh Gradient) */
+                radial-gradient(at 10% 10%, var(--bg-c2) 0px, transparent 50%),
+                radial-gradient(at 90% 0%, var(--bg-c1) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, var(--bg-c3) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, var(--bg-c1) 0px, transparent 50%);
+                
+            background-attachment: fixed;
+            background-size: 200% 200%;
+            transition: background-color 0.8s ease; 
+        }
+
+        /* * 磨砂玻璃容器
+         */
+        .glass-container {
+            width: 90%;
+            max-width: 800px;
+            background: var(--glass-bg);
+            /* 模糊度 */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            box-shadow: 0 8px 32px 0 var(--glass-shadow);
+            padding: 40px;
+            margin: 40px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* * 顶部工具栏
+         */
+        .toolbar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .btn-control {
+            background: var(--btn-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9em;
+            color: var(--text-color);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .btn-control:hover {
+            background: var(--btn-hover);
+            transform: scale(1.05);
+        }
+
+        .icon-btn {
+            padding: 6px;
+            width: 34px;
+            height: 34px;
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* * 头像区域 (1x1 方形)
+         */
+        .avatar-wrapper {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 16px; 
+            border: 4px solid var(--glass-border);
+            box-shadow: 0 8px 20px var(--glass-shadow);
+            transition: transform 0.5s ease;
+        }
+
+        .avatar:hover {
+            transform: rotate(3deg) scale(1.02);
+        }
+
+        /* * 文本排版
+         */
+        h1 {
+            text-align: center;
+            font-weight: normal;
+            margin-bottom: 30px;
+            font-size: 2em;
+            color: var(--text-color);
+            letter-spacing: 0.05em;
+        }
+
+        p {
+            margin-bottom: 1.2em;
+            text-align: justify;
+            font-size: 1.05em;
+        }
+
+        strong {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        /* * 底部版权
+         */
+        .footer {
+            text-align: center;
+            font-size: 0.8em;
+            color: var(--footer-color);
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--glass-border);
+            opacity: 0.9;
+            transition: color 0.3s;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 600px) {
+            .glass-container {
+                padding: 25px;
+                width: 85%;
+            }
+            .toolbar {
+                position: static;
+                display: flex;
+                justify-content: flex-end;
+                margin-bottom: 20px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+
+        /* 淡入动画 */
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-container">
+        <div class="toolbar">
+            <button class="btn-control" onclick="toggleLanguage()" id="langBtn">CN</button>
+            <button class="btn-control icon-btn" onclick="cycleTheme()" id="themeBtn" title="Toggle Theme">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/></svg>
+            </button>
+        </div>
+        
+        <div class="avatar-wrapper">
+            <img src="about-me_IceBear.png" alt="Ice Bear" class="avatar">
+        </div>
+
+        <div id="content" class="fade-in"></div>
+
+        <div class="footer" id="footer"></div>
+    </div>
+
+    <script>
+        // * --- 1. 数据内容 ---
+        const data = {
+            en: {
+                greeting: "Ciallo～(∠・ω< )⌒★!!! I'm WZM.",
+                identity: "In reality, I am a first-year Ph.D. student at <strong>Peking University</strong>.",
+                icebear: "In imagination, I wear many hats. Most often, I'm an <strong>Ice Bear</strong>. Like the Ice Bear from <em>We Bare Bears</em>, I cherish solitude. Perhaps I'm not as cool, omnipotent, or warm-hearted as he is, but I try.",
+                acgn: "True enough, I am a dedicated <strong>ACGN</strong> enthusiast. I devour animations, manga, and light novels across all styles and origins. However, I've stepped away from gaming entirely—it's simply too brain-draining for me right now.",
+                reading: "More precisely, I'm a homebody who loves curling up in a corner with books and movies. Conservatively speaking, I've read over <strong>1,500 physical books</strong> in the past 5 years (and even more if counting digital scraps). I am particularly enchanted by <strong>Sci-Fi</strong>, and the history and literature of China's Tang and Song dynasties. I'm brewing some writing ideas, hoping to put pen to paper before my youthful inspiration fades.",
+                music: "I started playing piano at age 3.75. I possess an 'amateur-level-approaching-professional' understanding of classical music. One of my wildest dreams is to record 50 sets of piano solos, concertos, or even symphonies within the next 50 years (assuming my fingers still work!). These recordings will be my <em>traces of life</em>. The core repertoire will undoubtedly be the immortal works of my three favorites: <strong>Bach, Beethoven, and Shostakovich</strong>. While this seems impossible for a non-pro like me, perhaps in the age of AI, anything is possible?",
+                footer: "Designed with the assistance of Gemini"
+            },
+            cn: {
+                greeting: "Ciallo～(∠・ω< )⌒★!!! 我是WZM。",
+                identity: "在现实中，我是<strong>北京大学</strong>的一年级博士生。",
+                icebear: "在想象中，我有多重身份，最多时候是一只<strong>北极熊</strong>。平时就像《咱们裸熊》里的 Ice Bear 一样更喜欢独处，但可能没他那么酷、全能，又是大暖男。",
+                acgn: "没错，我是一个<strong>二次元宅</strong>——我喜欢看所有风格、所有国家（或地区）产出的动画、漫画和轻小说。但我现在不玩任何游戏——因为那很费脑。",
+                reading: "更确切地说，我是一个喜欢窝在角落里看书和看电影/剧的阿宅。保守估计我在过去5年里读过 <strong>1500本</strong> 纸质书，如果算上零碎的数字化阅读就更多了。我尤其醉心于<strong>科幻</strong>，以及中国唐宋之际的文学和历史。我正在酝酿写点什么，希望能在没有丧失年轻的灵感前动笔。",
+                music: "我还从 3.75 岁开始学钢琴，对古典音乐有“业余程度里接近专业”层次的了解。我的梦想之一是在未来50年内（想象一下，50年后我的机能还不至于退化太严重……），录制50套钢琴独奏、协奏曲，甚至一些交响曲，聊为<strong>雪泥鸿爪</strong>。其中的核心应当是我最喜欢的三位作曲家 <strong>Bach, Beethoven 和 Shostakovich</strong> 的不朽作品。虽然这对一个我这样的非专业人士似乎不可能，但是在 AI 时代，这或许也是可能的？",
+                footer: "由 Gemini 辅助设计"
+            }
+        };
+
+        // * --- 2. 主题管理 ---
+        let currentThemeMode = localStorage.getItem('theme-mode') || 'system';
+
+        const icons = {
+            light: '<svg class="icon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>',
+            dark:  '<svg class="icon" viewBox="0 0 24 24"><path d="M11.01 3.05C6.51 3.54 3 7.36 3 12c0 4.97 4.03 9 9 9 4.63 0 8.45-3.5 8.95-8.01-.25.02-.5.03-.76.03-5.52 0-10-4.48-10-10 0-.26.01-.51.03-.76z"/></svg>',
+            system: '<svg class="icon" viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>'
+        };
+
+        function applyTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            let effectiveTheme = currentThemeMode;
+
+            if (currentThemeMode === 'system') {
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                effectiveTheme = systemDark ? 'dark' : 'light';
+                html.setAttribute('data-theme', effectiveTheme);
+                btn.innerHTML = icons.system;
+                btn.title = "Current: System";
+            } else {
+                html.setAttribute('data-theme', currentThemeMode);
+                btn.innerHTML = icons[currentThemeMode];
+                btn.title = "Current: " + (currentThemeMode === 'light' ? 'Light' : 'Dark');
+            }
+        }
+
+        function cycleTheme() {
+            if (currentThemeMode === 'system') currentThemeMode = 'light';
+            else if (currentThemeMode === 'light') currentThemeMode = 'dark';
+            else currentThemeMode = 'system';
+            localStorage.setItem('theme-mode', currentThemeMode);
+            applyTheme();
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            if (currentThemeMode === 'system') applyTheme();
+        });
+
+        // * --- 3. 语言与渲染逻辑 ---
+        let currentLang = 'en';
+
+        function renderContent() {
+            const c = data[currentLang];
+            const contentDiv = document.getElementById('content');
+            const footerDiv = document.getElementById('footer');
+            const langBtn = document.getElementById('langBtn');
+
+            langBtn.innerText = currentLang === 'en' ? 'CN / 中' : 'EN / 英';
+
+            contentDiv.innerHTML = `
+                <h1>${c.greeting}</h1>
+                <p>${c.identity}</p>
+                <p>${c.icebear}</p>
+                <p>${c.acgn}</p>
+                <p>${c.reading}</p>
+                <p>${c.music}</p>
+            `;
+
+            footerDiv.innerText = c.footer;
+            
+            contentDiv.classList.remove('fade-in');
+            void contentDiv.offsetWidth; 
+            contentDiv.classList.add('fade-in');
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'cn' : 'en';
+            renderContent();
+        }
+
+        window.onload = function() {
+            applyTheme();
+            renderContent();
+        };
+    </script>
+</body>
+</html>
