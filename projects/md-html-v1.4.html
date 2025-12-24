@@ -373,7 +373,9 @@
             `;
         },
         link(href, title, text) {
-            const titleAttr = title ? ` title="${title}"` : '';
+            // Note: marked.js already escapes HTML entities in href, title, and text
+            // but we keep explicit escaping for defense in depth
+            const titleAttr = title ? ` title="${title.replace(/"/g, '&quot;')}"` : '';
             return `<a href="${href}"${titleAttr} target="_blank">${text}</a>`;
         }
     };
