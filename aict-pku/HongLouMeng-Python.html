@@ -13,11 +13,11 @@
 }
 
         .monospace {
-            font-family: 'Georgia', 'PT Serif', 'Times New Roman', Times, serif;
+            font-family: 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif;
         }
         
         body {
-            font-family: 'Georgia', 'PT Serif', 'Times New Roman', Times, serif;
+            font-family: 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif;
             margin: 0;
             padding: 0;
             background-image: url('HongLouMeng-SunWen-023.jpg');
@@ -307,18 +307,18 @@
             <ul>
                 <li>原始文本需要的预处理包括：繁体化为简体，删去批语、按语和注释，分割章回</li>
                 <li>感兴趣的读者可以查看经过预处理的文本：
-                    <a href="HongLouMeng-Python/data/红楼梦_full.txt" class="file-link" target="_blank" rel="noopener noreferrer">红楼梦通行本简体中文分章回全文</a></li>
+                    <a href="HongLouMeng-Python/data/红楼梦_full.txt" target="_blank" class="file-link"  rel="noopener noreferrer">红楼梦通行本简体中文分章回全文</a></li>
             </ul>
             <hr>
             <h3>人物词频分析</h3>
             <ul>
                 <li>利用词频分析，辅助验证<sup class='md-footnote'><a href='#dfref-footnote-1' name='ref-footnote-1'>1</a></sup>人物重要性</li>
                 <li>Python实现
-                    <a href="HongLouMeng-Python/20250416_HongLouMeng_freq.py" class="file-link" target="_blank" rel="noopener noreferrer">代码</a>
+                    <a href="HongLouMeng-Python/20250416_HongLouMeng_freq.py" target="_blank" class="file-link"  rel="noopener noreferrer">代码</a>
                     ，主要使用jieba, pyecharts等库，生成
-                    <a href="HongLouMeng-Python/output/character_wordcloud.csv" class="file-link" target="_blank" rel="noopener noreferrer">全文中所有人物出场频次</a>、
-                    <a href="HongLouMeng-Python/output/top3_characters_per_chapter.csv" class="file-link" target="_blank" rel="noopener noreferrer">每个章回出场频次top3的人物</a>、
-                    <a href="HongLouMeng-Python/output/main_characters_appear.csv" class="file-link" target="_blank" rel="noopener noreferrer">宝黛钗三人在每个章回的出场频次</a></li>
+                    <a href="HongLouMeng-Python/output/character_wordcloud.csv" target="_blank" class="file-link"  rel="noopener noreferrer">全文中所有人物出场频次</a>、
+                    <a href="HongLouMeng-Python/output/top3_characters_per_chapter.csv" target="_blank" class="file-link"  rel="noopener noreferrer">每个章回出场频次top3的人物</a>、
+                    <a href="HongLouMeng-Python/output/main_characters_appear.csv" target="_blank" class="file-link"  rel="noopener noreferrer">宝黛钗三人在每个章回的出场频次</a></li>
                 <li>以下词云图可视化了全文中所有人物的出场频次，注意到黛玉出场频次排第2位，由此可见黛玉是仅次于宝玉的主角：</li>
                     <div class="chart-container wordcloud-chart">
                         <!--<div class="chart-loading">加载词云图中...</div>-->
@@ -346,7 +346,7 @@
             <ul>
                 <li>利用词频分析，辅助验证人物关系的紧密程度</li>
                 <li>通过与DeepSeek多轮交互，得到Python实现
-                    <a href="HongLouMeng-Python/20250416_HongLouMeng_cooc.py" class="file-link" target="_blank" rel="noopener noreferrer">代码</a>
+                    <a href="HongLouMeng-Python/20250416_HongLouMeng_cooc.py" target="_blank" class="file-link"  rel="noopener noreferrer">代码</a>
                     ，主要使用jieba, pyecharts等库，实现中文分句，以3句为窗口大小，分析人物共现关系</li>
                 <li>以下网络图可视化了全文出场频次前120位人物的共现关系，节点大小表示出场频次，边线粗细表示共现次数，
                     鼠标悬停在节点上可显示每个人物的出场频次和主要共现前5位人物及次数，在边线上可显示出两个人物之间的共现次数：</li>
@@ -435,9 +435,9 @@
 </li>
 <li><p>调用</p>
 <ul>
-<li>智谱清言<code>GLM</code>系列<a href='https://bigmodel.cn/dev/api/normal-model/glm-4'>API</a></li>
-<li>深度求索<code>deepseek-v3</code><a href='https://api-docs.deepseek.com/zh-cn/'>API</a></li>
-<li>阿里云<code>Qwen3</code>系列<a href='https://help.aliyun.com/zh/model-studio/first-api-call-to-qwen?spm=a2c4g.11186623.0.i6#undefined'>API</a></li>
+<li>智谱清言<code>GLM</code>系列<a href='https://bigmodel.cn/dev/api/normal-model/glm-4' target='_blank'>API</a></li>
+<li>深度求索<code>deepseek-v3</code><a href='https://api-docs.deepseek.com/zh-cn/' target='_blank'>API</a></li>
+<li>阿里云<code>Qwen3</code>系列<a href='https://help.aliyun.com/zh/model-studio/first-api-call-to-qwen?spm=a2c4g.11186623.0.i6#undefined' target='_blank'>API</a></li>
 
 </ul>
 </li>
@@ -461,7 +461,7 @@
 <ul>
 <li><p>尝试调用</p>
 <ul>
-<li><p>智谱清言<a href='https://bigmodel.cn/dev/api/normal-model/glm-4'>API</a>，最初尝试用<code>GLM-4-Flash-250414</code></p>
+<li><p>智谱清言<a href='https://bigmodel.cn/dev/api/normal-model/glm-4' target='_blank'>API</a>，最初尝试用<code>GLM-4-Flash-250414</code></p>
 <ul>
 <li><p><strong>完全免费</strong>（还是清华系产品诶），可以无负担随便试</p>
 </li>
@@ -479,9 +479,9 @@
 
 </ul>
 </li>
-<li><p>深度求索<code>deepseek-chat</code>(<code>deepseek-v3-250324</code>) <a href='https://api-docs.deepseek.com/zh-cn/'>API</a></p>
+<li><p>深度求索<code>deepseek-chat</code>(<code>deepseek-v3-250324</code>) <a href='https://api-docs.deepseek.com/zh-cn/' target='_blank'>API</a></p>
 </li>
-<li><p>阿里云<code>Qwen</code><a href='https://help.aliyun.com/zh/model-studio/first-api-call-to-qwen?spm=a2c4g.11186623.0.i6#undefined'>API</a></p>
+<li><p>阿里云<code>Qwen</code><a href='https://help.aliyun.com/zh/model-studio/first-api-call-to-qwen?spm=a2c4g.11186623.0.i6#undefined' target='_blank'>API</a></p>
 <ul>
 <li>尝试了<code>Qwen2.5</code>系列：<code>qwen-max-2025-01-25</code>&amp;<code>qwen-max</code>，效果不佳</li>
 <li>最终使用<code>Qwen3</code>系列：<code>qwen-plus-2025-04-28</code> &amp; <code>qwen-plus-latest</code></li>
@@ -627,7 +627,7 @@
                     </div>
 
 
-<li>下面<a href="HongLouMeng-Python/output/model3-character3.html" class="file-link" target="_blank" rel="noopener noreferrer">这个折线图</a>提供了多重对比
+<li>下面<a href="HongLouMeng-Python/output/model3-character3.html" target="_blank" class="file-link"  rel="noopener noreferrer">这个折线图</a>提供了多重对比
  ：</li>
                     <div class="chart-container bar-chart">
                         <div class="aspect-ratio-box">
@@ -679,11 +679,11 @@
 <div class='footnotes-area'  ><hr/>
 <div class='footnote-line'><span class='md-fn-count'>1</span> 之所以说“验证”，是因为谁是重要人物“红学家”已经研究了上百年，机器只能用来巩固和拓展人类的既有认识；之所以说“辅助”，假设不理解文本含义，基础、传统的文本分析，比如词频分析和共现分析，仅能起到辅助作用。 <a name='dfref-footnote-1' href='#ref-footnote-1' title='回到文档' class='reversefootnote' >↩</a></div>
 <div class='footnote-line'><span class='md-fn-count'>2</span> 虽然我们可以人类本位主义地认为，大模型也并不能真正“理解”人类的文学经典。实际上，即使是“红学家”很可能也不敢断言自己真正理解了《红楼梦》，曹雪芹本人恐怕也不行。 <a name='dfref-footnote-2' href='#ref-footnote-2' title='回到文档' class='reversefootnote' >↩</a></div>
-<div class='footnote-line'><span class='md-fn-count'>3</span> 实际上，北京大学-字节跳动数字人文开放实验室建设的<a href='https://www.shidianguji.com/?page_from=reading_page'>识典古籍</a>平台，正在召集同人做相关的努力。 <a name='dfref-footnote-3' href='#ref-footnote-3' title='回到文档' class='reversefootnote' >↩</a></div></div></body>
+<div class='footnote-line'><span class='md-fn-count'>3</span> 实际上，北京大学-字节跳动数字人文开放实验室建设的<a href='https://www.shidianguji.com/?page_from=reading_page' target='_blank'>识典古籍</a>平台，正在召集同人做相关的努力。 <a name='dfref-footnote-3' href='#ref-footnote-3' title='回到文档' class='reversefootnote' >↩</a></div></div></body>
 
 
         <footer style="text-align: center; margin-top: 2rem; color: #aaa;">
-            <p><a href="/">← 返回主页</a></p>
+            <p><a href="/" target="_blank">← 返回主页</a></p>
         </footer>
     </div>
 
