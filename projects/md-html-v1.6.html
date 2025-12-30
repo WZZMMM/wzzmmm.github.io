@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown to HTML Tool v1.6</title>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <!-- Marked.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+
+    <!-- Highlight.js Styles and Script -->
+    <!-- Default to github light, script will toggle if dark mode -->
+    <link id="hljs-theme" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/highlight.min.js"></script>
+
+    <script>
+        // MathJax Config
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                tags: 'ams'
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+        
+        // Theme Switcher for Highlight.js
+        function updateHighlightTheme() {
+            const themeLink = document.getElementById('hljs-theme');
+            const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (themeLink) {
+                themeLink.href = isDark 
+                    ? "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github-dark.min.css"
+                    : "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css";
+            }
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateHighlightTheme);
+        // Run immediately on load
+        document.addEventListener("DOMContentLoaded", updateHighlightTheme);
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style id="theme-style">
+        :root {--bg-color: #f3f2ee;
+            --text-color: #1f0909;
+            --link-color: #77a0ab;
+            --code-bg: #dadada; /* Fallback */
+            --border-color: #c5c5c5;
+            --blockquote-color: #656565;
+            --blockquote-border: #bababa;
+            --footnote-text: #555;
+            --toc-bg: #ffffffcc;
+            --toc-text: #333;
+            --toc-border: #ddd;
+            --toc-link: #77a0ab;
+            
+            
+            
+            --nav-btn-color: #6ab0c2;
+            --code-header-bg: #e1e1e1;
+            --code-header-text: #555;
+  }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #202124;
+                --text-color: #e8eaed;
+                --link-color: #77a0ab;
+                --code-bg: #0d1117;
+                --border-color: #5f6368;
+                --blockquote-color: #bdc1c6;
+                --blockquote-border: #5f6368;
+                --footnote-text: #9aa0a6;
+                --toc-bg: #2b2b2bcc;
+                --toc-text: #ddd;
+                --toc-border: #4a4a4a;
+                --toc-link: #77a0ab;
+                
+                
+                --nav-btn-color: #5a9aaa;
+                --code-header-bg: #161b22;
+                --code-header-text: #8b949e;
+            }
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Century', serif;
+        }
+
+        .toolbar-group { display: flex; gap: 10px; }
+
+        button, .file-upload-label {
+            padding: 6px 12px;
+            cursor: pointer;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 4px;
+            font-family: 'Century', serif;
+            font-size: 14px;
+        }
+
+        button:hover, .file-upload-label:hover { opacity: 0.8; background-color: rgba(0,0,0,0.1); }
+        input[type="file"] { display: none; }
+
+        .container { display: flex; flex: 1; overflow: hidden; }
+        .container.row { flex-direction: row; }
+        .container.column { flex-direction: column; }
+
+        .editor-pane {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-color);
+            overflow: hidden;
+        }
+
+        .container.row .editor-pane {
+            width: 40%;
+            border-right: 1px solid var(--border-color);
+            border-bottom: none;
+        }
+        .container.row .preview-pane { width: 60%; }
+
+        .container.column .editor-pane {
+            height: 50%;
+            border-bottom: 1px solid var(--border-color);
+            border-right: none;
+        }
+        .container.column .preview-pane { height: 50%; }
+
+        textarea {
+            width: 100%; height: 100%;
+            border: none; resize: none; padding: 20px;
+            font-family: 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif;
+            font-size: 14px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .preview-pane {
+            padding: 20px 40px;
+            overflow-y: auto;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            background: var(--bg-color);
+            position: relative;
+        }
+
+        #write { max-width: 900px; margin: 0 auto; padding-bottom: 80px; }
+        #write h1, #write h2, #write h3, #write h4, #write h5 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); text-align: center; }
+        #write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
+        #write h2 { font-size: 1.5em; }
+        #write h3 { font-size: 1.3em; font-weight: normal; }
+        #write h4 { font-size: 1.2em; font-weight: normal; }
+        #write h5 { font-size: 1.1em; font-weight: normal; }
+
+        #write a { color: var(--link-color); text-decoration: none; }
+        #write a:hover { text-decoration: underline; }
+        
+        /* Lists */
+        #write ul, #write ol { padding-left: 2em; margin-left: 0; margin-bottom: 1em; }
+        #write li { margin-bottom: 0.3em; }
+        
+        /* Nested list styles */
+        #write ol { list-style-type: decimal; }
+        #write ol ol { list-style-type: lower-alpha; }
+        #write ol ol ol { list-style-type: lower-roman; }
+        #write ol ol ol ol { list-style-type: decimal; }
+        #write ol ol ol ol ol { list-style-type: lower-alpha; }
+
+        #write blockquote { border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }
+        #write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
+        #write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
+        #write thead { background-color: rgba(0,0,0,0.05); }
+
+        /* inline code */
+        #write code { font-family: 'Courier', 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif; background-color: rgba(128,128,128,0.2); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+
+        /* Code Block Styling (Custom Container) */
+        .code-wrapper {
+            margin-bottom: 1.5em;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            background-color: var(--code-bg); /* This should match hljs bg if possible, or transparent */
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 12px;
+            background-color: var(--code-header-bg);
+            border-bottom: 1px solid var(--border-color);
+            font-family: 'Courier', sans-serif;
+            font-size: 0.8em;
+            color: var(--code-header-text);
+            text-transform: uppercase;
+            font-weight: bold;
+            user-select: none;
+        }
+
+        #write pre {
+            margin: 0;
+            padding: 0;
+            overflow-x: auto;
+            background: transparent;
+        }
+
+        #write pre code {
+            display: block;
+            padding: 15px;
+            background: transparent; /* Let hljs CSS or wrapper handle bg */
+            font-family: 'Courier', 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif;
+            font-size: 0.9em;
+            border: none;
+            overflow-x: auto;
+        }
+        
+        /* Override hljs background so it fills our wrapper nicely */
+        #write pre code.hljs {
+            background: transparent; 
+            padding: 15px;
+        }
+        
+        /* Dark mode adjustments for code block are handled by CSS variables and hljs-dark theme */
+
+        #write img { max-width: 100%; display: block; margin: 1em auto; }
+
+        .footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); cursor: pointer; text-decoration: none; }
+        .footnote-ref:hover { text-decoration: underline; }
+        .footnotes { display: none; }
+
+        mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+
+        .nav-buttons {
+            position: fixed;
+            right: 30px; bottom: 30px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s ease; z-index: 1000;
+        }
+        .nav-buttons.visible { opacity: 1; }
+        .nav-btn {
+            width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .nav-btn:hover { transform: scale(1.1); background: var(--link-color); }
+
+        @media (max-width: 768px) {
+            .container, .container.row, .container.column { flex-direction: column; }
+            .editor-pane, .preview-pane { width: 100% !important; height: 50% !important; }
+            .container .editor-pane { border-right: none; border-bottom: 1px solid var(--border-color); }
+            #write { padding: 10px 20px; }
+            .nav-buttons { right: 15px; bottom: 15px; }
+        }
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div style="font-weight: bold; font-size: 1.1em;">Markdown to HTML Tool v1.6</div>
+    <div class="toolbar-group">
+        <label for="fileInput" class="file-upload-label">上传 Markdown</label>
+        <input type="file" id="fileInput" accept=".md,.txt">
+        <button id="toggleLayoutBtn">切换编辑-预览布局 (↔️ / ↕️)</button>
+        <button onclick="downloadHtml()">导出 HTML</button>
+    </div>
+</header>
+
+<div id="container" class="container row">
+    <div class="editor-pane">
+        <textarea id="markdown-input" placeholder="输入 Markdown..."></textarea>
+    </div>
+    <div class="preview-pane" id="previewPane">
+        <div id="write"></div>
+    </div>
+</div>
+
+<div id="navButtons" class="nav-buttons">
+    <button class="nav-btn" id="scrollTopBtn" title="回到顶端">↑</button>
+    <button class="nav-btn" id="scrollBottomBtn" title="回到底端">↓</button>
+</div>
+
+<script>
+    const inputArea = document.getElementById('markdown-input');
+    const previewArea = document.getElementById('write');
+    const previewPane = document.getElementById('previewPane');
+    const fileInput = document.getElementById('fileInput');
+    const container = document.getElementById('container');
+    const toggleLayoutBtn = document.getElementById('toggleLayoutBtn');
+    const navButtons = document.getElementById('navButtons');
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    const scrollBottomBtn = document.getElementById('scrollBottomBtn');
+
+    let footnotesData = {};
+
+    // 1. Configure Marked with Custom Renderer for Code Blocks
+    const renderer = {
+        code(code, infostring) {
+            const lang = (infostring || '').match(/\S*/)[0];
+            const hasLang = lang && window.hljs && window.hljs.getLanguage(lang);
+            
+            let highlighted = '';
+            
+            try {
+                if (hasLang) {
+                    highlighted = window.hljs.highlight(code, { language: lang }).value;
+                } else {
+                    highlighted = window.hljs.highlightAuto(code).value;
+                }
+            } catch (e) {
+                // Fallback to simple escaping if hljs fails
+                highlighted = code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            }
+            
+            // Display name
+            const displayLang = lang || 'Text';
+
+            return `
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span>${displayLang}</span>
+                </div>
+                <pre><code class="hljs ${lang ? 'language-'+lang : ''}">${highlighted}</code></pre>
+            </div>
+            `;
+        },
+        link(href, title, text) {
+            // Note: marked.js already escapes HTML entities in href, title, and text
+            // but we keep explicit escaping for defense in depth
+            const titleAttr = title ? ` title="${title.replace(/"/g, '&quot;')}"` : '';
+            return `<a href="${href}"${titleAttr} target="_blank">${text}</a>`;
+        }
+    };
+
+    if (window.marked) {
+        window.marked.use({ 
+            renderer: renderer,
+            gfm: true,
+            breaks: false,
+            mangle: false,
+            headerIds: true
+        });
+    }
+
+    // 2. Default Text (Safely Escaped)
+    // Note: All backslashes in LaTeX must be double escaped for JS string \\
+    const defaultText = `# 测试示例 v1.6
+
+[TOC]
+
+这是 **Markdown to HTML Tool v1.6** 的功能演示。
+
+- 本网页端工具为使用Github Copilot调用\`Gemini-3\`和\`Claude-4.5\`氛围编程 (vibe coding) 的产出，旨在实现 Markdown 转特定格式 HTML 的功能。
+- 本网页端工具仅通过您的浏览器在本地运行，**不会**保留或分析您输入的任何数据。
+
+## 1. 基础排版
+### 1.1 列表展示
+- **无序列表**：
+  - 经济学 (Economics)
+    - 计量经济学 (Econometrics)
+* **有序列表**：
+  1.  第一步：数据收集
+  2.  第二步：模型设定
+  3.  第三步：假设检验
+    1. 算个$p$
+    2. 数星星
+
+### 1.2 表格 (Table)
+| 变量名 | 描述 | 数据类型 |
+| :--- | :--- | :--- |
+| GDP | 国内生产总值 | 连续变量 |
+| $r_t$ | 实际利率 | 连续变量 |
+| $D_i$ | 虚拟变量 | 0/1 |
+
+## 2. 数学公式与代码块
+
+### 行内公式
+
+根据欧拉方程 $u'(c_t) = \\beta E_t [R_{t+1} u'(c_{t+1})]$，我们可以推导消费路径。
+
+### 公式块 (Block Math)
+
+考虑如下的一般均衡模型的一阶条件：
+$$
+\\mathcal{L} = \\sum_{t=0}^{\\infty} \\beta^t \\left[ \\frac{c_t^{1-\\sigma}}{1-\\sigma} - \\lambda_t (c_t + k_{t+1} - f(k_t) - (1-\\delta)k_t) \\right]
+$$
+
+### 代码块
+\`\`\`latex
+$$
+\\mathcal{L} = \\sum_{t=0}^{\\infty} \\beta^t \\left[ \\frac{c_t^{1-\\sigma}}{1-\\sigma} - \\lambda_t (c_t + k_{t+1} - f(k_t) - (1-\\delta)k_t) \\right]
+$$
+\`\`\`
+
+\`\`\`javascript
+// 一个简单的JS示例
+function hello(name) {
+    console.log("Hello, " + name);
+}
+\`\`\`
+
+
+## 3. 多媒体与链接
+### 3.1 外部链接
+关于作者更多信息，请访问 [WZM的个人主页](https://wzzmmm.github.io/)。
+
+### 3.2 图片引用
+![Karl Marx](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Karl_Marx_by_John_Jabez_Edwin_Mayall_1875_-_Restored.png/250px-Karl_Marx_by_John_Jabez_Edwin_Mayall_1875_-_Restored.png)
+*(图注：这是Karl Marx 1875年的经典照片，引用自Wikimedia Commons)*
+
+## 4. 引用 (Footnotes)
+在许多宏观经济模型中，理性预期是一个核心假设[^*]。当然，行为经济学对此提出了挑战[^†]。另一个例子[^1]。
+
+[^*]: 参见 Muth (1961) 关于理性预期的开创性论文。
+[^†]: 参见 Thaler (2015) *Misbehaving: The Making of Behavioral Economics*.
+[^1]: 这是一个数字标注的脚注示例，包含一个[链接](https://example.com)来测试颜色。
+
+---
+> **内容声明**：
+> 大语言模型的幻觉可能加剧了学术研究中的"胡扯"(bullshit)，本示例中的所有内容均仅为示例。
+`;
+
+    // 3. Logic
+    inputArea.value = defaultText;
+
+    let isRowLayout = true;
+    toggleLayoutBtn.addEventListener('click', () => {
+        isRowLayout = !isRowLayout;
+        container.classList.toggle('row', isRowLayout);
+        container.classList.toggle('column', !isRowLayout);
+    });
+
+    let scrollTimeout;
+    previewPane.addEventListener('scroll', () => {
+        navButtons.classList.add('visible');
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            navButtons.classList.remove('visible');
+        }, 2000);
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+        previewPane.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    scrollBottomBtn.addEventListener('click', () => {
+        previewPane.scrollTo({ top: previewPane.scrollHeight, behavior: 'smooth' });
+    });
+
+    function normalizeId(str) {
+        return str.toLowerCase().replace(/[^\w\u4e00-\u9fa5\- ]+/g, '').trim().replace(/\s+/g, '-');
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function normalizeListIndentation(text) {
+        const lines = text.split(/\r?\n/);
+        const out = [];
+        for (const line of lines) {
+            const match = line.match(/^(\s+)([\-\*\+]|\d+\.)\s/);
+            if (match) {
+                const indent = match[1];
+                // Convert 2 spaces to 4 spaces roughly to help parser
+                if (!indent.includes('\t')) {
+                   // if indent is 2 spaces, make it 4. If 4, make it 8? 
+                   // A simple doubling strategy:
+                   out.push(indent + line); 
+                } else {
+                    out.push(line);
+                }
+            } else {
+                out.push(line);
+            }
+        }
+        return out.join('\n');
+    }
+
+    function limitListDepth(rootEl, maxDepth = 5) {
+        if (!rootEl) return;
+        const lists = rootEl.querySelectorAll('ul, ol');
+        lists.forEach(list => {
+            let depth = 1;
+            let p = list.parentElement;
+            while (p) {
+                if (p.tagName === 'UL' || p.tagName === 'OL') depth++;
+                p = p.parentElement;
+            }
+            if (depth > maxDepth) {
+                const frag = document.createDocumentFragment();
+                Array.from(list.children).forEach(li => {
+                    if (li.tagName !== 'LI') return;
+                    const div = document.createElement('div');
+                    div.style.marginLeft = '1em';
+                    div.textContent = li.textContent;
+                    frag.appendChild(div);
+                });
+                list.replaceWith(frag);
+            }
+        });
+    }
+
+    function parseAcademicMarkdown(text) {
+        let mathBlocks = [];
+        footnotesData = {};
+
+        text = normalizeListIndentation(text);
+        const hasToc = /^\s*\[TOC\]\s*$/m.test(text);
+        text = text.replace(/^\s*\[TOC\]\s*$/m, '');
+
+        // Extract Math
+        text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
+            mathBlocks.push(match);
+            return "MATH_BLOCK_PLACEHOLDER_" + (mathBlocks.length - 1);
+        });
+        text = text.replace(/\$([^$\n]+?)\$/g, (match) => {
+            mathBlocks.push(match);
+            return "MATH_INLINE_PLACEHOLDER_" + (mathBlocks.length - 1);
+        });
+
+        // Extract Footnotes
+        const footnoteDefRegex = /^\[\^([^\]]+)\]:\s*(.*)$/gm;
+        text = text.replace(footnoteDefRegex, (match, label, content) => {
+            footnotesData[label] = { label: label, content: content };
+            return "";
+        });
+
+        text = text.replace(/\[\^([^\]]+)\]/g, (match, label) => {
+            if (footnotesData[label]) {
+                const safeLabel = escapeHtml(label);
+                return '<sup><a href="#fn-' + safeLabel + '" id="fnref-' + safeLabel + '" class="footnote-ref">[' + safeLabel + ']</a></sup>';
+            }
+            return match;
+        });
+
+        // Parse Markdown
+        let html = '';
+        if (window.marked && typeof window.marked.parse === 'function') {
+            html = window.marked.parse(text);
+        } else {
+            html = text; // fallback
+        }
+
+        // Restore Math
+        html = html.replace(/MATH_BLOCK_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
+        html = html.replace(/MATH_INLINE_PLACEHOLDER_(\d+)/g, (match, id) => mathBlocks[id]);
+
+        return { html, hasToc, footnotesData };
+    }
+
+    function render() {
+        const mdText = inputArea.value;
+        const result = parseAcademicMarkdown(mdText);
+        previewArea.innerHTML = result.html;
+
+        limitListDepth(previewArea, 5);
+
+        // MathJax
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise([previewArea]).catch((err) => console.log(err));
+        }
+    }
+
+    let timeoutId;
+    inputArea.addEventListener('input', () => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(render, 300);
+    });
+
+    setTimeout(render, 200);
+
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            inputArea.value = e.target.result;
+            render();
+        };
+        reader.readAsText(file);
+    });
+
+    function downloadHtml() {
+        let fileName = prompt("请输入导出的网页标题:", "document-export");
+        if (fileName === null) return;
+        if (fileName.trim() === "") fileName = "document-export";
+        if (!fileName.toLowerCase().endsWith(".html")) {
+            fileName += ".html";
+        }
+
+        const rawMarkdown = inputArea.value;
+        const result = parseAcademicMarkdown(rawMarkdown);
+
+        // Generate Nested TOC (Same logic as before)
+        let tocHtml = '';
+        if (result.hasToc) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = result.html;
+            const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5');
+            if (headings.length > 0) {
+                const rootUl = document.createElement('ul');
+                rootUl.className = 'toc-list';
+                const ulStack = [rootUl];
+                const usedIds = new Set(); // To handle duplicate heading text
+                headings.forEach((h, idx) => {
+                    const level = parseInt(h.tagName.substring(1), 10);
+                    let baseId = normalizeId(h.textContent) || 'heading';
+                    let uniqueId = baseId;
+                    let counter = 1;
+                    while (usedIds.has(uniqueId)) {
+                        uniqueId = baseId + '-' + counter++;
+                    }
+                    usedIds.add(uniqueId);
+                    h.id = uniqueId;
+
+                    while (ulStack.length < level) {
+                        const parentUl = ulStack[ulStack.length - 1];
+                        let parentLi = parentUl.lastElementChild;
+                        if (!parentLi) {
+                            parentLi = document.createElement('li');
+                            parentLi.style.listStyle = 'none';
+                            parentUl.appendChild(parentLi);
+                        }
+                        const newUl = document.createElement('ul');
+                        parentLi.appendChild(newUl);
+                        ulStack.push(newUl);
+                    }
+                    while (ulStack.length > level) { ulStack.pop(); }
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = '#' + uniqueId;
+                    a.textContent = h.textContent;
+                    a.className = 'toc-link';
+                    li.appendChild(a);
+                    ulStack[ulStack.length - 1].appendChild(li);
+                });
+                
+                // Add toggles
+                function processLi(li, level) {
+                    const childUl = li.querySelector('ul');
+                    if (childUl) {
+                        let hasDirectUl = false;
+                        for (let i = 0; i < li.children.length; i++) {
+                            if (li.children[i].tagName === 'UL') { hasDirectUl = true; break; }
+                        }
+                        if (hasDirectUl) {
+                            const toggle = document.createElement('span');
+                            toggle.className = 'toc-toggle';
+                            toggle.textContent = '⌵';
+                            li.insertBefore(toggle, li.firstChild);
+                            if (level < 2) li.classList.add('open');
+                        } else {
+                            const spacer = document.createElement('span');
+                            spacer.className = 'toc-spacer';
+                            li.insertBefore(spacer, li.firstChild);
+                        }
+                    } else {
+                        const spacer = document.createElement('span');
+                        spacer.className = 'toc-spacer';
+                        li.insertBefore(spacer, li.firstChild);
+                    }
+                    if (childUl) {
+                        const childrenLis = childUl.children;
+                        for (let i = 0; i < childrenLis.length; i++) {
+                            if (childrenLis[i].tagName === 'LI') processLi(childrenLis[i], level + 1);
+                        }
+                    }
+                }
+                const rootLis = rootUl.children;
+                for (let i = 0; i < rootLis.length; i++) processLi(rootLis[i], 1);
+
+                const nav = document.createElement('nav');
+                nav.className = 'toc-sidebar';
+                nav.innerHTML = '<div class="toc-title">TOC</div>';
+                nav.appendChild(rootUl);
+                tocHtml = nav.outerHTML;
+                result.html = tempDiv.innerHTML;
+            }
+        }
+
+        // Footnotes
+        let footnotesHtml = '';
+        const fnKeys = Object.keys(result.footnotesData);
+        if (fnKeys.length > 0) {
+            footnotesHtml = '<div class="footnote-column">';
+            fnKeys.forEach(label => {
+                const item = result.footnotesData[label];
+                const safeLabel = escapeHtml(label);
+                let content = item.content;
+                if (window.marked && typeof window.marked.parseInline === 'function') {
+                    content = window.marked.parseInline(item.content);
+                }
+                footnotesHtml += '<div class="footnote-item" id="fn-' + safeLabel + '" style="display:none;"><span class="footnote-label">[' + safeLabel + ']</span> ' + content + ' <a href="#fnref-' + safeLabel + '" class="footnote-backref">↩</a></div>';
+            });
+            footnotesHtml += '</div>';
+        }
+
+        // Construct Export HTML
+        let htmlParts = [];
+        htmlParts.push('<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">');
+        htmlParts.push('<title>' + escapeHtml(fileName.replace('.html', '')) + '</title>');
+        htmlParts.push('<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">');
+        
+        // Use standard github styles for export, logic to switch is in script
+        htmlParts.push('<link id="hljs-theme" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css">');
+        htmlParts.push('<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/highlight.min.js"></' + 'script>');
+
+        htmlParts.push('<script>');
+        htmlParts.push('window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\\\(", "\\\\)"]], displayMath: [["$$", "$$"], ["\\\\[", "\\\\]"]], tags: "ams" }, svg: { fontCache: "global" } };');
+        htmlParts.push('</' + 'script>');
+        htmlParts.push('<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></' + 'script>');
+
+        // Copy styles from main page but minified/cleaner
+        htmlParts.push('<style>');
+        htmlParts.push(':root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #77a0ab; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #77a0ab; --nav-btn-color: #6ab0c2; --code-header-bg: #e1e1e1; --code-header-text: #555; --scrollbar-thumb: #ccc; --scrollbar-thumb-hover: #aaa; }');
+        htmlParts.push('@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #77a0ab; --code-bg: #0d1117; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #77a0ab; --nav-btn-color: #5a9aaa; --code-header-bg: #161b22; --code-header-text: #8b949e; --scrollbar-thumb: #555; --scrollbar-thumb-hover: #777; } }');
+
+        htmlParts.push('::-webkit-scrollbar { width: 8px; height: 8px; }');
+        htmlParts.push('::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }');
+        htmlParts.push('::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }');
+        htmlParts.push('::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }');
+        htmlParts.push('* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }');
+        
+        htmlParts.push('body { margin: 0; padding: 0; font-family: \'Century\', \'Georgia\', \'PT Serif\', \'SimSun\', Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }');
+        htmlParts.push('.page-container { display: flex; flex-direction: row; max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }');
+        htmlParts.push('.left-column { width: 20%; min-width: 200px; flex-shrink: 0; position: relative; margin-right: 30px; border-right: 1px solid var(--border-color); padding-right: 20px; }');
+        
+        // TOC Styles
+        htmlParts.push('.toc-sidebar { max-height: 40vh; overflow-y: auto; padding: 10px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); font-family: \'Century\', serif; }');
+        htmlParts.push('.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }');
+        htmlParts.push('.toc-list, .toc-list ul { list-style: none; margin: 0; padding: 0; }');
+        htmlParts.push('.toc-list ul { padding-left: 0.5em; display: none; }');
+        htmlParts.push('.toc-list li { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; }');
+        htmlParts.push('.toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; display: inline-block; flex: 1; padding: 2px 0; }');
+        htmlParts.push('.toc-link:hover { text-decoration: underline; }');
+        htmlParts.push('.toc-toggle { cursor: pointer; display: inline-block; width: 1.5em; text-align: center; margin-right: 4px; user-select: none; transition: transform 0.2s; color: #888; transform: rotate(-90deg); }');
+        htmlParts.push('.toc-toggle:hover { color: var(--link-color); }');
+        htmlParts.push('.toc-spacer { display: inline-block; width: 1.5em; margin-right: 4px; flex-shrink: 0; }');
+        htmlParts.push('.toc-list li.open > .toc-toggle { transform: rotate(0deg); }');
+        htmlParts.push('.toc-list li.open > ul { display: block; width: 100%; }');
+
+        // Main Content Styles
+        htmlParts.push('.main-content { flex: 1; min-width: 0; padding-right: 5%; }');
+        htmlParts.push('#write { max-width: 900px; padding-bottom: 80px; }');
+        htmlParts.push('#write h1, #write h2, #write h3, #write h4, #write h5 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); text-align: center; }');
+        htmlParts.push('#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }');
+        htmlParts.push('#write h2 { font-size: 1.5em; }');
+        htmlParts.push('#write h3 { font-size: 1.3em; font-weight: normal; }');
+        htmlParts.push('#write h4 { font-size: 1.2em; font-weight: normal; }');
+        htmlParts.push('#write h5 { font-size: 1.1em; font-weight: normal; }');
+        htmlParts.push('#write a { color: var(--link-color); text-decoration: none; }');
+        htmlParts.push('#write a:hover { text-decoration: underline; }');
+        htmlParts.push('#write ul, #write ol { padding-left: 2em; margin-left: 0; margin-bottom: 1em; }');
+        htmlParts.push('#write ol { list-style-type: decimal; } #write ol ol { list-style-type: lower-alpha; } #write ol ol ol { list-style-type: lower-roman; }');
+        htmlParts.push('#write li { margin-bottom: 0.3em; }');
+        htmlParts.push('#write blockquote { border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }');
+        htmlParts.push('#write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }');
+        htmlParts.push('#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }');
+        htmlParts.push('#write thead { background-color: rgba(0,0,0,0.05); }');
+        htmlParts.push('#write code { font-family: \'Courier\', \'Century\', \'Georgia\', \'PT Serif\', \'SimSun\', Times, serif; background-color: rgba(128,128,128,0.2); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }');
+        htmlParts.push('#write img { max-width: 100%; display: block; margin: 1em auto; }');
+
+        // New Code Block Styles
+        htmlParts.push('.code-wrapper { margin-bottom: 1.5em; border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--code-bg); }');
+        htmlParts.push('.code-header { display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background-color: var(--code-header-bg); border-bottom: 1px solid var(--border-color); font-family: \'Courier\', sans-serif; font-size: 0.8em; color: var(--code-header-text); text-transform: uppercase; font-weight: bold; user-select: none; }');
+        htmlParts.push('#write pre { margin: 0; padding: 0; overflow-x: auto; background: transparent; }');
+        htmlParts.push('#write pre code { display: block; padding: 15px; background: transparent; font-family: \'Courier\', \'Century\', \'Georgia\', \'PT Serif\', \'SimSun\', Times, serif; font-size: 0.9em; border: none; overflow-x: auto; }');
+
+        // Footnotes
+        htmlParts.push('.footnote-column { position: relative; width: 100%; }');
+        htmlParts.push('.footnote-item { position: absolute; left: 0; width: 100%; font-size: 0.85em; color: var(--footnote-text); padding-bottom: 10px; box-sizing: border-box; transition: top 0.3s ease; }');
+        htmlParts.push('.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 4px; }');
+        htmlParts.push('.footnote-backref { color: var(--link-color); text-decoration: none; margin-left: 5px; }');
+        htmlParts.push('.footnote-item a:not(.footnote-backref) { color: #77a0ab; text-decoration: none; }');
+        htmlParts.push('.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }');
+        
+        // Nav Buttons
+        htmlParts.push('.nav-buttons { position: fixed; right: 30px; bottom: 30px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s ease; z-index: 1000; }');
+        htmlParts.push('.nav-buttons.visible { opacity: 1; }');
+        htmlParts.push('.nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; }');
+        htmlParts.push('.nav-btn:hover { transform: scale(1.1); background: var(--link-color); }');
+
+        htmlParts.push('@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; margin-right: 0; border-right: none; padding-right: 0; margin-bottom: 20px; } .toc-sidebar { width: 100%; max-height: 200px; margin-bottom: 10px; } .footnote-column { width: 100%; position: static; display: flex; flex-wrap: wrap; gap: 10px; } .footnote-item { position: static; width: auto; max-width: 100%; border-bottom: 1px solid var(--border-color); padding: 5px 0; } .main-content { padding-right: 0; } }');
+        htmlParts.push('</style>');
+
+        htmlParts.push('</head><body>');
+        htmlParts.push('<div class="page-container">');
+        htmlParts.push('<div class="left-column">');
+        htmlParts.push(tocHtml);
+        htmlParts.push(footnotesHtml);
+        htmlParts.push('</div>');
+        htmlParts.push('<div class="main-content">');
+        htmlParts.push('<div id="write">');
+        htmlParts.push(result.html);
+        htmlParts.push('</div></div></div>');
+        htmlParts.push('<div id="navButtons" class="nav-buttons">');
+        htmlParts.push('<button class="nav-btn" onclick="window.scrollTo({top:0,behavior:\'smooth\'})" title="回到顶端">↑</button>');
+        htmlParts.push('<button class="nav-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:\'smooth\'})" title="回到底端">↓</button>');
+        htmlParts.push('</div>');
+
+        // JS for export
+        htmlParts.push('<script>');
+        htmlParts.push('var scrollTimeout;');
+        htmlParts.push('window.addEventListener("scroll", function() { document.getElementById("navButtons").classList.add("visible"); clearTimeout(scrollTimeout); scrollTimeout = setTimeout(function() { document.getElementById("navButtons").classList.remove("visible"); }, 2000); });');
+        htmlParts.push('function updateHighlightTheme() { const themeLink = document.getElementById("hljs-theme"); const isDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches; if (themeLink) { themeLink.href = isDark ? "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github-dark.min.css" : "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"; } }');
+        htmlParts.push('window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateHighlightTheme); updateHighlightTheme();');
+        htmlParts.push('document.addEventListener("click", function(e) { if (e.target.classList.contains("toc-toggle")) { e.preventDefault(); e.target.parentElement.classList.toggle("open"); } });');
+        
+        // Footnote Alignment Logic (simplified for export)
+        htmlParts.push('function alignFootnotes() { const refs = Array.from(document.querySelectorAll(".footnote-ref")); const notes = Array.from(document.querySelectorAll(".footnote-item")); const toc = document.querySelector(".toc-sidebar"); const leftCol = document.querySelector(".left-column"); if(!leftCol) return; const noteMap = {}; notes.forEach(note => { noteMap[note.id.replace("fn-", "")] = note; }); let currentY = toc ? (toc.offsetHeight + 20) : 0; const leftColRect = leftCol.getBoundingClientRect(); refs.forEach(ref => { const label = ref.getAttribute("href").replace("#fn-", ""); const note = noteMap[label]; if (note) { const refRect = ref.getBoundingClientRect(); let desiredTop = refRect.top - leftColRect.top; desiredTop += 5; if (desiredTop < currentY) { desiredTop = currentY; } note.style.top = desiredTop + "px"; note.style.display = "block"; currentY = desiredTop + note.offsetHeight + 15; } }); const fnCol = document.querySelector(".footnote-column"); if(fnCol) fnCol.style.height = currentY + "px"; }');
+        
+        htmlParts.push('window.addEventListener("load", function() { alignFootnotes(); });');
+        htmlParts.push('window.addEventListener("resize", alignFootnotes);');
+        htmlParts.push('if(window.MathJax) { MathJax.startup.promise.then(() => { setTimeout(alignFootnotes, 1000); }); }');
+        htmlParts.push('</' + 'script>');
+
+        htmlParts.push('</body></html>');
+
+        const finalHtml = htmlParts.join('\n');
+        const blob = new Blob([finalHtml], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+</script>
+
+</body>
+</html>
