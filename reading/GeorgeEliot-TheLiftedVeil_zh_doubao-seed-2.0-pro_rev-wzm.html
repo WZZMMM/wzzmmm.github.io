@@ -1,0 +1,624 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>George Eliot - The Lifted Veil_zh_doubao-seed-2.0-pro_rev-wzm</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link id="hljs-theme" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css">
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/highlight.min.js"></script>
+<script>
+window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], tags: "ams" }, svg: { fontCache: "global" } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root { --bg-color: #f3f2ee; --text-color: #1f0909; --link-color: #77a0ab; --code-bg: #dadada; --border-color: #c5c5c5; --blockquote-color: #656565; --blockquote-border: #bababa; --footnote-text: #555; --toc-bg: #ffffffcc; --toc-text: #333; --toc-border: #ddd; --toc-link: #77a0ab; --nav-btn-color: #6ab0c2; --code-header-bg: #e1e1e1; --code-header-text: #555; --scrollbar-thumb: #ccc; --scrollbar-thumb-hover: #aaa; }
+@media (prefers-color-scheme: dark) { :root { --bg-color: #202124; --text-color: #e8eaed; --link-color: #77a0ab; --code-bg: #0d1117; --border-color: #5f6368; --blockquote-color: #bdc1c6; --blockquote-border: #5f6368; --footnote-text: #9aa0a6; --toc-bg: #2b2b2bcc; --toc-text: #ddd; --toc-border: #4a4a4a; --toc-link: #77a0ab; --nav-btn-color: #5a9aaa; --code-header-bg: #161b22; --code-header-text: #8b949e; --scrollbar-thumb: #555; --scrollbar-thumb-hover: #777; } }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+body { margin: 0; padding: 0; font-family: 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+.page-container { display: flex; flex-direction: row; max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+.left-column { width: 20%; min-width: 200px; flex-shrink: 0; position: relative; margin-right: 30px; border-right: 1px solid var(--border-color); padding-right: 20px; }
+.toc-sidebar { max-height: 40vh; overflow-y: auto; padding: 10px; background: var(--toc-bg); border: 1px solid var(--toc-border); border-radius: 8px; color: var(--toc-text); font-family: 'Century', serif; }
+.toc-title { font-weight: bold; margin: 0 0 8px 0; font-size: 14px; letter-spacing: 0.5px; }
+.toc-list, .toc-list ul { list-style: none; margin: 0; padding: 0; }
+.toc-list ul { padding-left: 0.5em; display: none; }
+.toc-list li { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; }
+.toc-link { text-decoration: none; color: var(--toc-link); font-size: 14px; display: inline-block; flex: 1; padding: 2px 0; }
+.toc-link:hover { text-decoration: underline; }
+.toc-toggle { cursor: pointer; display: inline-block; width: 1.5em; text-align: center; margin-right: 4px; user-select: none; transition: transform 0.2s; color: #888; transform: rotate(-90deg); }
+.toc-toggle:hover { color: var(--link-color); }
+.toc-spacer { display: inline-block; width: 1.5em; margin-right: 4px; flex-shrink: 0; }
+.toc-list li.open > .toc-toggle { transform: rotate(0deg); }
+.toc-list li.open > ul { display: block; width: 100%; }
+.main-content { flex: 1; min-width: 0; padding-right: 5%; }
+#write { max-width: 900px; padding-bottom: 80px; }
+#write h1, #write h2, #write h3, #write h4, #write h5 { font-weight: bold; margin-top: 1.5em; margin-bottom: 1em; color: var(--text-color); text-align: center; }
+#write h1 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; }
+#write h2 { font-size: 1.5em; }
+#write h3 { font-size: 1.3em; font-weight: normal; }
+#write h4 { font-size: 1.2em; font-weight: normal; }
+#write h5 { font-size: 1.1em; font-weight: normal; }
+#write a { color: var(--link-color); text-decoration: none; }
+#write a:hover { text-decoration: underline; }
+#write ul, #write ol { padding-left: 2em; margin-left: 0; margin-bottom: 1em; }
+#write ol { list-style-type: decimal; } #write ol ol { list-style-type: lower-alpha; } #write ol ol ol { list-style-type: lower-roman; }
+#write li { margin-bottom: 0.3em; }
+#write blockquote { border-left: 4px solid var(--blockquote-border); margin: 1em 0; padding-left: 1em; color: var(--blockquote-color); }
+#write table { border-collapse: collapse; width: 100%; margin-bottom: 1.5em; }
+#write th, #write td { border: 1px solid var(--border-color); padding: 6px 10px; }
+#write thead { background-color: rgba(0,0,0,0.05); }
+#write code { font-family: 'Courier', 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif; background-color: rgba(128,128,128,0.2); padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+#write img { max-width: 100%; display: block; margin: 1em auto; }
+.code-wrapper { margin-bottom: 1.5em; border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--code-bg); }
+.code-header { display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background-color: var(--code-header-bg); border-bottom: 1px solid var(--border-color); font-family: 'Courier', sans-serif; font-size: 0.8em; color: var(--code-header-text); text-transform: uppercase; font-weight: bold; user-select: none; }
+#write pre { margin: 0; padding: 0; overflow-x: auto; background: transparent; }
+#write pre code { display: block; padding: 15px; background: transparent; font-family: 'Courier', 'Century', 'Georgia', 'PT Serif', 'SimSun', Times, serif; font-size: 0.9em; border: none; overflow-x: auto; }
+.footnote-column { position: relative; width: 100%; }
+.footnote-item { position: absolute; left: 0; width: 100%; font-size: 0.85em; color: var(--footnote-text); padding-bottom: 10px; box-sizing: border-box; transition: top 0.3s ease; }
+.footnote-label { font-weight: bold; color: var(--link-color); margin-right: 4px; }
+.footnote-backref { color: var(--link-color); text-decoration: none; margin-left: 5px; }
+.footnote-item a:not(.footnote-backref) { color: #77a0ab; text-decoration: none; }
+.footnote-ref { font-size: 0.8em; vertical-align: super; margin-left: 2px; color: var(--link-color); text-decoration: none; }
+.nav-buttons { position: fixed; right: 30px; bottom: 30px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s ease; z-index: 1000; }
+.nav-buttons.visible { opacity: 1; }
+.nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background: var(--nav-btn-color); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.nav-btn:hover { transform: scale(1.1); background: var(--link-color); }
+@media (max-width: 900px) { .page-container { flex-direction: column; padding: 15px; } .left-column { width: 100%; position: static; max-height: none; flex-direction: row; flex-wrap: wrap; margin-right: 0; border-right: none; padding-right: 0; margin-bottom: 20px; } .toc-sidebar { width: 100%; max-height: 200px; margin-bottom: 10px; } .footnote-column { width: 100%; position: static; display: flex; flex-wrap: wrap; gap: 10px; } .footnote-item { position: static; width: auto; max-width: 100%; border-bottom: 1px solid var(--border-color); padding: 5px 0; } .main-content { padding-right: 0; } }
+</style>
+</head><body>
+<div class="page-container">
+<div class="left-column">
+<nav class="toc-sidebar"><div class="toc-title">TOC</div><ul class="toc-list"><li class="open" style="list-style: none;"><span class="toc-toggle">⌵</span><ul><li><span class="toc-spacer"></span><a href="#翻译说明" class="toc-link">翻译说明</a></li></ul></li><li class="open"><span class="toc-toggle">⌵</span><a href="#掀起的面纱1" class="toc-link">掀起的面纱[1]</a><ul><li><span class="toc-spacer"></span><a href="#第一章" class="toc-link">第一章</a></li><li><span class="toc-spacer"></span><a href="#heading" class="toc-link"></a></li><li><span class="toc-spacer"></span><a href="#第二章" class="toc-link">第二章</a></li><li><span class="toc-spacer"></span><a href="#人物与专有名词译名表" class="toc-link">人物与专有名词译名表</a></li></ul></li></ul></nav>
+<div class="footnote-column"><div class="footnote-item" id="fn-1" style="display:none;"><span class="footnote-label">[1]</span> 书名典出雪莱1824年的十四行诗：“莫掀起生者唤作‘生命’的彩绘面纱。”也可能呼应威廉·柯林斯1746年的《恐惧颂》：“你向未知世界展露/它所有暗影幢幢的模样；/观者为虚幻场景惊骇，/幻想揭开了其间的面纱：/啊恐惧！啊狂乱的恐惧！”自古真理就常被描绘为蒙着面纱的形象或地点，普鲁塔克《道德论丛》记载，埃及赛斯的伊西斯神庙铭文写道：“我是一切过去、现在、未来之存在，无人能掀开我的面纱。”死亡也常被描述为面纱“之后”或“之外”的状态，丁尼生《悼念集》写道：“还有什么回答、什么补偿的希望？| 在面纱之后，在面纱之后。”《掀起的面纱》因此既暗含对终极真理的认知，也暗含对死亡的认知。 <a href="#fnref-1" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-2" style="display:none;"><span class="footnote-label">[2]</span> 这段题词是乔治·艾略特1873年2月所作，用于阐释“故事承载的理念，以及它的痛苦性的合理性”，初版未收录，1878年再版时加入。 <a href="#fnref-2" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-3" style="display:none;"><span class="footnote-label">[3]</span> 即心绞痛，据1853年版《大英百科全书》，当时医生用这个词指“心脏或大血管病变引发的胸部异常或痉挛性疼痛”。在艾略特的时代，这个词的词义正在变化，逐渐开始指代“心脏的神经症或神经性病变”。艾略特常让不那么讨喜的男性角色患有心脏病，除了拉蒂默之外，还有《教区生活场景》之《吉尔菲先生的情史》中自私的怀布罗上尉，以及《米德尔马契》中的卡苏朋先生。 <a href="#fnref-3" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-4" style="display:none;"><span class="footnote-label">[4]</span> 拉丁语，意为“凡激愤过甚之处，再难刺痛己心”，是乔纳森·斯威夫特墓志铭上的铭文。 <a href="#fnref-4" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-5" style="display:none;"><span class="footnote-label">[5]</span> 出自拜伦《曼弗雷德》第三幕第四场38-41行：“心不由得/对古老的伟烈默然顶礼！——/已死却仍握有权柄的君王，依旧/从他们的骨灰瓮里统治着我们的精魂。” <a href="#fnref-5" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-6" style="display:none;"><span class="footnote-label">[6]</span> 指罗伯特·波特1777年出版的《埃斯库罗斯悲剧集》，是当时标准的英语注释译本。 <a href="#fnref-6" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-7" style="display:none;"><span class="footnote-label">[7]</span> 指菲利普·弗朗西斯牧师1747年出版的《贺拉斯作品诗译》，是当时标准的英语注释译本。 <a href="#fnref-7" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-8" style="display:none;"><span class="footnote-label">[8]</span> 指1851年在伦敦杰明街成立的政府矿业学院，当时英国国内正兴起改革学校课程的呼声，要求更多重视科学、减少古典学与宗教内容，矿业学院是改革的成果之一，1863年演变为皇家矿业与应用科学学院，最终发展为如今的帝国理工学院。 <a href="#fnref-8" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-9" style="display:none;"><span class="footnote-label">[9]</span> 莱瑟罗尔是一位颅相学家，声称可以通过头骨的凸起分析人的智力、情感与道德能力。当时的颅相学认为，眉骨区域有缺陷代表缺乏条理性、归纳分类概括能力弱，判断时间的能力也差；头顶两侧过度发达则代表超常的想象力与“理想性”，符合诗人、画家、雕塑家等艺术从业者的特质。乔治·艾略特本人对颅相学很感兴趣，1844年曾做过头骨模型，颅相学家查尔斯·布雷分析后认为她“大脑容量很大”“分析能力极强，判断力有本能的可靠度”。 <a href="#fnref-9" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-10" style="display:none;"><span class="footnote-label">[10]</span> 指教授古典学的传统公学。 <a href="#fnref-10" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-11" style="display:none;"><span class="footnote-label">[11]</span> 普鲁塔克（公元1世纪），古希腊散文作家，最著名的作品是《希腊罗马名人传》，收录了46组希腊与罗马名人的平行传记。 <a href="#fnref-11" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-12" style="display:none;"><span class="footnote-label">[12]</span> 乔治·艾略特本人1849年7月曾到访日内瓦，在城里居住过冬，《掀起的面纱》中对日内瓦的描写基本来自她的亲身回忆。 <a href="#fnref-12" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-13" style="display:none;"><span class="footnote-label">[13]</span> 指让-雅克·卢梭（1712-1778），日内瓦出生的作家、哲学家，浪漫主义思潮的重要奠基人，在《一个孤独漫步者的遐想》中描述过在比恩湖划船的体验。艾略特从1846年起阅读卢梭，深受影响。 <a href="#fnref-13" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-14" style="display:none;"><span class="footnote-label">[14]</span> 指先知以利亚的火战车，典出《列王纪下》第二章。 <a href="#fnref-14" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-15" style="display:none;"><span class="footnote-label">[15]</span> 据艾略特传记记载，这个名字来自她在日内瓦时听过布道的著名牧师玛丽·安。 <a href="#fnref-15" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-16" style="display:none;"><span class="footnote-label">[16]</span> 法语，指街头顽童、流浪儿。 <a href="#fnref-16" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-17" style="display:none;"><span class="footnote-label">[17]</span> 萨莱夫山是法国上萨瓦省的孤立山脉，俯瞰日内瓦，能看到勃朗峰和汝拉山脉的景色。沃韦是日内瓦湖远岸的城镇，距离洛桑11英里，艾略特1849年7月曾到访。 <a href="#fnref-17" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-18" style="display:none;"><span class="footnote-label">[18]</span> 艾略特1858年7月曾和乔治·亨利·刘易斯到访布拉格，认为它是“德国最辉煌的城市”，印象极深，后来在《丹尼尔·德龙达》中也将布拉格作为部分故事的背景。 <a href="#fnref-18" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-19" style="display:none;"><span class="footnote-label">[19]</span> 即查理大桥，横跨伏尔塔瓦河，连接布拉格老城与小城，两侧有28尊圣徒雕像。大桥始建于1357年，1507年完工。艾略特在日记中将其称为“圣让·内波穆克的奇妙大桥，沿路都是雕像”，圣让·内波穆克的雕像是查理大桥上的著名雕像，传说他因拒绝向国王透露王后的告解内容，被扔进伏尔塔瓦河淹死。 <a href="#fnref-19" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-20" style="display:none;"><span class="footnote-label">[20]</span> 即布拉格城堡，是波西米亚国王的宫殿，新古典主义立面宏伟壮观，沿着布拉格小城北侧的山脊延伸。 <a href="#fnref-20" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-21" style="display:none;"><span class="footnote-label">[21]</span> 溶景术是十九世纪的一种幻灯放映技术，用两台 magic lantern 放映，调整角度让画面重叠，再通过类似梳齿的金属快门缓慢切换，使一幅画面渐渐融化为另一幅，1807年首次公开展示，1818年技术成熟，在十九世纪中期随着摄影技术的发展愈发流行。 <a href="#fnref-21" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-22" style="display:none;"><span class="footnote-label">[22]</span> 约翰·弥尔顿，英国诗人，代表作《失乐园》。艾略特早年就熟读弥尔顿，其思想对她的思想与散文风格影响极大。 <a href="#fnref-22" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-23" style="display:none;"><span class="footnote-label">[23]</span> 诺瓦利斯是弗里德里希·冯·哈登贝格（1772-1801）的笔名，德国浪漫主义诗人、小说家，死于肺结核。 <a href="#fnref-23" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-24" style="display:none;"><span class="footnote-label">[24]</span> 卡纳莱托（1697-1768），意大利画家、版画家，以描绘欧洲主要城市、尤其是故乡威尼斯的风景画闻名。 <a href="#fnref-24" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-25" style="display:none;"><span class="footnote-label">[25]</span> 即八音盒，是当时英国游客必买的伴手礼。 <a href="#fnref-25" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-26" style="display:none;"><span class="footnote-label">[26]</span> 德国民间传说中的水精灵，通常对人类怀有恶意，歌德的叙事诗《渔夫》中对其有相关描写，刘易斯在《歌德传》中翻译并讨论过这个形象。 <a href="#fnref-26" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-27" style="display:none;"><span class="footnote-label">[27]</span> 指十八世纪中期至十九世纪早期的德国浪漫主义抒情诗，当时有流行的英译本《德国抒情诗人作品选：收录 Bürger、歌德、克洛卜施托克、席勒等作家的诗歌韵译》（1822），艾略特的不懂德语的读者可能对这本选集较为熟悉。 <a href="#fnref-27" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-28" style="display:none;"><span class="footnote-label">[28]</span> 法语，意为“先生您不舒服吗？” <a href="#fnref-28" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-29" style="display:none;"><span class="footnote-label">[29]</span> 贝格酒店是日内瓦的高档酒店，位于罗讷河左岸，面朝湖面，所在的贝格区1830年才开发，主要服务英国游客。1851年版《瑞士旅行者手册》提到，该酒店所在的奎德贝格街门罗书店的阅览室，是英国游客的非正式信息中心。 <a href="#fnref-29" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-30" style="display:none;"><span class="footnote-label">[30]</span> 1849年10月至1850年3月，艾略特在日内瓦曾住在肖像画家弗朗索瓦·达尔伯特的家中，1850年2月达尔伯特给她画了肖像，一共复制了三幅，其中一幅给了艾略特，原作现存于英国国家肖像馆。达尔伯特后来还将艾略特的几部作品翻译成了法语。 <a href="#fnref-30" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-31" style="display:none;"><span class="footnote-label">[31]</span> 1845年版《布莱克伍德杂志》原文此处为“sympathy with（同情）”。 <a href="#fnref-31" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-32" style="display:none;"><span class="footnote-label">[32]</span> 法语，意为“善良正直的女人”。 <a href="#fnref-32" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-33" style="display:none;"><span class="footnote-label">[33]</span> 欧泊传统上与变幻无常的特质相关，因为它的色彩会微妙变化，莎士比亚《第十二夜》中写道：“你的心就像一枚欧泊。”还有古老传说称，欧泊裹在月桂叶里能让佩戴者隐身。 <a href="#fnref-33" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-34" style="display:none;"><span class="footnote-label">[34]</span> 指被邪灵附身的人。艾略特可能想到了沃尔特·司各特《修道院院长》（1820）第32章，书中狂热的天主教徒预言苏格兰玛丽女王逃出洛克利文城堡时，被描述为“附魔者，或是被魔鬼附身的人”。 <a href="#fnref-34" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-35" style="display:none;"><span class="footnote-label">[35]</span> 原文笔误，实际指维也纳的列支敦士登宫，即列支敦士登亲王未居住的夏日宫殿（也叫“花园宫”），位于美景宫东北方几个街区，画廊收藏了近1500幅画作，包括拉斐尔、柯雷乔、达芬奇、卡拉瓦乔的作品。艾略特1854-1855年冬天曾在维也纳居住。 <a href="#fnref-35" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-36" style="display:none;"><span class="footnote-label">[36]</span> 据《旅行者手册》，该画被描述为“卢克雷齐娅·博尔贾，附卢克雷齐娅的速写，带有铭文”，归为乔尔乔内的作品实际是误判，1870年代之后英国旅行指南不再推荐这幅画，实际是洛伦佐·洛托《持素描的女士》的旧摹本，现存于伦敦国家美术馆。 <a href="#fnref-36" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-37" style="display:none;"><span class="footnote-label">[37]</span> 即美景宫，由萨伏依的欧根亲王建于十八世纪初，分为上、下两座建筑，坐落在缓坡的山脚和山顶，中间是优美的公共花园。下美景宫曾收藏盔甲、画作、珠宝、埃及藏品和欧洲王公肖像，上美景宫曾是帝国画廊，收藏意大利和古代德语大师的作品，在德国艺术藏品中仅次于德累斯顿。1891年画廊迁入艺术史博物馆一楼。 <a href="#fnref-37" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-38" style="display:none;"><span class="footnote-label">[38]</span> 上美景宫前的露台，《旅行者手册》称其“拥有维也纳最宜人的景观之一”。 <a href="#fnref-38" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-39" style="display:none;"><span class="footnote-label">[39]</span> 指壁炉中支撑柴火的金属炉架。 <a href="#fnref-39" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-40" style="display:none;"><span class="footnote-label">[40]</span> 指浮士德的传说，歌德的诗剧《浮士德》（1808-1832）对其有经典重述。 <a href="#fnref-40" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-41" style="display:none;"><span class="footnote-label">[41]</span> 1801年英国利物浦就批准了第一条货运有轨车道，但直到十九世纪末，英国（与法国、美国不同）的客运“街铁”都不普及。1860年美国企业家乔治·F·特雷恩在伯明翰开设了第一条马拉有轨车道，同年申请在伦敦运营线路，1861年8月已有三条线路运营，但遭到伦敦公共汽车公司的强烈反对，次年6月特雷恩被迫关闭所有线路。 <a href="#fnref-41" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-42" style="display:none;"><span class="footnote-label">[42]</span> 典出《旧约》，指以色列人出埃及后在阿拉伯旷野漂泊四十年，逃离埃及为奴之地的经历。 <a href="#fnref-42" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-43" style="display:none;"><span class="footnote-label">[43]</span> 十九世纪的半专业术语，当时包括亨利·霍兰德爵士在内的生理学家假设，大脑的半球结构对感知有可观测的影响，精神健康取决于大脑两半球与神经系统的“正常协同或行动统一”。大脑受伤或病变可能导致思维过程紊乱，精神失常、癔症患者尤其容易出现“思维的双重运作”：“仿佛存在两种心智，一种倾向于用更公正的认知、感受、意志纠正另一种的偏差；二者的相对力量在不同时期有差异。”这种“两种意识交替出现，每种都有对外界印象的感知和相应的思维链条，但没有普通的渐变过渡，也没有共同记忆”的状态，被称为“双重意识”。这个术语也用于催眠术领域，描述催眠对象在拥有正常清醒意识的同时，还能体验到磁状态引发的意识改变的情况。艾略特本人至少两次在作品中使用“双重意识”指代自身体验，1860年她在意大利旅行的日记中写道：“看见世界闻名的景物给我带来的快乐，一大减分项就是频繁出现的双重意识，它告诉我我并没有充分享受当下的视觉体验，当更高层次的愉悦来临时，我会在想象中重现当时的场景，有些细节给我的印象太浅，因为我的能力没有被调动起来进入活跃状态。” <a href="#fnref-43" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-44" style="display:none;"><span class="footnote-label">[44]</span> 即布拉格老城的约瑟夫城犹太区，《旅行者手册》将其描述为“狭窄肮脏街道和低矮房屋组成的迷宫，人口像蚁穴一样密集，估计约有8000犹太居民”。艾略特在日记中记录她参观老犹太会堂和犹太墓地的经历，和拉蒂默的体验非常相似。 <a href="#fnref-44" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-45" style="display:none;"><span class="footnote-label">[45]</span> 意大利语，意为向导。 <a href="#fnref-45" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-46" style="display:none;"><span class="footnote-label">[46]</span> 即托尔夸托·塔索（1544-1595），史诗《被解放的耶路撒冷》的作者，1579至1586年间被阿方索二世认定精神失常遭到监禁。歌德、拜伦、雪莱都曾在浪漫主义思潮中创作过以他为主题的作品。艾略特1854年在柏林读过歌德的诗剧《托尔夸托·塔索》，但拉蒂默更熟悉的应该是拜伦的《塔索的哀歌》，这首诗聚焦于塔索对莱奥诺拉·德斯特的爱导致他被公爵监禁的传奇故事。 <a href="#fnref-46" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-47" style="display:none;"><span class="footnote-label">[47]</span> 庙宇中最神圣的部分，即神龛或圣所，此处喻指最隐秘的内心。 <a href="#fnref-47" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-48" style="display:none;"><span class="footnote-label">[48]</span> 印度大麻的提取物，用作麻醉剂。 <a href="#fnref-48" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-49" style="display:none;"><span class="footnote-label">[49]</span> 原指传说中趁人熟睡压在人身上的邪灵，引申为噩梦带来的压迫感。 <a href="#fnref-49" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-50" style="display:none;"><span class="footnote-label">[50]</span> 腹腔内膜腹膜的炎症。在这一时期，这个术语涵盖了一系列胃和肠道疾病，晚期患者会感到剧烈疼痛，几天内就会死亡。 <a href="#fnref-50" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-51" style="display:none;"><span class="footnote-label">[51]</span> 女性宽松的家居晨袍。 <a href="#fnref-51" class="footnote-backref">↩</a></div><div class="footnote-item" id="fn-52" style="display:none;"><span class="footnote-label">[52]</span> 《布莱克伍德》杂志版本的原文为“上帝啊！死而复生原来是这样”，参见序言第26页。 <a href="#fnref-52" class="footnote-backref">↩</a></div></div>
+</div>
+<div class="main-content">
+<div id="write">
+<h2 id="翻译说明">翻译说明</h2>
+<p>在Claude Code中调用<code>doubao-seed-2.0-pro-260215</code>完成翻译，经人工审核修订。</p>
+<p>参考文献：</p>
+<blockquote>
+<p>Eliot, George. 1999. <em>The Lifted Veil  •  Brother Jacob</em>. Edited by Helen Small. Oxford World’s Classics. Oxford University Press.</p>
+<p>George Eliot, “The Lifted Veil (1859, Original Publication),” <em>George Eliot Archive</em>, accessed April 6, 2026, <a href="https://georgeeliotarchive.org/items/show/2789" target="_blank">https://georgeeliotarchive.org/items/show/2789</a>.</p>
+</blockquote>
+<hr>
+<h1 id="掀起的面纱1">掀起的面纱<sup><a href="#fn-1" id="fnref-1" class="footnote-ref">[1]</a></sup></h1>
+<blockquote>
+<p>巍巍上苍，毋赐我虚妄明光，</p>
+<p>唯愿光之所及，人情暖意皆淬为力量；</p>
+<p>毋赐我逾越凡俗生之传承的异能，</p>
+<p>唯愿我生而为人，品性得臻完满。<sup><a href="#fn-2" id="fnref-2" class="footnote-ref">[2]</a></sup></p>
+</blockquote>
+<hr>
+<h2 id="第一章">第一章</h2>
+<p>我的死期已近。近来我常受<em>心绞痛</em><sup><a href="#fn-3" id="fnref-3" class="footnote-ref">[3]</a></sup>发作的折磨，医生说按常理推断，我的寿命多半撑不过几个月。除非我这副异于常人的精神特质所附带的诅咒，也落在我的体格上，否则我很快就能摆脱这尘世的重负，不必再忍受这令人厌倦的苟活。倘若不然——倘若我真能活到多数人向往并早做筹备的年纪——我倒能弄明白，虚妄期许带来的痛苦，和预知一切带来的痛苦，究竟哪一种更难承受。因为我能预见自己的死期，也能预见临终前会发生的所有事。</p>
+<p>从今日算起刚好一个月后，也就是1850年9月20日夜里十点，我会坐在书房的这把椅子上，一心求死。无休止的洞察与预知耗尽了我的精力，我既无妄念，也无希望。我望着炉火里腾起一道蓝色的火舌，灯油即将燃尽，胸口便会开始那可怕的紧缩。窒息感涌上来之前，我只剩时间摸到铃绳，死命拽动。没人会来应铃。我知道原因：我的两个仆人是一对恋人，到时肯定刚吵过架；管家两小时前就会盛怒之下冲出家门，赌佩里会以为她跳河自尽；佩里最终慌了神，出门找她去了；年幼的厨房女佣在长椅上睡熟了，铃声从来闹不醒她。窒息感越来越强，我的灯伴着一股难闻的异味灭掉，我拼尽全力，再次去抓铃绳。我忽然渴望活下去，却无人施救。我曾渴求未知，如今那渴求已经消散。上帝啊，就让我守着已知的一切，哪怕我早已厌倦了这一切，我也心甘情愿。剧痛与窒息翻涌——而这世上的大地、田野、白嘴鸦栖息的林地下那条铺满卵石的溪流、雨后清新的气息、透过我卧室窗户的晨光、霜寒过后壁炉的暖意——难道这一切，终将永远被黑暗吞噬？</p>
+<p>黑暗——黑暗——没有疼痛——只剩无边黑暗：我在黑暗里不断坠落，思绪沉在黑暗中，却始终清晰地感知到自己在不断向前……</p>
+<hr>
+<p>在那一刻到来之前，我想趁我还尚有精力、尚能安闲，把我生平这段离奇的经历讲出来。我从未对任何人袒露过心声，也从不敢指望同类能予我多少共情。可我们所有人死了之后，总能得到几分怜悯，几分温柔，几分善意：只有活着的人不被原谅，只有活着的人得不到旁人的宽容与敬重，就像冷硬的东风挡落了所有雨水。心脏还在跳动的时候，你只管去伤它——这是你仅有的机会；眼睛还能噙着怯懦的湿意向你哀求的时候，你只管报以冰冷无应的凝视，把它冻僵；耳朵是通往灵魂至深圣所的微妙信使，它还能听见善意的语调时，你只管拿生硬的客套、嘲讽的恭维、装出来的冷漠不屑把它打发走；鲜活的头脑还在为不公刺痛，还在渴望兄弟般的认同时，你只管抓紧时间，用欠考虑的评判、无聊的攀比、轻率的曲解去压迫它。要不了多久，心脏就会彻底静下来——<em>“凡激愤过甚之处，再难刺痛己心”</em><sup><a href="#fn-4" id="fnref-4" class="footnote-ref">[4]</a></sup>；眼睛不会再哀求，耳朵会彻底失聪，头脑不再有任何欲求，也不再运转。到那时你再去说那些善意的话也无妨，再去追忆、怜悯他人的辛劳、挣扎与失败也无妨，再去给他人取得的成就应有的荣誉也无妨，再去原谅他人的过错、同意把过错一并掩埋也无妨。</p>
+<p>那不过是段无聊的学童课文，我何必费这么多笔墨？它和我没什么关系，因为我死后不会留下任何值得世人尊敬的作品。我没有至亲会在我坟前哭泣，弥补他们在我生前加诸我身的伤害。唯有我这一生的故事，或许能在我死后，从陌生人那里博得一点同情，比我活着的时候从朋友那里得到的还要多一点。</p>
+<p>或许是和后来的岁月相比，我的童年在回忆里显得比实际要快乐些。那时未来对我而言，和对其他孩子一样，是一道穿不透的幕布：我和他们一样享受当下的每一刻，对明天怀着甜美的、模糊的期许；我还有一位温柔的母亲，即便漫长的 dreary 岁月已经过去，想起她时，我心里仍会泛起一丝微不可察的悸动。她把我抱在膝上，胳膊环着我小小的身体，脸颊贴在我的脸上，那种触感还清晰如昨。我得过眼疾，一度失明了一阵，她从早到晚把我抱在膝头。那独一无二的慈爱很快就从我的生命里消失了，就连我 childish 的感知都能察觉到，日子变得冷了下来。我照旧骑着我的小白马，马夫跟在旁边，可我上马时再也没有疼爱的目光落在我身上，我回家时也再也没有欢喜的手臂朝我张开。或许七八岁的孩子大多不会像我这样想念母亲的爱，对他们来说，生活里其他的乐趣还和从前一样；可我实在是个格外敏感的孩子。我到现在还记得，马厩里传来石板路上马蹄的哒哒声、马夫洪亮的说话声、狗的吠叫，父亲的马车轰隆隆驶进庭院的拱门，通知午饭和晚饭开饭的锣声响起，这些声音会让我混杂着恐惧与雀跃的心情一并翻涌。我有时能听见士兵整齐的脚步声——我父亲的房子挨着郡治所在的镇子，那里有很大的兵营——那声音会让我哭着发抖，可等他们走过去了，我又盼着他们再回来。</p>
+<p>我猜父亲觉得我是个古怪的孩子，对我没什么疼爱，只是尽到做父亲的责任而已。他那时已经过了中年，我也不是他的独子。我母亲是他的第二任妻子，他娶我母亲的时候已经四十五岁了。他是个坚定、古板、极其讲究秩序的人，本质上是个银行家，不过也兼营活跃的地产生意，盼着能在郡里有点影响力：他这种人永远一成不变，不受天气影响，既不知道什么是忧郁，也不知道什么是兴高采烈。我对他极为敬畏，在他面前比平时更胆怯敏感，或许正是这点，让他打定主意，要给我安排和我哥哥不一样的教育计划——我哥哥已经是伊顿公学的高个子青年了。我哥哥是他的代表，也是继承人，为了积累人脉，自然要去伊顿和牛津读书：我父亲可不会低估拉丁讽刺作家和希腊悲剧作家对获得贵族身份的作用。可他骨子里看不起那些“已死却仍握有权柄的魂灵”<sup><a href="#fn-5" id="fnref-5" class="footnote-ref">[5]</a></sup>，读过波特版的《埃斯库罗斯》<sup><a href="#fn-6" id="fnref-6" class="footnote-ref">[6]</a></sup>，翻了翻弗朗西斯译的《贺拉斯》<sup><a href="#fn-7" id="fnref-7" class="footnote-ref">[7]</a></sup>，就觉得自己有资格形成独立观点了。对我的教育，他在负面要求之外，还加了一项来自新近参与的矿业投机<sup><a href="#fn-8" id="fnref-8" class="footnote-ref">[8]</a></sup>的正面要求：科学教育对小儿子来说才是真正有用的训练。何况，像我这样腼腆敏感的男孩，显然不适合公学的粗暴环境，莱瑟罗尔先生<sup><a href="#fn-9" id="fnref-9" class="footnote-ref">[9]</a></sup>也明确说过这点。莱瑟罗尔先生是个戴眼镜的高大男人，那天他把我小小的脑袋夹在他的大手里，带着探究、怀疑的神色这儿按按那儿捏捏——然后把两个大拇指按在我的太阳穴上，把我推得离他远了点，透过闪闪发光的镜片盯着我。他似乎对打量的结果很不满意，皱着眉，拇指划过我的眉毛，对我父亲说：</p>
+<p>“缺陷在这儿，先生——这儿；还有这儿，”他摸着我头顶两侧，补充道，“这儿的能力过剩了。得把多余的消掉，缺陷的地方补起来。”</p>
+<p>我浑身发抖，一半是因为隐约觉得自己是个被嫌弃的次品，一半是因为我第一次生出了恨意——恨这个戴眼镜的大个子，他把我的脑袋拧来拧去，仿佛我是件可以随便讨价还价的便宜货。</p>
+<p>我不知道后来给我安排的教育模式有多少是莱瑟罗尔先生的主意，但很快就定了：请私人教师，教自然史、科学和现代语言，用这些工具来弥补我体质上的缺陷。我对机器一窍不通，所以要花大量时间学这个；我对分类记忆毫无天赋，所以必须系统学习动物学和植物学；我渴望了解人间事迹与人类情感，所以要被塞满机械力、基本粒子、电磁现象之类的知识。要是换个心智健全的男孩，有这些学识渊博的老师，有这些科学仪器，肯定会收获颇丰，无疑也会和我一样，每个周四都被告知电磁现象多么有趣。可实际上，我在课堂上学到的东西的无知程度，能和古典学院<sup><a href="#fn-10" id="fnref-10" class="footnote-ref">[10]</a></sup>出来的最差的拉丁文学者不相上下。我偷偷读普鲁塔克<sup><a href="#fn-11" id="fnref-11" class="footnote-ref">[11]</a></sup>、莎士比亚和《堂吉诃德》，任凭思绪飘远，我的老师还在跟我强调，“和无知的人不同，长进的人得知道水为什么往低处流。”我一点也不想做什么长进的人，我就爱看着流水，能连着好几个钟头看它在卵石间汩汩流淌，浇灌鲜亮的绿色水生植物。我不想知道它为什么流，我完全相信，这般美丽的事物背后总有好的缘由。</p>
+<p>这段人生我不必多讲。我已经说得够多了，足以说明我天性敏感、不切实际，成长的环境又格格不入，永远不可能让我成长为快乐健康的人。十六岁那年，我被送到日内瓦<sup><a href="#fn-12" id="fnref-12" class="footnote-ref">[12]</a></sup>完成学业，这个变化让我非常开心，我们从汝拉山脉往下走时，我第一眼看见夕阳笼罩下的阿尔卑斯山，仿佛踏进了天堂；我在那里待了三年，永远处在一种狂喜的状态里，仿佛在大自然极致的壮美面前，时时刻刻都在啜饮醇酒。你或许会觉得，我对自然这么敏感，早该当个诗人。可我的命运没那么好。诗人能吟出自己的歌，<em>相信</em>会有聆听的耳朵，会有应和的灵魂，他的歌迟早会传到对方那里。可徒有诗人的敏感却没有诗人的声音——空有诗人的感受却无处抒发，只能在晴日的岸边默默垂泪，正午的阳光在水面撒下碎金，听见人类粗粝的嗓音、看见人类冰冷的眼神就忍不住内心发颤——这种哑然的激情，会让一个人在同类之中陷入致命的灵魂孤独。我最不孤独的时刻，是傍晚划着船往湖心去的时候：天空、霞光笼罩的山顶、辽阔的蓝水，像母亲一样慈爱地围着我，自从母亲的爱消失之后，再也没有人类的面孔给过我这样的爱。我常像让-雅克<sup><a href="#fn-13" id="fnref-13" class="footnote-ref">[13]</a></sup>那样做——躺在船里，任它随波漂流，我望着天光一点点消退，一座接一座的山峰隐去，仿佛先知的火战车<sup><a href="#fn-14" id="fnref-14" class="footnote-ref">[14]</a></sup>正从山巅驶过，去往光的居所。等白色的山顶都变得黯淡，像死尸一般，我就得划船回家了，因为有人看管着我，不许我在外游荡到太晚。我这种性子，很难和日内瓦随处可见的同龄年轻人建立亲密的友谊。不过我确实交到了<em>一个</em>朋友，说来也怪，他的思想倾向和我完全相反。我就叫他夏尔·默尼耶<sup><a href="#fn-15" id="fnref-15" class="footnote-ref">[15]</a></sup>吧，他本姓是个英国姓，因为他有英国血统，后来还成了名人。他是个孤儿，靠微薄的补助金攻读医学，在这方面他有极高的天赋。说来奇怪，我脑子混沌、敏感、不爱观察、讨厌探究、只顾着沉思，居然会被一个最热爱科学的年轻人吸引。可我们的羁绊和智识无关，它来自某种能愉快地把愚笨和聪慧、空想和务实融合在一起的源头：来自共通的情感。夏尔又穷又丑，被日内瓦的流浪儿<sup><a href="#fn-16" id="fnref-16" class="footnote-ref">[16]</a></sup>嘲笑，也进不了上流社会的客厅。我看得出他和我一样孤立，只是原因不同，出于同病相怜的义愤，我怯生生地向他示好。不必多说，我们性格不同，却结下了深厚的友谊；夏尔难得放假的时候，我们要么一起爬萨莱夫山，要么坐船去沃韦<sup><a href="#fn-17" id="fnref-17" class="footnote-ref">[17]</a></sup>，我出神地听着他滔滔不绝地讲未来的实验和发现，那些大胆的构想，在我脑子里和蓝色的湖水、轻盈的浮云、鸟鸣、冰川远处的闪光混在了一起。他很清楚我的心大半不在这上面，可他还是喜欢和我这么说话；我们要是喜欢猫狗，不也会和它们讲我们的希望和计划吗？我提起这段友谊，是因为它和我后来人生里那段离奇又可怕的遭遇有关。</p>
+<p>我在日内瓦的快乐生活因为一场重病结束了，那段日子我一半是空白，一半是模糊记得的痛苦，父亲不时在我床边守着。之后就是漫长乏味的恢复期，随着力气慢慢恢复，我能坐马车出去的路程越来越长，日子也渐渐变得有了声色。有一天，我记得格外清楚，父亲坐在我沙发边，对我说：</p>
+<p>“等你好到能出门旅行了，拉蒂默，我就带你回家。路上你能好好玩玩，对你身体也好，我们会经过蒂罗尔和奥地利，你能看见好多新地方。我们的邻居菲尔莫一家也来了，阿尔弗雷德会在巴塞尔和我们会合，我们一起去维也纳，再从布拉格<sup><a href="#fn-18" id="fnref-18" class="footnote-ref">[18]</a></sup>回来……”</p>
+<p>父亲话没说完就被人叫走了，我的思绪停在“布拉格”这个词上，忽然有种奇异的感觉，仿佛一幅崭新的、令人惊叹的景象在我眼前展开：一座城市沐浴在明亮的阳光下，那阳光仿佛是几个世纪前的夏日阳光，被定格在了原地——千百年没有夜露，没有暴雨冲刷，烤得这片注定要困在记忆的循环里的民族，那蒙尘、疲惫、被时光侵蚀的宏伟景象愈发焦灼，就像被废黜的老朽国王，穿着织着金线的破烂王袍。这座城市看起来干渴极了，宽阔的河流在我眼里像一片金属板；我沿着没有尽头的桥<sup><a href="#fn-19" id="fnref-19" class="footnote-ref">[19]</a></sup>往前走，那些漆黑的雕像在我空白的注视下闪过，它们穿着古老的衣袍，戴着圣徒的冠冕，仿佛才是这个地方真正的居民和主人，而忙忙碌碌、庸庸碌碌的男男女女，不过是朝生暮死的访客，只在这儿停留一天。我想，这些冷峻的石人，才是那些早已消逝的古老孩童的祖先，住在我面前陡峭山坡上那些被时光侵蚀的褐色房子里；他们在高地那座绵延单调的宫殿<sup><a href="#fn-20" id="fnref-20" class="footnote-ref">[20]</a></sup>磨损破败的排场里朝觐，在教堂憋闷的空气里倦怠地做礼拜，没有恐惧也没有希望，只是受着命运的驱使，永远苍老、不死，永远困在僵化的习惯里，活在永恒的正午，没有黑夜的休憩，也没有清晨的新生。</p>
+<p>一阵刺耳的金属碰撞声猛地穿过我的身体，我才重新意识到自己房间里的东西：皮埃尔开门给我送药，碰掉了一根拨火棍。我的心狂跳不止，央求皮埃尔把药放在旁边，我过会儿再喝。</p>
+<p>等我又一个人待着，我开始问自己刚才是不是睡着了。这难道是梦吗——这幅清晰得惊人的景象，清晰到路面上有一片星形彩玻璃灯罩投下的彩虹光斑都历历在目，是我完全想象不出来的陌生城市？我从来没见过布拉格的照片，它对我来说只是个名字，只有模糊的历史联想——是帝国荣光和宗教战争的模糊记忆。</p>
+<p>我以前做梦从来没有过这种情况，我还经常因为自己的梦要么支离破碎要么平淡无奇，只有偶尔的噩梦能有点意思而感到羞愧。可我没法相信我刚才睡着了，因为我清楚地记得那幅景象是怎么慢慢浮现在我眼前的，就像溶景术<sup><a href="#fn-21" id="fnref-21" class="footnote-ref">[21]</a></sup>里新出现的画面，或是晨雾被朝阳掀开，风景一点点变得清晰。我在意识到这幅异象出现的同时，也清楚地记得皮埃尔进来通报说菲尔莫先生来找我父亲，父亲急急忙忙走出了房间。不，这不是梦；这难道——我心里满是震颤的狂喜——难道是我身上诗人的本性，从前只是混乱的、渴望的敏感，现在突然化为了自发的创作？肯定是这样，荷马看见特洛伊平原，但丁看见冥界，弥尔顿<sup><a href="#fn-22" id="fnref-22" class="footnote-ref">[22]</a></sup>看见撒旦坠向凡间，都是这样的吧？难道是这场病给我的身体带来了某种可喜的变化——让我的神经绷得更紧了，清除了某种迟钝的阻塞？我常读到这种事，至少小说里有。不，我读的真实传记里也写过，有些疾病会给精神力量带来精微的、升华的影响。诺瓦利斯<sup><a href="#fn-23" id="fnref-23" class="footnote-ref">[23]</a></sup>不就是在肺结核恶化的过程中，灵感越来越强的吗？</p>
+<p>我在这个美妙的念头上琢磨了好半天，觉得或许可以靠自己的意志试验一下。这幅景象是在父亲说到我们要去布拉格的时候出现的。我一点也不相信这是那座城市的真实呈现，我相信——我倒希望这是我刚解放的天赋，急匆匆从模糊的记忆里抓来色彩，画出的一幅画。要是我把注意力集中在别的地方，比如威尼斯，我对威尼斯的想象可比布拉格熟悉多了，说不定也会出现同样的结果。我把思绪集中在威尼斯上，用诗歌里的记忆刺激我的想象，努力像刚才感知布拉格那样感知自己身在威尼斯。可没用。我只是在给家里旧卧室里挂着的卡纳莱托<sup><a href="#fn-24" id="fnref-24" class="footnote-ref">[24]</a></sup>版画添色而已，画面飘来飘去，我的脑子犹犹豫豫地想找更鲜活的意象，可除非我刻意去想，不然根本看不到任何具体的形状或阴影。全是平淡的努力，根本没有刚才那种浑然忘我的被动状态，就是半小时前我经历过的那种。我很沮丧，不过我记得灵感本来就是时有时无的。</p>
+<p>接下来好几天我都处在兴奋的期待里，等着这份新的天赋再次显现。我让思绪在我所知的世界里到处漫游，希望能找到某个对象，能唤醒我沉睡的天赋，让它重新震颤起来。可没有，我的世界还是一如既往的昏暗，那道奇异的光再也没有出现，哪怕我满心雀跃、心跳如鼓地等着它。</p>
+<p>父亲每天都陪我坐车出去，我能走路之后，我们散步的路程也越来越长；有天晚上他说好第二天十二点来接我，我们一起去挑八音盒<sup><a href="#fn-25" id="fnref-25" class="footnote-ref">[25]</a></sup>，还有别的来日内瓦游玩的英国有钱人必定会买的东西。他是最守时的人，也是个银行家，我总 nervous 地盼着到点就能准备好等他。可让我惊讶的是，十二点十五分了他还没出现。我就像个没什么事做的恢复期病人，刚被许诺能出门活动、能摆脱沉闷的刺激，此刻满肚子都是不耐烦。</p>
+<p>我坐不住，也攒不住力气，就在房间里走来走去，望着罗讷河的水流，它正从深蓝色的湖里流出来；可我满脑子都在想，可能是什么事耽误了父亲。</p>
+<p>忽然我察觉父亲进了房间，还不是一个人：他身边还有两个人。奇怪！我没听见脚步声，也没看见门开，可我就是看见父亲了，他右手边是我们的邻居菲尔莫太太，我记得很清楚，虽然我已经五年没见过她了。她是个普通的中年女人，穿着丝绸和开司米衣服；可父亲左手边的女士才二十出头，高挑苗条，杨柳似的身段，留着浓密的金发，编成精巧的辫子，堆在她纤细的身形和线条柔和、嘴唇偏薄的脸上，发量看起来几乎太重了。可她脸上没有一点少女的神态：五官锋利，浅灰色的眼睛敏锐、躁动、带着讥讽。她半笑不笑地盯着我，满是好奇，我感到一阵刺痛，仿佛有寒风刮过我的身体。她穿着浅绿的裙子，发间似乎别着绿叶做装饰，让我想起水精<sup><a href="#fn-26" id="fnref-26" class="footnote-ref">[26]</a></sup>——我满脑子都是德国抒情诗<sup><a href="#fn-27" id="fnref-27" class="footnote-ref">[27]</a></sup>，这个脸色苍白、眼神冷冽的女人，头上戴着绿色的草叶，仿佛是从某条冰冷、长满莎草的溪流里生出来的，是古老河流的女儿。</p>
+<p>“好了拉蒂默，你肯定等急了吧。”我父亲开口说……</p>
+<p>他最后一个字还在我耳边响着，那三个人就全消失了，我和门之间只剩那扇中国彩绘屏风。我浑身发冷，抖个不停，只能踉踉跄跄往前扑到沙发上。这股奇异的新能力又出现了……可这真的是能力吗？难道这其实是种病——某种间歇性的谵妄，把我大脑的能量集中在几阵不健康的活跃里，剩下的清醒时刻反而更贫瘠了？我看着眼前的东西，只觉得天旋地转，不真实得很，我像要挣脱噩梦似的，抽搐着抓住铃绳，拽了两次。皮埃尔进来了，脸上满是惊慌。</p>
+<p><em>“先生您不舒服吗？”</em><sup><a href="#fn-28" id="fnref-28" class="footnote-ref">[28]</a></sup>他焦急地问。</p>
+<p>“皮埃尔，我等烦了，”我尽可能清晰、用力地说，像个喝了酒还拼命想保持清醒的人，“恐怕我父亲出事了——他向来最守时。你去贝格酒店<sup><a href="#fn-29" id="fnref-29" class="footnote-ref">[29]</a></sup>看看他在不在。”</p>
+<p>皮埃尔立刻离开了，嘴里安抚地说着“好的，先生”；这幕真实、清醒的日常场景让我好受了点。为了让自己更冷静，我走进和客厅相连的卧室，打开一瓶古龙水，拔出瓶塞，把提神的香气抹在手上、额头上，凑到鼻子底下闻，那股香味让我欢喜，因为这是我慢慢拿出来、慢慢用的，不是什么突如其来的疯癫带来的。我已经开始尝到一点恐惧的滋味，那是天生不适应普通人类生存状态的人独有的恐惧。</p>
+<p>我还闻着香味，回到客厅，可客厅已经不是我离开时的空样子了。中国屏风前面站着我父亲，右手边是菲尔莫太太，左手边是——那个身材苗条的金发姑娘，锋利的五官，锐利的眼睛，正半笑不笑、好奇地盯着我。</p>
+<p>“好了拉蒂默，你肯定等急了吧。”我父亲开口说……</p>
+<p>我之后什么也听不见了，什么也感觉不到了，等我再醒过来，我头低低地靠在沙发上，皮埃尔和我父亲都在我旁边。</p>
+<p>等我彻底缓过来，我父亲离开了房间，很快又回来了，说：</p>
+<p>“我去跟两位女士说了你的情况，拉蒂默。她们在隔壁房间等着呢。我们今天就不出去买东西了。”</p>
+<p>过了会儿他又说：“那位年轻小姐是伯莎·格兰特，菲尔莫太太的孤女外甥女。菲尔莫收养了她，她跟他们一起住，我们回家之后她就是你们的邻居了——说不定还能成一家人呢，我看她和阿尔弗雷德之间有情意，这桩婚事我很满意，菲尔莫会把她当亲生女儿一样，给她备好所有嫁妆。我还以为你知道她住在菲尔莫家呢，看来你一点都不清楚。”</p>
+<p>他没有再提我看见她就晕过去的事，我也绝不可能告诉他原因：我根本不敢把这种会被人当成可怜怪癖的事告诉任何人，尤其是告诉我父亲，不然他从此以后都会怀疑我脑子不正常。</p>
+<p>我不想详细讲我经历的细节。我把这两次事讲得这么长，是因为它们对我后来的人生造成了确切的、清晰可查的影响。</p>
+<p>就在这次事之后不久——我想就是第二天——我发现了我这种异常感知的另一个阶段，生病之前我从来没有过这种体验。我能强行探知和我接触的人的思维活动，先是一个人，再是另一个：某个无关紧要的熟人脑子里那些无聊、轻浮的想法和情绪——比如菲尔莫太太——会强行钻进我的意识里，像走调的乐器发出的噪音，又像被关起来的昆虫吵人的动静。好在这种讨厌的感知是时有时无的，也会给我留些休息的时刻，这时旁人的思绪就被隔绝在我外面，我能松一口气，像疲累的神经终于得到了安静。我或许还能说服自己，这种烦人的洞察力只是我想象力的病态活动，可我能预知别人还没说出口的话、还没做的动作，证明了它和其他人的思维活动有确切的关联。可是，这种多出来的意识，要承受无关紧要的人的琐碎想法已经够累人、够烦人了，当它向我打开和我关系亲密的人的灵魂时，才会变成极致的痛苦和悲伤：那些理性的交谈、优雅的关照、俏皮的措辞、善意的举动，曾经织就了他们的性格表象，如今像被显微镜刺穿了似的，暴露出所有介于间隙的无聊念头，所有被压抑的自私，所有幼稚、卑劣、反复无常的模糊记忆，所有临时拼凑的懒怠想法，人类的言语和行为就像盖在发酵堆上的薄纸片，从这些东西里冒出来。</p>
+<p>我们在巴塞尔和我哥哥阿尔弗雷德会合了，他现在二十六岁，英俊自信，和我脆弱、神经质、一无是处的样子形成了鲜明对比。我觉得别人都觉得我有种半女气、半幽灵似的美；日内瓦的肖像画家多如牛毛<sup><a href="#fn-30" id="fnref-30" class="footnote-ref">[30]</a></sup>，经常请我当模特，我还当过一幅装饰画里濒死游吟诗人的原型。可我极其讨厌自己的<em>体格</em>，要不是相信这是诗人才有的特质，我根本没法接受。那点渺茫的希望早就没了，我现在看着自己的脸，只看见病态体质的烙印，天生就是要被动承受痛苦的——太孱弱，连诗歌创作那种崇高的反抗都做不到。我和阿尔弗雷德之前几乎一直分开，他现在的性格和长相，在我看来完全是个陌生人，他拼命想对我表现得格外友好，像个好哥哥似的。他天性开朗、自满，没什么竞争意识，也没遇到过什么挫折。我不敢说我的性子好到完全不会嫉妒他，哪怕我们的欲望没有冲突，哪怕我是个健康的正常人，能大方地信任别人、善意地体谅别人。我们的天性里本来就有种互斥的东西。实际情况是，才过了几个星期，他就成了我极度痛恨的对象；他一进房间，尤其是一开口说话，我就觉得像听见金属刮擦的声音，牙都酸了。我这病态的意识，比起琢磨其他碰见的人，更无时无刻不在纠缠于他的想法和情绪。他的自负、他好为人师的毛病、他自以为伯莎·格兰特深爱他的笃定、他对我半带怜悯的轻蔑——这些心思我根本不用从语气、措辞、小动作这些敏锐多疑的人通常会留意的普通迹象里猜，我能看见它们赤裸裸、毫无遮掩的复杂全貌。</p>
+<p>因为我们是情敌，我们的欲望是冲突的，只是他还不知道而已。我还没说过和伯莎·格兰特熟悉之后，她对我产生的影响。这种影响主要是因为，在我周围的所有人里，只有她是我这份不幸的洞察力的例外。对伯莎，我永远处在不确定的状态里：我可以观察她脸上的表情，猜测它的意思；我可以带着无知者真切的兴趣问她的看法；我可以满怀希望与恐惧，等着听她说话、看她微笑：对我来说，她就像一段没被解开的命运，有无穷的吸引力。我得说，主要是这个事实，决定了她对我的强烈影响：因为抽象来说，没有哪个女性性格，比伯莎更和我这种腼腆、浪漫、热情的青年没有<em>共鸣</em><sup><a href="#fn-31" id="fnref-31" class="footnote-ref">[31]</a></sup>了。她敏锐、尖刻、缺乏想象力，过早地变得 cynical，最动人的场景下也不为所动，喜欢贬低我所有心爱的诗，尤其看不起我当时最喜欢的德国抒情诗。直到现在我也说不清我对她的感觉：那不是普通的少年爱慕，因为她简直是我理想中可爱女性的反面，就连她的头发颜色都和我想象的不一样；她也没有那种对伟大与美好的热情，哪怕在她完全支配我的那一刻，我也得说那是她性格里最高贵的部分了。可是，一个以自我为中心的负面性格，对一个永远渴求同情与支持、病态敏感的人施加的暴政，是最彻底的。再独立的人，面对一个沉默的人，都会更在意他的评价，觉得能赢得这个一贯挑剔、讽刺的批评家的尊敬，是额外的胜利：所以也难怪，一个满腔热情、不自信的青年，会守在一个刻薄女人脸上紧闭的秘密跟前，像守在一位不知会不会施恩的、可疑的神祇的神龛前，她主宰着他的命运。年轻的狂热者没法想象，自己心里翻腾的情绪，在另一个人心里可能完全不存在：他总觉得那些情绪可能只是微弱、潜藏、没有表现出来，它们就在那儿——总有一天会被唤醒；偶尔在快乐的幻觉里，他甚至相信它们的确存在，就是因为他看不见任何外在的迹象，反而觉得它们的力量更强大。我刚才说的这种效应，在我身上被放大到了极致，因为伯莎是唯一一个还把灵魂藏在神秘幽闭处的人，这种幽闭才能容下年轻人的幻想。无疑还有另一种吸引力在起作用——那种微妙的生理吸引，总爱捉弄我们的心理预判，逼得那些画精灵的画家，反倒会爱上<em>善良正直的女人</em><sup><a href="#fn-32" id="fnref-32" class="footnote-ref">[32]</a></sup>，粗跟鞋、长雀斑的那种。</p>
+<p>伯莎对我的态度，刚好助长了我所有的幻觉，放大了我少年人的热情，让我越来越依赖她的笑容。以我现在可悲的认知回头看，我敢说，她知道我第一次见她就晕了过去，纯粹是被她的人打动，她的虚荣心和权力欲得到了极大的满足。最乏味的女人也愿意相信自己是一场激烈、诗意的激情的对象；伯莎骨子里一点浪漫细胞都没有，可她有种爱耍诡计的天性，一想到她要嫁的男人的弟弟，正为她爱得死去活来、嫉妒得发狂，就觉得格外有意思。她要嫁给我哥哥这件事，我当时还不相信；虽然他对她大献殷勤，我也很清楚我父亲和他都打定了主意要成这桩事，可当时还没有明确的订婚约定；伯莎习惯性地和我哥哥调情，接受他的示好，那姿态仿佛是让他知道她清楚他的意图，可她又用最不易察觉的眼神和话语——那些没法拿出来当证据的小女儿态——让我相信，他其实是她暗地里嘲笑的对象，她和我一样觉得他是个花花公子，耍他玩是件乐事。在我哥哥面前，她公然把我当孩子疼，仿佛我太小、太体弱，根本不可能当什么情人；我哥哥也是这么看我的。可我相信她心里肯定很得意，她拍拍我的卷发，笑话我引的诗句时，我会浑身发抖。这种爱抚从来都是在朋友面前做的；只剩我们俩的时候，她反而会故意和我拉开距离，时不时用话或是小动作撩拨我愚蠢怯懦的希望，让我觉得她其实更喜欢我。她为什么不能顺着自己的心意来呢？我的条件是不如我哥哥，可我也有我的优势，我只比她小不到一岁，她是个继承人，很快就到法定年龄，可以自己做决定了。</p>
+<p>希望和恐惧来回翻涌，全绕着她这一个核心转，让我每天待在她身边的日子，成了甜蜜的折磨。她有一次故意的举动，更是让我迷醉得神魂颠倒。我们在维也纳的时候，赶上她二十岁生日，她喜欢首饰，我们就趁这个机会，在这个“条顿人的巴黎”的精致珠宝店里，给她挑生日礼物。我的礼物自然是最便宜的：是枚<em>欧泊</em><sup><a href="#fn-33" id="fnref-33" class="footnote-ref">[33]</a></sup>戒指——欧泊是我最喜欢的宝石，因为它会变脸红或是变白，仿佛有灵魂一样。我把戒指给她的时候这么跟她说，说它是诗意天性的象征，会随着天光、随着女人眼睛里的神色变化。当晚她穿得十分优雅，显眼地戴着所有生日礼物，除了我的。我急着看她的手指，可没看见欧泊。那天晚上我没机会问她；第二天早餐后，我看见她一个人坐在窗边，就说：“你不屑戴我这枚寒酸的欧泊。我早该记得你看不起诗意的天性，该送你珊瑚，或是绿松石，或是别的不会给你反应的、没知觉的石头才对。”“我看不起它？”她回答，捏着她脖子上一直戴着的那条细金链，把末端从胸口拽出来，我的戒指就挂在上面；“它贴在我身上有点疼，我跟你说，”她还是那种带着点不确定的笑，“只能戴在这个秘密的地方；你们这些诗人天性蠢得很，就喜欢招摇的东西，我可受不了这个疼了。”</p>
+<p>她把戒指从链子上摘下来戴在手指上，还在笑，我的血一下子冲上脸颊，我连一句求她还把戒指戴回原来的地方的话都说不出来。</p>
+<p>我完全被这一幕骗住了，接下来两天，只要伯莎不在，我就把自己关在房间里，反复回想刚才的场景和它所有的暗示，越想越沉醉。</p>
+<p>我得说，这两个月里——那些新奇又强烈的快乐和痛苦，对我来说像过了一辈子那么久——我那病态的、能闯入别人意识的能力还在折磨我；一会儿是我父亲，一会儿是我哥哥，一会儿是菲尔莫太太或她先生，一会儿是我们的德国向导，他们的思绪像 ringing 的耳鸣一样往我脑子里冲，赶都赶不走，不过这也没打断我自己的冲动和想法，它们照常运转着。就像听觉被超自然地放大了，别人觉得一片死寂的地方，我能听见轰鸣的声响。这种不由自主闯入别人灵魂的疲惫和厌恶，只有我对伯莎的一无所知，还有我对她日益增长的热情能抵消；这份热情即便不是完全由这份无知催生，也被它极大地刺激了。在这片 dreary 的知识荒漠里，她是我神秘的绿洲。我从来不让自己的病态状况暴露出来，也不让它驱使我做出什么奇怪的言行，只有一次，我对我哥哥生出了一股古怪的恨意，抢先说出了他准备讲的话——那是他事先准备好的一句俏皮话。他说话偶尔会有点装出来的犹豫，他说完第二个字顿了一下的时候，我的不耐烦和嫉妒冲昏了头，替他把话接完了，仿佛那是我们俩都背过的台词。他脸涨得通红，又惊讶又恼火；话刚从我嘴里说出去，我就吓得一哆嗦，生怕这种预知别人要说什么的本事——虽说那些话也不是什么难猜的话——会暴露我是个异类，是个沉默的附魔者<sup><a href="#fn-34" id="fnref-34" class="footnote-ref">[34]</a></sup>，所有人，尤其是伯莎，都会怕我、躲着我。可和往常一样，我把自己的言行可能给别人造成的影响放大了；没人觉得我的插话比鲁莽无礼更严重，都看在我神经衰弱的份上原谅我了。</p>
+<p>我虽然几乎一直有这种能感知现实的额外意识，可自从第一次见伯莎那次之后，那种清晰的预知能力再也没出现过；我满怀着好奇等着看，我之前看见的布拉格的景象，会不会也是同样的预知。欧泊戒指的事过去没几天，我们去参观列支敦士登宫<sup><a href="#fn-35" id="fnref-35" class="footnote-ref">[35]</a></sup>。我没法连着看好多画，因为只要画的感染力够强，对我的冲击就太大，看个一两幅就耗尽我所有的思考能力了。那天早上我一直在看乔尔乔内的画<sup><a href="#fn-36" id="fnref-36" class="footnote-ref">[36]</a></sup>，画的是个眼神冷酷的女人，据说画的是卢克雷齐娅·博尔贾。我一个人在它跟前站了好久，被那张狡黠、冷酷的脸上的可怕真实感迷住了，直到我生出一种奇异的中毒般的感觉，仿佛我早就吸进了致命的毒气，现在才刚察觉到它的效果。要是同行的人没回到这间屋子，宣布他们要去美景宫画廊<sup><a href="#fn-37" id="fnref-37" class="footnote-ref">[37]</a></sup>，解决我哥哥和菲尔莫先生为一幅画打的赌，我说不定还不会走。我恍恍惚惚跟着他们，几乎没注意身边发生的事，直到他们都上楼去画廊了，把我留在下面；我那天实在不想再看见第二幅画了。我往大露台<sup><a href="#fn-38" id="fnref-38" class="footnote-ref">[38]</a></sup>走，因为说好等争议解决了，我们就去花园里散步。我在那儿坐了一小会儿，隐约能看见修剪整齐的花园，远处是城市和青山，我想躲开哨兵，就站起身沿着宽阔的石阶往下走，准备到花园里更远的地方坐会儿。我刚走到碎石步道上，就感觉有只胳膊挽住了我的，一只轻轻的手按着我的手腕。同时一阵奇异的、令人迷醉的麻木感席卷了我，就像刚才看着卢克雷齐娅·博尔贾的眼神时那种感觉的延续，或者说高潮。花园、夏日的天空、伯莎挽着我胳膊的触感，全都消失了，我仿佛突然掉进了黑暗里，昏暗的炉火慢慢从黑暗里透出来，我发觉自己坐在父亲家书房的皮椅上。我认得那个壁炉——还有烧柴火的炉架<sup><a href="#fn-39" id="fnref-39" class="footnote-ref">[39]</a></sup>——黑色大理石的壁炉台，白色大理石饰板中间雕着濒死的克利奥帕特拉。强烈的、毫无希望的痛苦压在我的灵魂上，光越来越亮，因为伯莎正走进来，手里拿着根蜡烛——伯莎，我的妻子——眼神冷酷，白色舞裙上戴着绿宝石和绿叶，她心里所有可恨的念头我都一清二楚……“疯子，蠢货！你怎么不赶紧去死？”那是地狱般的一刻。我看透了她无情的灵魂——看见它贫瘠的世俗，看见它灼人的恨意——感觉那恨意像空气一样裹着我，我非吸不可。她拿着蜡烛走到我跟前，脸上挂着轻蔑的苦笑；我看见她胸口别着硕大的祖母绿胸针，是条镶着钻石眼睛的蛇。我浑身发抖——我鄙视这个灵魂贫瘠、心思歹毒的女人；可在她面前我毫无还手之力，仿佛她攥着我滴血的心脏，要一直攥到最后一滴血流干为止。她是我的妻子，我们互相憎恨。渐渐的，壁炉、昏暗的书房、烛光都消失了——仿佛融进了光的背景里，只有那双钻石眼睛的绿蛇，还像暗像一样留在我的视网膜上。然后我感觉自己的眼皮在抖，白日的亮光透了进来；我看见花园，听见人声；我坐在美景宫露台的台阶上，我的朋友们都围着我。</p>
+<p>这幅可怕的幻象把我吓得心神大乱，病了好几天，我们在维也纳的行程也延长了。我一想到那场景就吓得发抖，它反反复复地出现，每个细节都清清楚楚，仿佛被烧进了我的记忆里；可人类的心在即时欲望的影响下就是这么疯狂，我居然感到一阵疯狂的、敢闯地狱的喜悦：伯莎会是我的；我第一次见她时的预知应验了，让我几乎敢抱有希望，觉得最后这幅窥见未来的可怕场景，不过是我脑子的病态臆想，和现实没有任何关系。我唯一能用来质疑这份可怕确信的可能，就是发现我对布拉格的想象是错的——而布拉格正好是我们下一站要去的城市。</p>
+<p>同时，我一回到伯莎身边，就又完全被她拿捏住了。就算我看透了伯莎的心脏，那个成熟的女人——伯莎，我的妻子？伯莎，那个姑娘，对我来说还是个迷人的秘密：我一碰到她的手就发抖，她在场就像有魔法似的，我渴望得到她爱我的保证。对渴得要命的人来说，怕中毒的恐惧是微不足道的。是啊，我还是和以前一样嫉妒我哥哥——还是一样被他那点屈尊降贵的态度惹恼；因为我的骄傲，我那病态的敏感，还和从前一样，每次受了冒犯都忍不住退缩，就像眼睛进了灰会条件反射地眨眼一样。未来哪怕是被这幅吓得我发抖的幻象拖到了触手可及的地方，和当下的情感力量——我对伯莎的爱，我对哥哥的厌恶和嫉妒——比起来，也不过是个念头而已，没什么分量。</p>
+<p>有个<em>古老的传说</em><sup><a href="#fn-40" id="fnref-40" class="footnote-ref">[40]</a></sup>，说人会把灵魂卖给魔鬼，用鲜血签下契约，因为契约要到遥远的未来才生效；然后他们会急不可耐地去抢自己灵魂渴求的那杯酒，哪怕身边站着黑影也不管，那股冲动一点也没少。通往智慧没有捷径，没有专利有轨车道<sup><a href="#fn-41" id="fnref-41" class="footnote-ref">[41]</a></sup>；哪怕经过了多少世纪的发明，灵魂的路还是要穿过<em>荆棘荒野</em><sup><a href="#fn-42" id="fnref-42" class="footnote-ref">[42]</a></sup>，必须孤身跋涉，脚流着血，哭着求助，和远古时候的人走的路一模一样。</p>
+<p>我满脑子都在急切地盘算，怎么才能赢过我哥哥，我还是太胆怯，不知道伯莎真实的心意，不敢采取任何行动，逼她承认对我的感情。我想，要是我对布拉格的幻象是真的，我就能有底气这么做了；可那种预知带来的恐惧啊！在苗条的少女伯莎身后——我留意着她的每句话每个表情，她的触碰就是我的极乐——永远站着那个身形更丰满、眼神更冷酷、嘴唇更僵硬的伯莎，贫瘠自私的灵魂暴露无遗；再也不是什么迷人的秘密，而是确凿的事实，永远往我不情愿的眼睛里钻。正在读这个故事的你，难道就不能同情我一下吗？你难道想象不出我身上运作的<em>双重意识</em><sup><a href="#fn-43" id="fnref-43" class="footnote-ref">[43]</a></sup>吗？它们像两条平行的溪流，永远不会交汇，也不会融成同一种颜色。你肯定也体会过那种预感，当洞察力和激情交锋时就会冒出来；我的幻象不过是被放大到恐怖程度的预感而已。你肯定也知道，在冲动的力量面前，念头有多无力；我的幻象一旦变成记忆，就只是些念头而已——苍白的影子，徒劳地招手，而我的手正被活生生的、我爱着的人握着。</p>
+<p>后来我时常痛苦地后悔，要是我能预知到一点别的、不一样的东西就好了——要是那幅毒害了我的激情、却没能摧毁它的可怕幻象不存在就好了，或是哪怕我除了它之外，还能预见到我最后一次看着我哥哥的脸的时刻，或许我对他的感觉就能软化一点：骄傲和恨意肯定会被同情压下去，那些隐藏的罪孽的记录也能短一点。可这不过是我们人类用来自我安慰的空想而已。我们总愿意相信，我们心里的利己主义本来是很容易融化的，只是我们的认知太狭窄，才困住了我们的慷慨、敬畏、人类的虔诚，妨碍了我们把坚硬的冷漠，转化为对同类感受和情绪的共情。我们的温柔和自我牺牲，只有在利己主义得逞之后才会显得强烈——等我们费尽心思想要赢的、会给别人带来损失的胜利突然到来，我们反而会吓得发抖，因为递来胜利的是死亡冰冷的手。</p>
+<p>我们到布拉格的时候是夜里，我很高兴，因为这仿佛把那个无比关键的时刻推后了，我可以在城里待好几个小时都不用看见它。我们不在布拉格久留，要尽快去德累斯顿，所以大家提议第二天一早就坐车逛一圈，看看城市全景，再去几个特别有意思的景点，赶在天气变热之前——因为当时是八月，天气又热又干。可女士们早上梳妆打扮花了太久，我父亲虽然礼貌地压着，可明显很不耐烦，我们上午过了很久才坐上车。我们先去犹太区参观老犹太会堂<sup><a href="#fn-44" id="fnref-44" class="footnote-ref">[44]</a></sup>，我心里松了口气，觉得我们要在这个封闭、沉闷的城区里待到又累又热，不想再去别的地方，这样我们就能只逛已经走过的街道就回去。这样我就能多一天的悬念——悬念，是恐惧的灵魂唯一能获得的希望慰藉。可当我站在老会堂被熏黑的、带肋拱的拱门底下，圣灯里七根细蜡烛的光把周围照得影影绰绰，我们的犹太向导<sup><a href="#fn-45" id="fnref-45" class="footnote-ref">[45]</a></sup>拿出律法书，用古老的语言诵读的时候——我打了个寒颤，感觉这座奇怪的建筑，这些昏暗的灯光，这从中世纪犹太教里遗留下来的枯槁残余，和我见过的幻象是一体的。那些蒙尘的黑皮肤基督教圣徒，待在更高的拱门下，点着更大的蜡烛，恐怕还要轻蔑地笑话他们，说他们这种活死人的状态，比自己的还要枯槁呢。</p>
+<p>不出我所料，离开犹太区之后，同行的长辈们都想回酒店。可我非但没有像之前盼望的那样高兴，反而突然生出一股无法抗拒的冲动，想立刻去那座桥，结束我一直想拖延的悬念。我一反常态地坚决，说我要下车自己走，他们不用等我，先回去就行。我父亲只当这又是我平时的“诗人式胡言乱语”，反对说大热天走路对我身体不好；可我坚持要去，他就气冲冲地说，我想怎么荒唐都行，但是施密特（我们的向导）必须跟着我。我同意了，和施密特一起往桥的方向走。我刚穿过通往大桥的古老城门的拱门，就浑身开始发抖，正午的太阳底下我反而浑身发冷；可我还是往前走，我在找一样东西——我记忆里格外清楚的、幻象里的一个小细节。就在那儿：星形灯罩投在路面上的彩虹光斑。</p>
+<h2 id="heading"></h2>
+<hr>
+<h2 id="第二章">第二章</h2>
+<p>秋意尚未散尽，庄园里的山毛榉还缀着浓密的棕褐色叶片时，我哥哥和伯莎便订了婚，婚期定在来年早春。尽管在布拉格的桥上那一刻，我就笃定伯莎终有一天会成为我的妻子，但天生的怯懦与猜忌始终麻痹着我，那些事先反复酝酿的告白，最终都烂在了喉咙里。我内心依旧受着同样的拉扯：既渴望从伯莎口中听到爱的确认，又怕一句轻视与拒绝像腐蚀性的酸液般浇到我身上。那种关于遥远宿命的信念对我而言算得了什么呢？她当下的一瞥就能让我浑身颤抖，我渴求的是近在眼前的欢愉，而此刻的恐惧像冰一样塞住了我的血管，冻得我动弹不得。日子就这么一天天过去，我眼睁睁看着伯莎订婚，听旁人谈论她的婚事，仿佛陷在一场清醒的噩梦里——我明知这是场终将消散的幻梦，却被一只攥紧的手死死掐住，喘不过气。</p>
+<p>我常伴在伯莎左右，她总待我带着几分玩笑似的恩赐态度，我哥哥对此完全不会起疑。不在她身边时，我大半时间都在闲逛、散步，或是趁天光尚好时骑马走很远的路，回家就把自己关在房里对着堆得老高的未读的书发愣——书本早就拴不住我的注意力了。我的自我意识敏锐到了极致，内心的情绪像一出戏，非要强行推到我眼前来上演，我甚至会为自己的痛苦落泪，倒不是因为痛苦本身有多难熬，而是想着它就忍不住难过。我为自己命运的悲哀感到又怜悯又痛楚：我这样的人，天生对痛苦格外敏感，却几乎没有感受快乐的神经；想到未来的厄运会夺走当下的欢愉我便难受，想到未来的幸福也没法缓解此刻的渴望与恐惧。我默默熬过了诗人受苦的那个阶段：感受着倾诉欲带来的又甜又痛的悸动，把自己的哀愁都具化成了意象。</p>
+<p>家里没人劝我改掉这种耽于幻想、任性放纵的生活方式，我清楚父亲对我的看法：“这小子这辈子不会有什么出息，守着分到他名下的收入混日子罢了，我犯不上为他的前途费心。”</p>
+<p>十一月初一个温和的早晨，我站在门廊外，拍着老迈慵懒的凯撒——那是只年纪大得几乎瞎了的纽芬兰犬，也是唯一愿意搭理我的狗，其他狗都躲着我，只会围着家里更讨人喜欢的成员摇尾巴。这时马夫牵来我哥哥要骑去打猎的马，哥哥自己也出现在门口，他面色红润，肩宽体阔，一脸洋洋自得，还觉得自己仗着这么多优势却没对旁人摆架子，实在是个脾气好的好人。</p>
+<p>“拉蒂默，老伙计，”他语气亲热得带着同情，“你也该时不时跟着猎犬出去跑跑！消弭低落情绪最好不过了！”</p>
+<p>“低落情绪！”他骑马走远后，我在心里愤愤地想，“你这种粗鄙狭隘的人，懂什么叫情绪？你对这些体验的了解还不如你骑的马多。这世上的好处本来就是你们这种人的：天生的愚钝、健全的自私、好脾气的自负，这些就是通往幸福的钥匙。”</p>
+<p>我随即又想，我的自私其实比他更甚，只不过我的自私是在受苦，他的自私是在享乐。但话说回来，我能看透阿尔弗雷德那洋洋自得的灵魂，看透他从没有疑虑、没有恐惧，没有得不到满足的渴望，也没有敏感带来的极致折磨——这些东西早织成了我人生的罗网，这样的洞察让我觉得自己完全不必对他尽什么义务。他不需要怜悯，也不需要爱，那些细腻的情感对他而言，就像柔白的薄雾拂过岩石，根本留不下任何痕迹。他的人生里本就没有厄运：就算他娶不成伯莎，也只会是因为他找到了更合心意的活法。</p>
+<p>菲尔莫家的宅子离我们家大门不过半英里，我一知道哥哥往别的方向去了，就会往他家跑，盼着能碰到伯莎在家。那天下午我走过去，难得她一个人在家，我们便一起到庭院里散步——她平时很少走路走出扫得整整齐齐的砾石小径。十一月的太阳斜斜照着她的金发，她看起来就像个轻灵的小仙女，蹦蹦跳跳地走着，像往常一样用轻松的打趣逗我，我半是沉醉半是闷闷不乐地听着，这就是伯莎神秘的内心向我展露的全部信号了。这天大概闷闷不乐的情绪占了上风，哥哥临走时那副施恩的态度勾起的妒火还没从我心里退下去。我突然开口，几乎是恶狠狠地打断了她的玩笑，把她吓了一跳：“伯莎，你怎么可能爱阿尔弗雷德？”</p>
+<p>她惊讶地看了我一会儿，很快又露出那副轻快的笑容，语带讽刺地回答：“你凭什么觉得我爱他？”
+“你怎么能问出这种话，伯莎？”</p>
+<p>“怎么？凭你的聪明才智，觉得我就得爱我要嫁的人？这可是世上最没意思的事。我会和他吵架，会吃他的醋，我们的<em>家庭生活</em>肯定会过得特别没教养。要我说，一点淡淡的轻蔑才最能给生活添风雅呢。”</p>
+<p>“伯莎，这不是你的真心话。你为什么总编出这种愤世嫉俗的话，就为了骗我好玩？”</p>
+<p>“我骗你才用不着费心想话呢，我的小塔索<sup><a href="#fn-46" id="fnref-46" class="footnote-ref">[46]</a></sup>——”这是她平时拿来取笑我的绰号，“骗诗人最容易的办法，就是跟他说真话。”</p>
+<p>她大胆地试探着这句俏皮话的效果，有那么一瞬间，我预知幻象里的那个伯莎——她的灵魂对我而言毫无秘密的那个伯莎——从我和眼前这个光彩照人的女孩之间穿了过去。眼前的她是个爱玩的小仙女，她的感受对我而言是迷人的谜。我想我当时肯定打了个寒颤，或者用别的方式泄露了那一瞬间的恐惧寒意。</p>
+<p>“塔索！”她抓住我的手腕，探过头来看我的脸，“你不会真的开始发现我是个没心没肺的女孩了吧？哎呀，我还以为你有一半诗人资质呢，居然真的信我是这种人。”</p>
+<p>那道阴影从我俩之间退去了，不再是我眼前最清晰的存在。这个用柔软的手指抓着我，精灵般动人的脸凑到我面前的女孩——我觉得她分明是对我有好感，只是不肯直接承认而已——这个有温度的活人重新攫住了我的感官和想象，像<em>塞壬</em>的歌声重新飘了过来，刚才那阵骇浪的轰鸣暂时把它压了下去。这一刻的甜美，就像我做了个自己已经人到中年的梦，醒过来发现自己还年轻。我忘了一切，只记得满腔爱意，泪眼婆娑地说——</p>
+<p>“伯莎，我们结婚的时候你会爱我吗？哪怕你只爱我一小段时间，我也不介意。”</p>
+<p>她满脸惊愕，松开我的手，惊得往后退了一步，我这才反应过来自己说了多么奇怪、多么冒失的话，简直罪大恶极。</p>
+<p>“原谅我，”我缓过神来立刻匆忙道歉，“我刚才不知道自己在说什么。”</p>
+<p>“啊，我看塔索的疯病又犯了，”她比我先镇定下来，语气平静地说，“让他回家去冷静冷静吧。我得进屋了，太阳都要落了。”</p>
+<p>我离开她，满心都是对自己的愤怒。我刚才脱口而出的话，要是她仔细琢磨，说不定会怀疑我精神不正常——我最怕的就是这个。而且，对自己哥哥的未婚妻说这种话，本身就够卑劣的，我为此羞愧难当。我慢慢走回家，没有走大门，而是从一个私人侧门进了庄园。快到宅子的时候，我看见一个人从马厩场冲出来，全速跑过庄园。家里出事了吗？应该没有，说不定是父亲有什么十万火急的差事要办，才要这么没命地狂奔。我没多想，还是加快了脚步，很快就到了家。我不想细述家里的那番场景：我哥哥死了，他从马上摔下来，当场脑震荡去世了。</p>
+<p>我上楼去他停放遗体的房间，父亲坐在他旁边，一脸僵住的绝望。回家之后我比谁都躲着父亲，我们俩天性就水火不容，我能看穿他的内心，这对我而言是种持续的折磨。但现在我走到他身边，沉默地站着，感觉有什么新的东西把我们俩融在了一起，我们从来没这么亲近过。父亲是商界最成功的那类人，从来没受过什么情绪上的苦，也没生过病。他这辈子遇到的最大的打击，就是第一任妻子去世。但他没过多久就娶了我母亲，我小时候观察力敏锐，记得他丧妻一周后就和平时没什么两样了。</p>
+<p>但现在，他终于尝到了痛苦的滋味：老年人的痛苦，骄傲和希望被碾碎时，痛得有多厉害，全看这份骄傲和希望有多狭隘、多平庸。他的儿子本来很快就要结婚，说不定下次选举就能当选选区议员。每年买新的土地把地产连成整片，最好的由头就是为了这个儿子。年复一年做着同样的事，却不知道为什么要做，这样的人生实在乏味。或许青春和激情落空的悲剧，远比不上迟暮和世俗希冀落空的悲剧来得可怜。</p>
+<p>我看穿了父亲内心的荒芜，对他涌起了深深的怜悯，这是我们父子间新的情愫的开端。哥哥去世后头一两个月，他看我的眼神还带着怪异的敌意，但这份情愫还是在不断滋长。要不是我对他的同情软化了一切——这是我第一次对人产生这么深的共情——我肯定会被他的态度刺痛：他把长子的继承权转到我名下时，带着明显的屈辱感，就像命运逼得他没办法，才不得不把我当成个重要人物来对待。他自己也不情愿，才开始带着关切的重视考虑我的事。但凡曾经不受宠的孩子，因为死亡空出了更受偏爱的位置，都能懂我这种感受。</p>
+<p>不过，我后来开始顺从他的意愿，这份出于怜悯的耐心慢慢赢得了他的好感。他开始试着让我填补哥哥的位置，尽我这更软弱的性格所能做到的地步。我看得出来，后来我可以娶伯莎的前景，他是乐见其成的，他甚至打算让我们婚后和他一起住——他当初对哥哥都没这个打算。我对父亲的态度软化后，那段日子是我童年以来最快乐的时光：那几个月里，我还抱着爱着伯莎的甜美幻觉，渴望着、怀疑着、盼着她或许也爱我。哥哥去世后，伯莎对我的态度多了点新的分寸感，也疏远了些；我自己也受着双重约束：既要对亡兄保有体面的分寸，又要担心我上次脱口而出的话会给她留下不好的印象。但我们彼此的矜持在中间竖起了一道屏障，反而让我更彻底地被她掌控：<em>内殿</em><sup><a href="#fn-47" id="fnref-47" class="footnote-ref">[47]</a></sup>再空都没关系，只要面纱够厚就好。</p>
+<p>我们的灵魂绝对需要一些隐藏的、不确定的东西，来维持怀疑、希望和努力，这些就是灵魂的生命气息。如果从今往后的整个人生都摊开在我们面前，全人类的注意力都会集中在今天剩下的几个小时里：我们会渴求着仅剩的上午和下午里的不确定性，会疯狂冲到证券交易所，抓住最后一点投机、成功或是失望的可能性；会冒出一大堆政治预言家，赌仅剩的二十四小时里会不会出现危机。你可以想象一下，如果所有命题都是不证自明的，只剩一个要到夏日黄昏才会揭晓答案，其余时间里都可以被质疑、被假设、被辩论，人类的心智会变成什么样子？艺术、哲学、文学、科学都会像蜜蜂一样叮在这个带着可能性的蜜的命题上，而且会更加急切，因为日落时分这份乐趣就会结束。我们的冲动、我们的精神活动，不可能适应未来一切虚无的设定，就像我们的心跳、肌肉的应激性不可能适应一样。</p>
+<p>周围其他人的心思都乏味得一览无余，只有这个苗条的金发女孩伯莎，她当下的想法和情绪对我而言是个谜，她对我的吸引力，就像独独剩下来的、未知的“今天”，就像唯一一个要等到日落才能揭晓答案的假设命题。我天性里所有压抑的、受束缚的信与不信、信任与猜忌，都顺着这道窄窄的出口涌了出来。</p>
+<p>她还让我相信她爱我。她一直不改那副<em>打趣</em>的语气，带着点玩笑似的优越感，让我迷醉地觉得我对她而言是不可或缺的，只有我在她身边，顺从她那点 playful 的霸道，她才会安心。女人要这样迷住我们实在太容易了！一句半吞半吐的话，一阵突如其来的沉默，甚至为我们耍点小性子，都能像<em>哈希什</em><sup><a href="#fn-48" id="fnref-48" class="footnote-ref">[48]</a></sup>一样让我们晕乎好久。她用几乎察觉不到的最微妙的信号织成网，让我自己编织出幻想：她潜意识里一直更爱我，而不是阿尔弗雷德，只是年轻女孩心思懵懂，被我哥哥这样在世上风光无限的男人欣赏、挑选的虚荣冲昏了头。她还优雅地自嘲自己当初的虚荣和野心。我那点可悲的预知力明明清楚，我现在不过是继承了哥哥除了他本人之外的所有优势，可那又怎么样呢？我们甜美的幻觉，有一半是我们主动选择沉溺的，就像我们明知道那些彩色的舞台效果是金属箔、碎玻璃和破布做出来的，还是会觉得好看。</p>
+<p>阿尔弗雷德去世十八个月后，我们结婚了，那是四月一个晴朗寒冷的早晨，天上一边出太阳一边下冰雹。伯莎穿着白纱，戴着淡绿色的叶饰，头发和脸色都浅淡透亮，看起来就像晨曦的精灵。父亲比他自己预想的还要高兴：他觉得这场婚姻肯定能彻底改造我的性格，让我变得务实、世俗，能像个正常人一样在社会上立足。他很欣赏伯莎的手腕和聪慧，相信她肯定能管住我，把我塑造成她想要的样子：我才二十一岁，又疯狂地爱着她。可怜的父亲！我们婚后第一年，他还抱着这份希望，后来他瘫痪了，这份希望还没完全熄灭，倒也免了他彻底失望。</p>
+<p>剩下的故事我就快点讲，不再像之前那样细述我的内心体验了。人和人熟了之后，多半只会聊发生的外在事件，内心的感受和情绪留给对方自己猜就好。</p>
+<p>我们回家之后就忙着轮流拜访亲友，举办盛大的晚宴，我们家马车仪仗的光彩在邻里间引起了不小的轰动——父亲本来就打算等儿子结婚时，再展示他越来越丰厚的家产。熟人们都有大把的机会议论，说我这个继承人和新郎实在太不成器了。这样的生活让我神经疲惫，那些虚伪和陈词滥调，我要应付外在的表象，内心又感知得清清楚楚，等于受两遍罪，要不是初恋的狂热带来的麻木，我肯定要疯。新人身处财富带来的一切排场里，被社交的漩涡推着连轴转，忙里偷闲地温存片刻，这样的日子其实是在为未来的共同生活做准备，就像见习修士进修道院之前，先体验一遍和修道生活反差最大的世俗享乐。</p>
+<p>在那些热闹纷乱的月份里，伯莎的内心依旧对我紧闭着，我还是只能通过她的话和举止推测她的想法：我还抱着普通人的期待，想知道我的言行能不能讨她欢心，想听她说一句情话，忍不住把她的微笑赋予过度的美好含义。但我能察觉到，她对我的态度越来越不一样了：有时候是毫不掩饰的傲慢的冷淡，像我们婚礼那天阳光下砸下来的冰雹一样，刺骨地冷；有时候只是巧妙地回避我盼了很久的<em>独处</em>散步或者晚餐。我为此痛苦极了，甚至觉得心都被碾碎了，知道我那短暂的幸福时光快要落山了，但我还是依赖着伯莎，渴盼着这份很快就要永远消失的幸福的最后几缕光线，盼着即将降临的黑夜里，能再出现一点更美的余晖。</p>
+<p>我记得——我怎么可能不记得？——什么时候我彻底不再依赖、不再抱有希望了。之前伯莎越来越疏远我，我为此难过，到后来我回头看，连那份难过都让我渴望，就像瘫痪的人怀念肢体还能感受到疼痛的最后时刻。那是在父亲最后一场病结束之后，那场病让我们没法参加社交，只能天天待在一起。那天是父亲去世的傍晚。之前，遮住伯莎灵魂的面纱，让她成了所有人里唯一一个能给我可贵的神秘感、怀疑和期待的人，而那天傍晚，那层面纱第一次被掀开了。大概是从我爱上她以来，这是第一次，这份爱意被另一种强烈的情绪彻底抵消了。我一直在父亲的临终榻前守着，看着他的灵魂最后一次断断续续地眷恋地回望自己耗竭的一生，看着他最后一次模糊地感知到我按他的手传递的爱意。当你亲历过这种极致的痛苦，那些私人的情爱又算得了什么？刚从死亡面前走开的那一小段时间里，我们对所有活人的情感，都会被“我们同属人类、共担命运”这个宏大的联系吞没。</p>
+<p>我怀着这样的心情，到伯莎的私人起居室找她。她斜靠在长沙发上，背对着门，浅金色的浓密发卷堆在她纤细的脖颈上，从沙发靠背上方露出来。我关上门的那一刻，一股冰冷的颤意攫住了我，模糊地觉得自己被厌恶、无比孤独——这种感觉模糊却强烈，像预感一样。我知道自己当时是什么样子，因为她抬起锐利的灰眼睛看我的时候，我从她的想法里看见了我自己：一个可悲的灵视者，大白天被幻影围着，树叶都纹丝不动的天气里，却在风里发抖，对常人渴求的一切都没兴趣，只知道追逐月光。我们面对面站着，互相评判。那个彻底洞悉一切的可怕时刻来了，我才发现之前的黑暗背后根本没有什么风景，只有一面空洞平庸的墙：从那天晚上之后，在接下来令人作呕的年月里，我把这个女人灵魂的窄小房间看得清清楚楚——我以前还满心欢喜地以为那里面有娇羞的敏感，有和暗藏的情愫较劲的心思，实际只有卑劣的诡计和空洞的冷漠；我以前以为那里面有女孩飘忽的虚荣，实际都变成了女人处心积虑的卖弄风情和工于心计的自私；我以前以为那里面有反感和厌恶，实际早已硬化成了残忍的恨意，只为了发泄而给我制造痛苦。</p>
+<p>伯莎当然也有她的幻灭之苦。她本来以为，我那种诗人式的狂野爱意会让我成为她的奴隶，对她言听计从。她天性消极、缺乏想象力，根本理解不了敏感不代表软弱。她以为我的弱点会让我任她摆布，结果这些弱点成了她掌控不了的力量。我们的位置颠倒了。结婚前，她对我而言是个谜，彻底俘获了我的想象，我会自己脑补出各种未知的想法，在这些想法面前瑟瑟发抖，就好像那真的是她的想法一样。但现在她的灵魂在我面前摊开了，我不得不感知她所有隐秘的动机，看穿她言行背后的所有小算盘，她再也没法掌控我了，只能让我产生厌恶的寒颤——她根本掌控不了我，因为她找不到任何可以撬动我的杠杆。我对世俗的野心、社交的虚荣，对她那狭隘的想象力能想到的所有诱惑都毫无兴趣，我的人生受着她完全看不到的力量的影响。</p>
+<p>所有人都觉得，伯莎嫁了我这样的丈夫实在可怜。她这么优雅聪慧，对晨间的访客和颜悦色，是舞会上的焦点，说得出俏皮的对答，放在她这样的女人身上，大家都会觉得是聪慧有趣，自然所有人都同情她，不同情我这个病弱、心不在焉、甚至有人觉得脑子有问题的丈夫。连家里的仆人都更偏向她、同情她。我们从来没吵过架，我们的疏远、对彼此的厌恶，都藏在各自的心里，没人知道。女主人经常出门，好像不爱陪着男主人，这难道不正常吗，可怜的人？毕竟男主人那么古怪。我对仆从们都很和善公正，但他们对我只有退缩的、半带轻蔑的怜悯：这些下人评判别人，从来不会依据什么长远的考量，甚至不会依据长期相处观察到的品性。他们评判人就像评判钱币，只看市面流通的价值高不高。</p>
+<p>后来我几乎完全不干涉伯莎的生活，说起来也奇怪，她对我的恨意居然还能越来越强烈、越来越不加掩饰。但她从我几次不自觉的流露里，开始怀疑我有反常的洞察力，至少我断断续续地能奇怪地看穿她的想法和意图，她开始被对我的恐惧缠上，时而又变成对我的挑衅。她天天琢磨着怎么把我这个<em>梦魇</em><sup><a href="#fn-49" id="fnref-49" class="footnote-ref">[49]</a></sup>从她的生活里甩掉，怎么摆脱这段可恨的婚姻——她既把我当成傻子鄙视，又把我当成能看穿一切的审判官害怕。有很长一段时间，她都盼着我那明摆着的痛苦会逼得我自杀，但我天生就不可能自杀。我太清楚自己被未知的力量掌控着，根本不相信我有能力自我解脱。我对自己的命运已经完全被动了，我唯一的热烈渴望早就耗尽了，冲动再也压不过清醒的认知。所以我从来没想过要彻底分居，闹得所有人都知道我们感情破裂。我现在受的苦，都是我曾经最渴求的事造成的后果，我为什么要急着改变现状呢？那是有欲望要满足的人才会有的逻辑，我已经没有任何欲望了。我和伯莎越来越疏远，有钱人要过着结婚但分居的日子，实在太容易了。</p>
+<p>我几句话带过的这段日子，实际过了好多年。那么多痛苦，那么多慢慢滋生的、可怕的恨意和罪恶，居然能压缩成一句话！世人就是通过这种概要的方式评判别人的人生。他们把旁人的人生经历浓缩成几句话，用工整的措辞给人定罪，还觉得自己又明智又高尚，觉得自己战胜了那些他们用精心挑选的措辞定义的诱惑。七年的痛苦，在那些从来没挨过寒冷的失望、头痛欲裂的煎熬、恐惧和徒劳的挣扎、悔恨和绝望的人嘴里，轻飘飘就说出来了。我们只会死记硬背词语，根本不懂它们的真正含义：要懂这些含义，得用热血去换，要刻在神经的每一根纤细纤维里。
+我还是赶快把故事讲完吧。对那些一看就懂的人，和那些永远也懂不了的人来说，简洁点总没错。</p>
+<p>父亲去世几年后，一月的一个傍晚，我坐在图书馆昏暗的炉火边——坐的是父亲以前常用的皮椅——伯莎出现在门口，手里拿着根蜡烛，朝我走过来。我认得她穿的那件舞会礼服，白色的，镶着绿宝石，烛光照亮了壁炉台上那块刻着濒死的克利奥帕特拉的浮雕饰板，也照着礼服闪闪发光。她出门前为什么来找我？图书馆是我常待的地方，她已经好几个月没进来过了。她为什么举着蜡烛站在我面前，用残酷轻蔑的眼神盯着我，胸前那枚闪闪发光的蛇形胸针，像个熟悉的恶魔？有那么一瞬间，我以为我在维也纳的幻象成真了，我的命运要遇到什么可怕的危机，但我看穿了她的心思，里面只有对我这副深陷痛苦的样子的鄙夷……“蠢货，白痴，你怎么不去死？”这就是她的想法。不过她很快想起了来意，开口说了话。她的来意居然这么无关紧要，和我刚才的预知和不安比起来，简直虎头蛇尾得可笑。</p>
+<p>“我得雇个新女仆，弗莱彻要结婚了，她想让我问问你，能不能把莫尔顿的酒馆和农场给她丈夫。我觉得可以，你现在就答应吧，弗莱彻明天一早就走——快点，我赶时间。”</p>
+<p>“行，你答应她吧。”我冷淡地说，伯莎一阵风似的又走出了图书馆。</p>
+<p>我本来就怕见生人，尤其怕见那种满脑子世俗无知琐事的人，免得我那不得已的洞察力被烦扰。但我尤其怕见这个新女仆，因为她要来的消息，刚好在我觉得和某种宿命有关的时候传过来：我模糊地害怕，她会掺和进我这沉闷的人生戏剧里，某个恶心的新幻象会告诉我她是个恶神。后来我免不了见到她，模糊的恐惧变成了明确的厌恶。这个阿彻太太又高又瘦，结实得很，黑眼睛，长得还算周正，反倒给她粗鄙冷酷的天性添了一层可恶的伪装，看起来既大胆又自信，还爱卖弄风情。就凭这一点，我就足够躲着她了，更别说她看我的眼神还带着轻蔑。我很少见到她，但能察觉到她很快就成了伯莎的心腹。过了八九个月，我开始发现，伯莎对这个女人抱着一种又怕又依赖的复杂情绪，这种情绪还和一些模糊的画面绑在一起：梳妆室里点着蜡烛的场景，伯莎把什么东西锁进了柜子里。我和妻子的见面越来越短，也很少有独处的时候，我没机会更清晰地看穿她脑子里的这些画面。思绪流转得太快，过去的记忆会被压缩，有时候和现实的差别，就像东方的字母文字和它所指代的实物之间的差别那么大。</p>
+<p>而且，过去一年多以来，我的精神状态一直在变化，越来越明显。我看穿旁人心思的能力越来越模糊，也越来越断断续续，占据我双重意识的那些想法，越来越不需要和人接触就能出现。我身上一切属于个人的部分好像在慢慢消亡，我能感知别人情绪和打算的官能正在退化。但不用再受烦人的洞察力的折磨的同时，我多出了一种新的能力，后来证实我当时的判断没错：我能预知外在的场景了。好像我和其他人的联系越来越麻木，和所谓无生命事物的联系反而被赋予了新的生命。我越远离社会，我的痛苦就越从激情痛苦的剧烈跳动，平息成习惯性痛苦的麻木，我就越常出现和当年布拉格那次一样的、更生动的幻象：陌生的城市，沙质的平原，巨大的废墟，布满陌生的明亮星座的午夜天空，山隘，午后阳光穿过树枝斑斑点点照着的长草的角落：我身处这些场景之中，所有这些宏大的景象里，好像都有种未知而无情的存在压在我心上。持续的痛苦已经摧毁了我心里的宗教信仰：对彻底痛苦的人——不爱人也不被人爱的人——来说，根本没有宗教，没有信仰，只有对魔鬼的崇拜。除此之外，还有一个反复出现的幻象，就是我的死亡：剧痛，窒息，最后徒劳地想抓住生命的挣扎。</p>
+<p>第七年快结束的时候，我的状态就是这样。我彻底失去了洞察力，再也不会反常地感知到自己以外的意识了，我不再不由自主地闯进别人的内心世界，只天天活在自己孤独的未来里。伯莎也知道我变了很多。让我意外的是，她最近好像总找机会和我待在一块儿，还养成了那种客客气气、再也没法缓和的疏远夫妻之间常有的，疏离却又熟稔的说话语气。我倦怠地忍受着，对她的动机没什么兴趣，懒得仔细观察；但我还是能察觉到，她的仪态和神色里有种得意、兴奋的情绪，太微妙了，没法用语言或者语气形容，只让人觉得她好像在期待什么，心里满怀着希望悬着。我最主要的感受是，她的内心终于又对我关闭了，我对此很满意。我甚至很享受这种失神的忧郁，可以答非所问，完全不知道她在说什么。我清楚地记得，有一次我又答非所问，她看着我笑着说：“我以前还以为你有预知能力，所以才那么恨其他有预知力的人，想独占这份本事呢。现在看来你比旁人还要迟钝啊。”</p>
+<p>我没答话。我猜她最近总主动凑过来，可能是想测试我还能不能看穿她的秘密，但我很快就把这个念头抛在了脑后：她的动机和所作所为我一点都不感兴趣，她想找什么乐子我都不会拦着。我心里还对所有活着的生命抱有怜悯，伯莎也还活着，她也有可能遭遇痛苦。</p>
+<p>就在这时，发生了一件事，多少把我从麻木的状态里拉了出来，让我对当下的日子居然产生了兴趣，我本来以为我再也不会有这种感觉了。是夏尔·默尼耶来信说，他工作太累，要来英国休养，想来看我。默尼耶现在已经是全欧洲有名的医生了，但他的信里还清晰记得我们早年的交情，记得当年我对他的共情之恩，只有品格高贵的人才会记得这些。我也觉得，他的到来，会让我短暂地回到从前更快乐的日子里。</p>
+<p>他来了，我尽可能重拾我们当年的乐趣，一起<em>独处</em>远足，只是我们没法再去看山川、冰川和宽阔的蓝湖，只能将就着去看看坡地、池塘和人工种植林。岁月改变了我们俩，改变的方向却天差地别！默尼耶现在是社交界的风云人物，优雅的女士们都装着专心听他说话，附庸风雅的贵族都以认识他为荣。他极其得体地掩饰了见到我时的震惊，也没探问我的处境，用尽他迷人的社交能力，让我们的重逢尽可能愉快。伯莎本来以为他只是有名而已，拿得出手，没想到他这么有魅力，被深深吸引了，使出浑身解数卖弄风情和才艺。她显然成功博取了他的好感，他对伯莎既殷勤又讨人喜欢。他的到来让我感觉很安心，尤其是我们像当年那样单独散步的时候，他会滔滔不绝地给我讲他行医的奇妙经历。好几次，他聊到疾病和心理的关系时，我都忍不住想，要是他在我这儿待得够久，说不定我能把我命运的秘密告诉他。他的医术里，说不定也有能救我的解药？他宽厚善感的心胸，说不定至少能理解我、同情我？但这个念头只是偶尔微弱地闪一下，还没变成愿望就消失了。我太害怕再次闯入别人灵魂的隐私，这种本能让我不自觉地把自己的秘密裹得更紧，就像我们总会不自觉地对别人做自己希望别人对自己做的事一样。</p>
+<p>默尼耶的拜访快结束的时候，家里出了件事，引起了不小的骚动，因为伯莎的反应大得惊人——伯莎向来冷静自持，从来不会有女人家的激动情绪，连恨人都恨得有分寸、不失体面。出事的是她的女仆阿彻太太，突然得了重病。我到现在才提这件事：默尼耶来之前不久，我就注意到一件事，伯莎带阿彻去远亲家做客的时候，俩人吵了一架。我听见阿彻说话的语气尖酸刻薄，无礼得够当场开除的了。但伯莎没开除她，反倒默默忍受着这个女人时不时发脾气带来的麻烦。更让我惊讶的是，阿彻生病之后，伯莎好像特别关心她，日夜守在病床边，不让别人当首席护士。刚好我们的家庭医生出去度假了，默尼耶在我们家就更是雪中送炭。他对这个病例的兴趣，明显远超过普通的职业关怀，那天他去看过阿彻之后，沉默了很久，我问他——</p>
+<p>“默尼耶，这个病很特别吗？”</p>
+<p>“不，”他回答，“是<em>腹膜炎</em><sup><a href="#fn-50" id="fnref-50" class="footnote-ref">[50]</a></sup>发作，没救了，但症状和我见过的其他病例没什么生理上的区别。不过我跟你说我在想什么，要是你允许的话，我想在这个女人身上做个实验。不会伤害她，也不会让她疼——我要等她完全失去知觉之后再做。我想试试她的心脏停止跳动几分钟之后，给动脉输血会有什么效果。我用死于这种病的动物反复做过实验，结果很惊人，我想在人类受试者身上试试。我带了需要的细管，其他设备也很容易准备。我用我自己的血，从我胳膊上抽。我敢肯定她活不过今晚，你答应给我帮忙好不好？我一个人做不了，不过最好别找你们这里的本地医生当助手，免得事情传出去，被说得又难听又荒唐。”</p>
+<p>“你跟我妻子说过这件事吗？”我问，“她好像格外在意这个女仆，阿彻是她的心腹。”</p>
+<p>“说实话，我不想让她知道。这种事女人总归是接受不了的，而且‘死者’的反应可能会很吓人。我们俩一起熬夜等着，做好准备。等出现相应的症状，我就叫你进去，到时候我们想办法把其他人都支出去。”</p>
+<p>我们后面的谈话就不细说了。他给我讲了所有细节，勾起了我对实验可能出现的结果的敬畏与好奇，压过了我本来的反感。</p>
+<p>我们准备好了所有东西，他教我作为助手要做的事。他没告诉伯莎他确定阿彻活不过今晚，只是尽力劝伯莎离开病房，回去休息一晚。但伯莎很固执，她猜到死神已经来了，以为默尼耶只是想让她别太伤神。她不肯离开病房。默尼耶和我在图书馆熬夜，他时不时去病房看看，回来总说情况完全和他预料的一样。有一次他跟我说：“你能想象吗，女主人对她这么好，这个女人居然还对女主人有恶意？”</p>
+<p>“她生病之前她们俩好像闹过别扭。你为什么这么问？”</p>
+<p>“因为我观察了五六个小时了，大概是她知道自己没救了之后，总想说什么，但疼得厉害，力气也不够，说不出来。她的眼神有种可怕的意味，总往她女主人那边看。得了这种病的人，直到最后脑子通常都异常清醒。”</p>
+<p>“她对伯莎有恶意我一点都不意外，”我说，“这个女人从一开始就让我不信任、不喜欢，不过她很会讨女主人的欢心。”他听完没说话，出神地看着炉火，然后又上楼去了。这次他去的时间比平时久，回来的时候轻声跟我说：“走吧。”</p>
+<p>我跟着他到了死神盘旋的病房。大床挂着深色的床幔，我进门的时候，伯莎苍白的脸在背景的衬托下格外醒目。她看见我进来，往前冲了一步，然后愤怒地质问地看向默尼耶；但默尼耶抬了抬手，示意她安静，然后把注意力转到濒死的女人身上，摸了摸她的脉搏。阿彻的脸干瘪惨白，额头上冒着冷汗，眼皮垂着，几乎盖住了大大的黑眼睛。过了一两分钟，默尼耶走到伯莎站的那一侧床边，用他一贯温和礼貌的态度，请伯莎把病人交给我们照顾，我们会料理好一切，病人已经意识不到亲人在身边了。伯莎犹豫着，几乎愿意相信他的话、依从他的安排。她转头看了看濒死的女人惨白的脸，像是想确认他说的是真的，这时垂着的眼皮突然抬了起来，眼睛好像在看向伯莎，但眼神茫然。伯莎浑身一颤，又回到了枕头边的位置，暗示她不肯离开房间。</p>
+<p>眼皮再也没抬起来过。有一次我看向伯莎，她正盯着濒死的人的脸。她穿着件华贵的<em>晨衣</em><sup><a href="#fn-51" id="fnref-51" class="footnote-ref">[51]</a></sup>，金发半掩在蕾丝睡帽下：她和往常一样，穿着打扮都优雅极了，活像现代贵族生活画里走出来的人物：但我忍不住想，我以前怎么会觉得她是个普通的女人，有童年的回忆，会痛苦，需要疼爱呢？那一刻她的五官锋利得反常，眼神冷酷又急切，看起来像个残忍的不死者，在濒死之人的痛苦里汲取精神盛宴。阿彻呼出最后一口气的时候，她冷酷的脸上好像闪过一道光，我们都知道，死亡的幕布彻底落下了。伯莎和这个女人之间藏着什么秘密？我赶紧把目光从她身上移开，心里满是恐惧，怕我的洞察力突然回来，逼我看穿这两个没有爱的女人的心里到底藏着什么。我感觉伯莎一直在等死亡的这一刻，把她的秘密彻底封死：谢天谢地，这个秘密不用我知道。</p>
+<p>默尼耶轻声说：“她走了。”他伸手扶住伯莎，她任由他扶着走出了房间。</p>
+<p>应该是她吩咐的，两个女仆进来了，把之前守在这里的年轻女仆支走了。她们进来的时候，默尼耶已经切开了枕头上僵硬的细长脖颈上的动脉，我把两个女仆打发走，让她们在远处等着，我们摇铃再过来：我说医生要做个手术，还不能确定人已经死了。接下来的二十分钟里，我满脑子都是默尼耶和他全神贯注的实验，我觉得他已经听不到、看不到任何和实验无关的东西了。一开始我的任务是输血完成后给尸体做人工呼吸，没过多久默尼耶就替换了我，我看见生命正奇妙地慢慢回到尸体上：胸部开始起伏，呼吸越来越有力，眼皮开始颤抖，灵魂好像回到了身体里。我们停止了人工呼吸，呼吸还在继续，嘴唇也动了起来。</p>
+<p>就在这时，我听见门把手转动的声音：应该是伯莎听女仆说她们被赶出来了，心里隐约觉得害怕，所以脸色惊慌地走了进来。她走到床尾，压抑地尖叫了一声。</p>
+<p>死去的女人眼睛睁得大大的，清清楚楚地认出了她——眼神里全是恨意。她突然用尽全身力气，那只伯莎以为永远不会再动的手指向了她，憔悴的脸动了动。喘着气、急切的声音响了起来——</p>
+<p>“你想给你丈夫下毒……毒药在黑柜子里……是我帮你拿的……你还笑我，背后造我的谣，让所有人都讨厌我……因为你嫉妒我……你现在……后悔了吗？”</p>
+<p>嘴唇还在喃喃地动，但声音已经听不清了。很快就没了声音，只剩一点轻微的颤动：生命的火焰跳了出来，又更快地熄灭了。这个可怜的女人的心里只装着恨和报复，生命的精灵只拨了一下琴弦，就永远消失了。天哪！<em>死而复生</em><sup><a href="#fn-52" id="fnref-52" class="footnote-ref">[52]</a></sup>原来是这样……一醒过来就带着未平息的渴望，没说出口的诅咒涌到嘴边，肌肉还想着要把没做完的恶事做完？</p>
+<p>伯莎脸色惨白地站在床尾，浑身发抖，无计可施，像个狡猾的动物，藏身处被迅速逼近的火焰团团围住。连默尼耶都呆住了，那一刻，生命对他而言不再是个科学问题。对我来说，这场景和我人生的其他部分是一样的质地：恐怖我早就习惯了，这次新的真相暴露，不过是旧的痛苦换了个新的情形复发而已。</p>
+<p>从那之后我和伯莎就分居了，她守着她的那一半家产住在她的宅邸，我在国外流浪，最后来到德文郡的这个小地方等死。所有人都同情伯莎、称赞伯莎；除了我之外，谁和她这么迷人的女人一起生活会不幸福呢？当时病房里除了我就只有默尼耶是证人，他活着的时候一直遵守对我的承诺，没有把这件事说出去。</p>
+<p>有一两次我厌倦了漂泊，在一个喜欢的地方停留，和附近的居民慢慢熟了，也开始喜欢他们，但我的旧洞察力快要回来的时候，我就只能恐惧地逃走——逃到只有那个未知的存在相伴的日子里，那个存在藏在天地的帷幕之后，既显现又隐藏。直到最后疾病缠上了我，逼得我只能在这里安顿下来，靠仆人们照顾。然后洞察力的诅咒——我的双重意识——又回来了，再也没离开过。我知道他们所有狭隘的想法，淡漠的关怀，还有半带不耐烦的怜悯。</p>
+<hr>
+<p>今天是1850年9月20日。我写下的这几个日期，好像我已经看了一辈子的铭文一样熟悉。我已经在书桌的这页纸上看见过它无数次了，每次都是我临死的挣扎浮现在我眼前的时候……</p>
+<hr>
+<hr>
+<h2 id="人物与专有名词译名表">人物与专有名词译名表</h2>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span>json</span>
+                </div>
+                <pre><code class="hljs language-json">{
+  "glossary": [
+    {
+      "en": "The Lifted Veil",
+      "zh": "掀起的面纱",
+      "note": "作品名，乔治·艾略特创作的中篇小说"
+    },
+    {
+      "en": "George Eliot",
+      "zh": "乔治·艾略特",
+      "note": "作者，英国维多利亚时代著名女作家"
+    },
+    {
+      "en": "Latimer",
+      "zh": "拉蒂默",
+      "note": "叙事者、男主角"
+    },
+    {
+      "en": "angina pectoris",
+      "zh": "心绞痛",
+      "note": "医学名词，胸部痉挛性疼痛，多与心脏病变相关"
+    },
+    {
+      "en": "Jonathan Swift",
+      "zh": "乔纳森·斯威夫特",
+      "note": "英国作家，《格列佛游记》作者"
+    },
+    {
+      "en": "Letherall",
+      "zh": "莱瑟罗尔",
+      "note": "颅相学家"
+    },
+    {
+      "en": "Æschylus",
+      "zh": "埃斯库罗斯",
+      "note": "古希腊悲剧作家，“悲剧之父”"
+    },
+    {
+      "en": "Horace",
+      "zh": "贺拉斯",
+      "note": "古罗马诗人、文艺理论家"
+    },
+    {
+      "en": "mining speculations",
+      "zh": "矿业投机",
+      "note": "十九世纪英国矿业投资热潮，也指当时兴起的科学教育改革"
+    },
+    {
+      "en": "Plutarch",
+      "zh": "普鲁塔克",
+      "note": "古希腊传记作家、散文家，代表作《希腊罗马名人传》"
+    },
+    {
+      "en": "William Shakespeare",
+      "zh": "威廉·莎士比亚",
+      "note": "英国文艺复兴时期剧作家、诗人"
+    },
+    {
+      "en": "Don Quixote",
+      "zh": "堂吉诃德",
+      "note": "塞万提斯同名小说的主人公，也代指小说本身"
+    },
+    {
+      "en": "Geneva",
+      "zh": "日内瓦",
+      "note": "瑞士城市，位于日内瓦湖畔"
+    },
+    {
+      "en": "Jura",
+      "zh": "汝拉山脉",
+      "note": "欧洲西部山脉，位于法国与瑞士边境"
+    },
+    {
+      "en": "Jean Jacques Rousseau",
+      "zh": "让-雅克·卢梭",
+      "note": "法国启蒙思想家、哲学家、作家，浪漫主义运动先驱"
+    },
+    {
+      "en": "prophet's chariot of fire",
+      "zh": "先知的火战车",
+      "note": "典出《旧约·列王纪下》，先知以利亚升天时乘坐的座驾"
+    },
+    {
+      "en": "Charles Meunier",
+      "zh": "夏尔·默尼耶",
+      "note": "拉蒂默在日内瓦结识的医学生"
+    },
+    {
+      "en": "gamins",
+      "zh": "流浪儿",
+      "note": "法语，指街头顽童"
+    },
+    {
+      "en": "Salève",
+      "zh": "萨莱夫山",
+      "note": "法国上萨瓦省山脉，俯瞰日内瓦"
+    },
+    {
+      "en": "Vevay",
+      "zh": "沃韦",
+      "note": "瑞士城镇，位于日内瓦湖东岸"
+    },
+    {
+      "en": "Filmore",
+      "zh": "菲尔莫",
+      "note": "拉蒂默家的邻居"
+    },
+    {
+      "en": "Alfred",
+      "zh": "阿尔弗雷德",
+      "note": "拉蒂默的兄长"
+    },
+    {
+      "en": "Tyrol",
+      "zh": "蒂罗尔",
+      "note": "奥地利西部州，位于阿尔卑斯山区"
+    },
+    {
+      "en": "Austria",
+      "zh": "奥地利",
+      "note": "欧洲中部国家"
+    },
+    {
+      "en": "Basle",
+      "zh": "巴塞尔",
+      "note": "瑞士北部城市，位于瑞、法、德三国边境"
+    },
+    {
+      "en": "Vienna",
+      "zh": "维也纳",
+      "note": "奥地利首都"
+    },
+    {
+      "en": "Prague",
+      "zh": "布拉格",
+      "note": "捷克首都"
+    },
+    {
+      "en": "Charles Bridge",
+      "zh": "查理大桥",
+      "note": "布拉格的著名古迹，横跨伏尔塔瓦河"
+    },
+    {
+      "en": "Prague Castle",
+      "zh": "布拉格城堡",
+      "note": "布拉格的地标建筑，古代波西米亚国王的宫殿"
+    },
+    {
+      "en": "dissolving view",
+      "zh": "溶景术",
+      "note": "十九世纪流行的幻灯放映技术，可实现画面渐变切换"
+    },
+    {
+      "en": "Homer",
+      "zh": "荷马",
+      "note": "古希腊诗人，代表作《伊利亚特》《奥德赛》"
+    },
+    {
+      "en": "Dante Alighieri",
+      "zh": "但丁·阿利吉耶里",
+      "note": "意大利文艺复兴时期诗人，代表作《神曲》"
+    },
+    {
+      "en": "John Milton",
+      "zh": "约翰·弥尔顿",
+      "note": "英国诗人，代表作《失乐园》"
+    },
+    {
+      "en": "Novalis",
+      "zh": "诺瓦利斯",
+      "note": "德国浪漫主义诗人、作家"
+    },
+    {
+      "en": "Canaletto",
+      "zh": "卡纳莱托",
+      "note": "意大利威尼斯画派画家，以风景画闻名"
+    },
+    {
+      "en": "Rhone",
+      "zh": "罗讷河",
+      "note": "欧洲主要河流，流经瑞士、法国，注入地中海"
+    },
+    {
+      "en": "musical box",
+      "zh": "八音盒",
+      "note": "十九世纪欧洲流行的自动演奏乐器，是当时英国游客的热门伴手礼"
+    },
+    {
+      "en": "Water-Nixie",
+      "zh": "水精",
+      "note": "德国民间传说中的水中精灵，通常对人类抱有恶意"
+    },
+    {
+      "en": "German lyrics",
+      "zh": "德国抒情诗",
+      "note": "十八至十九世纪的德国浪漫主义诗歌"
+    },
+    {
+      "en": "Monsieur ne se trouve pas bien?",
+      "zh": "先生您不舒服吗？",
+      "note": "法语，仆人对主人的关切询问"
+    },
+    {
+      "en": "Hôtel des Bergues",
+      "zh": "贝格酒店",
+      "note": "日内瓦的高档历史酒店，位于罗讷河畔"
+    },
+    {
+      "en": "Bertha Grant",
+      "zh": "伯莎·格兰特",
+      "note": "菲尔莫夫妇的养女，拉蒂默的爱慕对象"
+    },
+    {
+      "en": "Eton College",
+      "zh": "伊顿公学",
+      "note": "英国著名贵族男子中学"
+    },
+    {
+      "en": "University of Oxford",
+      "zh": "牛津大学",
+      "note": "英国顶尖高等学府"
+    },
+    {
+      "en": "physique",
+      "zh": "体格",
+      "note": "法语，指人的身形、体质"
+    },
+    {
+      "en": "bonne et brave femme",
+      "zh": "善良正直的女人",
+      "note": "法语"
+    },
+    {
+      "en": "opal",
+      "zh": "欧泊",
+      "note": "宝石名，以色彩随光线变幻的特性闻名"
+    },
+    {
+      "en": "energumen",
+      "zh": "附魔者",
+      "note": "指被邪灵附身的人"
+    },
+    {
+      "en": "Lichtenberg Palace",
+      "zh": "列支敦士登宫",
+      "note": "原文笔误，实际指维也纳的列支敦士登夏日宫殿，内设艺术画廊"
+    },
+    {
+      "en": "Giorgione",
+      "zh": "乔尔乔内",
+      "note": "意大利文艺复兴时期威尼斯画派画家"
+    },
+    {
+      "en": "Lucrezia Borgia",
+      "zh": "卢克雷齐娅·博尔贾",
+      "note": "文艺复兴时期意大利费拉拉公爵夫人，以美貌与狠辣的政治手腕闻名"
+    },
+    {
+      "en": "Belvedere Gallery",
+      "zh": "美景宫画廊",
+      "note": "维也纳著名美术馆，位于美景宫内"
+    },
+    {
+      "en": "Grand Terrace",
+      "zh": "大露台",
+      "note": "维也纳美景宫前的观景露台"
+    },
+    {
+      "en": "andirons",
+      "zh": "炉架",
+      "note": "壁炉中支撑柴火的金属架，原文用dogs指代"
+    },
+    {
+      "en": "Faust legend",
+      "zh": "浮士德传说",
+      "note": "欧洲经典传说，讲述学者浮士德与魔鬼缔约交换知识与欲望的故事，歌德有诗剧《浮士德》"
+    },
+    {
+      "en": "patent tram-road",
+      "zh": "专利有轨车道",
+      "note": "十九世纪初出现的早期公共交通设施，以马匹牵引"
+    },
+    {
+      "en": "thorny wilderness",
+      "zh": "荆棘荒野",
+      "note": "典出《旧约》，指以色列人出埃及后漂泊的旷野"
+    },
+    {
+      "en": "double consciousness",
+      "zh": "双重意识",
+      "note": "十九世纪生理学、心理学与催眠学领域的术语，指人同时存在两种互不干涉的意识状态"
+    },
+    {
+      "en": "Dresden",
+      "zh": "德累斯顿",
+      "note": "德国东部城市，以艺术收藏闻名"
+    },
+    {
+      "en": "Jews' quarter",
+      "zh": "犹太区",
+      "note": "布拉格老城的犹太聚居区，今名约瑟夫城"
+    },
+    {
+      "en": "synagogue",
+      "zh": "犹太会堂",
+      "note": "犹太教的宗教活动场所"
+    },
+    {
+      "en": "cicerone",
+      "zh": "向导",
+      "note": "意大利语，尤指文物、景点的专业向导"
+    },
+    {
+      "en": "Schmidt",
+      "zh": "施密特",
+      "note": "拉蒂默一行的德国向导"
+    },
+    {
+      "en": "Cæsar",
+      "zh": "凯撒",
+      "note": "拉蒂默家的老年纽芬兰犬"
+    },
+    {
+      "en": "Newfoundland",
+      "zh": "纽芬兰犬",
+      "note": "大型犬种，原产于加拿大纽芬兰岛"
+    },
+    {
+      "en": "Tasso",
+      "zh": "塔索",
+      "note": "伯莎对拉蒂默的戏称，典出意大利诗人托尔夸托·塔索"
+    },
+    {
+      "en": "adytum",
+      "zh": "内殿",
+      "note": "原指庙宇中最神圣的区域，此处喻指最隐秘的内心"
+    },
+    {
+      "en": "hashish",
+      "zh": "哈希什",
+      "note": "印度大麻提取物，用作麻醉剂"
+    },
+    {
+      "en": "incubus",
+      "zh": "梦魇",
+      "note": "原指传说中趁人熟睡压在人身上的邪灵，引申为噩梦带来的压迫感"
+    },
+    {
+      "en": "peritonitis",
+      "zh": "腹膜炎",
+      "note": "腹腔内膜的炎症，在十九世纪常为致命疾病"
+    },
+    {
+      "en": "Fletcher",
+      "zh": "弗莱彻",
+      "note": "伯莎原先的女仆"
+    },
+    {
+      "en": "Molton",
+      "zh": "莫尔顿",
+      "note": "地名，拉蒂默家地产的所在地"
+    },
+    {
+      "en": "Archer",
+      "zh": "阿彻",
+      "note": "伯莎后来的女仆"
+    },
+    {
+      "en": "peignoir",
+      "zh": "晨衣",
+      "note": "女性宽松家居晨袍"
+    },
+    {
+      "en": "Devonshire",
+      "zh": "德文郡",
+      "note": "英国西南部郡名"
+    }
+  ]
+}</code></pre>
+            </div>
+            
+</div></div></div>
+<div id="navButtons" class="nav-buttons">
+<button class="nav-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶端">↑</button>
+<button class="nav-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" title="回到底端">↓</button>
+</div>
+<script>
+var scrollTimeout;
+window.addEventListener("scroll", function() { document.getElementById("navButtons").classList.add("visible"); clearTimeout(scrollTimeout); scrollTimeout = setTimeout(function() { document.getElementById("navButtons").classList.remove("visible"); }, 2000); });
+function updateHighlightTheme() { const themeLink = document.getElementById("hljs-theme"); const isDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches; if (themeLink) { themeLink.href = isDark ? "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github-dark.min.css" : "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"; } }
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateHighlightTheme); updateHighlightTheme();
+document.addEventListener("click", function(e) { if (e.target.classList.contains("toc-toggle")) { e.preventDefault(); e.target.parentElement.classList.toggle("open"); } });
+function alignFootnotes() { const refs = Array.from(document.querySelectorAll(".footnote-ref")); const notes = Array.from(document.querySelectorAll(".footnote-item")); const toc = document.querySelector(".toc-sidebar"); const leftCol = document.querySelector(".left-column"); if(!leftCol) return; const noteMap = {}; notes.forEach(note => { noteMap[note.id.replace("fn-", "")] = note; }); let currentY = toc ? (toc.offsetHeight + 20) : 0; const leftColRect = leftCol.getBoundingClientRect(); refs.forEach(ref => { const label = ref.getAttribute("href").replace("#fn-", ""); const note = noteMap[label]; if (note) { const refRect = ref.getBoundingClientRect(); let desiredTop = refRect.top - leftColRect.top; desiredTop += 5; if (desiredTop < currentY) { desiredTop = currentY; } note.style.top = desiredTop + "px"; note.style.display = "block"; currentY = desiredTop + note.offsetHeight + 15; } }); const fnCol = document.querySelector(".footnote-column"); if(fnCol) fnCol.style.height = currentY + "px"; }
+window.addEventListener("load", function() { alignFootnotes(); });
+window.addEventListener("resize", alignFootnotes);
+if(window.MathJax) { MathJax.startup.promise.then(() => { setTimeout(alignFootnotes, 1000); }); }
+</script>
+</body></html>
